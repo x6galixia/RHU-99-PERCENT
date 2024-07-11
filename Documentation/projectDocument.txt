@@ -1,0 +1,14 @@
+-- database configuration
+
+//-- user login configuration --//
+
+CREATE TABLE users (
+    user_id VARCHAR(50) PRIMARY KEY,
+    surname VARCHAR(50) NOT NULL,
+    firstname VARCHAR(50) NOT NULL,
+    middle_initial VARCHAR(5) NOT NULL,
+    profession VARCHAR(100) NOT NULL,
+    username VARCHAR(50) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    user_type VARCHAR(50) NOT NULL
+);
