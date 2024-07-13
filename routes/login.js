@@ -17,7 +17,14 @@ router.post("/login", checkNotAuthenticated, (req, res, next) => {
     }
     if (!user) {
       console.log("Authentication failed:", info.message);
-      req.flash("error", info.message); // Use the message from Passport
+      req.flash("error", info.message);
+      return res.redirect("/login");
+    }
+    const selectedUserType = req.body["user_type"];
+    console.log("User type selected:", selectedUserType);
+    console.log("Actual user type:", user.user_type);
+    if (user.user_type !== selectedUserType) {
+      req.flash("error", "User type does not match.");
       return res.redirect("/login");
     }
     req.logIn(user, (err) => {
@@ -25,14 +32,7 @@ router.post("/login", checkNotAuthenticated, (req, res, next) => {
         console.error("Login error:", err);
         return next(err);
       }
-      const selectedUserType = req.body["user_type"];
-      console.log("User type selected:", selectedUserType);
-      if (
-        !["medtech", "nurse", "doctor", "pharmacist"].includes(selectedUserType)
-      ) {
-        req.flash("error", "Invalid user type.");
-        return res.redirect("/login");
-      }
+      console.log("User type matches. Redirecting...");
       switch (selectedUserType) {
         case "medtech":
           return res.redirect("/medtech");

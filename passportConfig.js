@@ -2,9 +2,9 @@ const LocalStrategy = require("passport-local").Strategy;
 const pool = require("./models/localdb");
 
 const authenticateUser = (username, password, done) => {
-  const trimmedUsername = username.trim(); // Trim any whitespace
+  const trimmedUsername = username.trim();
 
-  console.log("Searching for username:", trimmedUsername); // Debugging log
+  console.log("Searching for username:", trimmedUsername);
 
   pool.query(
     `SELECT * FROM users WHERE LOWER(username) = LOWER($1)`,
@@ -15,7 +15,7 @@ const authenticateUser = (username, password, done) => {
       }
       if (results.rows.length > 0) {
         const user = results.rows[0];
-        console.log("Authenticated user:", user); // Check user structure
+        console.log("Authenticated user:", user);
         if (password.trim() === user.password.trim()) {
           return done(null, user);
         } else {
