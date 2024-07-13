@@ -23,6 +23,7 @@ router.delete("/logout", (req, res) => {
   });
 });
 
+//-------------------functions---------///
 function setUserData(req, res, next) {
   if (req.isAuthenticated()) {
     res.locals.firstname = req.user.firstname;

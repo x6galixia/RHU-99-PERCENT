@@ -19,12 +19,12 @@ const medtechRouter = require('./routes/medtech');
 const pharmacyRouter = require('./routes/pharmacy');
 
 pool.connect()
-    .then(() => console.log('Connected to database'))
-    .catch(err => console.error('Error connecting to database:', err));
+    .then(() => console.log('Connected to RHU database'))
+    .catch(err => console.error('Error connecting to RHU database:', err));
 
 citizenPool.connect()
-    .then(() => console.log('Connected to citizen database'))
-    .catch(err => console.error('Error connecting to citizen database:', err));
+    .then(() => console.log('Connected to CITIZEN database'))
+    .catch(err => console.error('Error connecting to CITIZEN database:', err));
 
 initializePassport(passport);
 

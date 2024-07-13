@@ -117,6 +117,7 @@ router.post(
   }
 );
 
+//-------------------functions------//
 router.delete("/logout", (req, res) => {
   req.logOut((err) => {
     if (err) {

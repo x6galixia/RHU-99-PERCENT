@@ -22,7 +22,7 @@ router.delete("/logout", (req, res) => {
     res.redirect("/login");
   });
 });
-
+//------------------------function-----------//
 function setUserData(req, res, next) {
   if (req.isAuthenticated()) {
     res.locals.firstname = req.user.firstname;
