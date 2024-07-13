@@ -91,7 +91,11 @@ CREATE TABLE records (
         physician VARCHAR(250),
         diagnosis VARCHAR(250),
         requesting_party VARCHAR(250),
-        relationship_to_bp VARCHAR(250)
+        relationship_to_bp VARCHAR(250),
+        transaction_no VARCHAR(250),
+        product_name VARCHAR(250),
+        dis_quantity INT,
+        date_issued DATE
 );
 
 
