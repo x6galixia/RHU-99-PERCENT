@@ -1,7 +1,6 @@
 -- database configuration
 
-//-- user login configuration --//
-
+-- user login configuration --
 CREATE TABLE users (
     user_id VARCHAR(50) PRIMARY KEY,
     surname VARCHAR(50) NOT NULL,
@@ -98,6 +97,8 @@ CREATE TABLE records (
         date_issued DATE
 );
 
+//first create 3(three) separate database named {CITIZEN}{RHU}{PHARMACY} remember all caps.
+//the above configuration is checked and is correct.
 
 //this configuration includes three different databases the : RHU database, CITIZEN database and PHARMACY database
 1. the table users is inside the RHU database.
@@ -105,4 +106,12 @@ CREATE TABLE records (
 3. the citizens table is inside the CITIZEN database.
 4. the inventory table is inside the PHARMACY database.
 
+this project is agile and is prepared for upgrade.
+
+//DEVELOPERS 
+    backend & frontend: Kim A. Galicia
+    frontend: Adriane Garcia
+    Designers: Mark Jhondrex Alde
+               Chrizza Mae Lovina
+               Mark Philip Catalo
 ----> 

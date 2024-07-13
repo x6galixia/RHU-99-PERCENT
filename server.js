@@ -1,7 +1,9 @@
 const express = require('express');
 const app = express();
+//--->DATABASES----
 const pool = require('./models/localdb');
 const citizenPool = require('./models/citizendb');
+//----->
 const path = require('path');
 const passport = require('passport');
 require('dotenv').config();
@@ -70,4 +72,3 @@ app.get('/', (req, res) => {
 app.listen(process.env.PORT, () => {
     console.log(`Server is up and running on port ${process.env.PORT}`);
 });
-//backend galicia, frontend garcia designer ui/ux alde, lovina, catalo
