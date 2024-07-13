@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctor</title>
+</head>
+<body>
+  <form action="/logout?_method=DELETE" method="POST">
+    <div> 
+      <button type="submit">Log out</button>
+    </div>
+</form>
+    <table>
+        <thead>
+          <tr>
+            <th>Lastname</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (patientListDrop && patientListDrop.length > 0) { %> <%
+            patientListDrop.forEach(pt => { %>
+            <td><%= pt.last_name %></td>
+          </tr>
+          <% }) %> <% } else { %>
+          <tr>
+            <td colspan="1">No patients.</td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+</body>
+</html>

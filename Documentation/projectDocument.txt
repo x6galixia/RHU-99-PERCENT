@@ -12,3 +12,64 @@ CREATE TABLE users (
     password VARCHAR(100) NOT NULL,
     user_type VARCHAR(50) NOT NULL
 );
+
+CREATE TABLE patients (
+    -- patients
+    unq_id VARCHAR(100) PRIMARY KEY,
+    last_name VARCHAR(50) NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    middle_name VARCHAR(50),
+    address VARCHAR(100) NOT NULL,
+    barangay VARCHAR(100) NOT NULL,
+    town VARCHAR(100) NOT NULL,
+    birthdate DATE NOT NULL,
+    gender VARCHAR(10) NOT NULL,
+    phone VARCHAR(15) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    philhealth_no VARCHAR(100) NOT NULL,
+    occupation VARCHAR(250),
+    guardian VARCHAR(250),
+    
+    -- nurse
+    height VARCHAR(50),
+    weight VARCHAR(50),
+    systolic VARCHAR(50),
+    diastolic VARCHAR(50),
+    temperature VARCHAR(50),
+    pulse_rate VARCHAR(50),
+    respiratory_rate VARCHAR(50),
+    bmi VARCHAR(50),
+    comment VARCHAR(250),
+    
+    -- doctor
+    diagnoses VARCHAR(250),
+    findings VARCHAR(250),
+    orders VARCHAR(250),
+    medicine VARCHAR(250),
+    instruction VARCHAR(250),
+    quantity INT,
+    tests VARCHAR(250),
+    prescription_date DATE,
+
+    -- medtech
+    lab_result BYTEA
+);
+--  cetizens info
+
+CREATE TABLE citizens (
+-- cItizen
+    unq_id VARCHAR(100) PRIMARY KEY,
+    last_name VARCHAR(50) NOT NULL,
+    first_name VARCHAR(50) NOT NULL,
+    middle_name VARCHAR(50),
+    address VARCHAR(100) NOT NULL,
+    barangay VARCHAR(100) NOT NULL,
+    town VARCHAR(100) NOT NULL,
+    birthdate DATE NOT NULL,
+    gender VARCHAR(10) NOT NULL,
+    phone VARCHAR(15) NOT NULL,
+    email VARCHAR(50) NOT NULL,
+    philhealth_no VARCHAR(100) NOT NULL,
+    occupation VARCHAR(250),
+    guardian VARCHAR(250)
+);

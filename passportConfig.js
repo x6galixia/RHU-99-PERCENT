@@ -1,38 +1,66 @@
-const LocalStrategy = require('passport-local').Strategy
-const { pool } = require('./models/localdb') // Adjust according to your DB connection
+const LocalStrategy = require("passport-local").Strategy;
+const pool = require("./models/localdb");
+
+const authenticateUser = (username, password, done) => {
+  const trimmedUsername = username.trim(); // Trim any whitespace
+
+  console.log("Searching for username:", trimmedUsername); // Debugging log
+
+  pool.query(
+    `SELECT * FROM users WHERE LOWER(username) = LOWER($1)`,
+    [trimmedUsername],
+    (err, results) => {
+      if (err) {
+        return done(err);
+      }
+      if (results.rows.length > 0) {
+        const user = results.rows[0];
+        console.log("Authenticated user:", user); // Check user structure
+        if (password.trim() === user.password.trim()) {
+          return done(null, user);
+        } else {
+          return done(null, false, { message: "Password is incorrect" });
+        }
+      } else {
+        return done(null, false, { message: "Username is not registered" });
+      }
+    }
+  );
+};
 
 function initialize(passport) {
-    const authenticateUser = async (username, password, done) => {
-        try {
-            const result = await pool.query('SELECT * FROM users WHERE username = $1', [username])
-            const user = result.rows[0]
+  passport.use(
+    new LocalStrategy(
+      {
+        usernameField: "username",
+        passwordField: "password",
+      },
+      authenticateUser
+    )
+  );
 
-            if (!user) {
-                return done(null, false, { message: 'No user with that username' })
-            }
+  passport.serializeUser((user, done) => {
+    if (!user || !user.user_id) {
+      return done(new Error("User not found or user_id is missing"));
+    }
+    done(null, user.user_id);
+  });
 
-            if (password === user.password) {
-                return done(null, user);
-            } else {
-                return done(null, false, { message: 'Password incorrect' })
-            }
-
-        } catch (err) {
-            return done(err)
+  passport.deserializeUser((user_id, done) => {
+    pool.query(
+      `SELECT * FROM users WHERE user_id = $1`,
+      [user_id],
+      (err, results) => {
+        if (err) {
+          return done(err);
         }
-    };
-
-    passport.use(new LocalStrategy({ usernameField: 'username' }, authenticateUser))
-    passport.serializeUser((user, done) => done(null, user.user_id))
-    passport.deserializeUser(async (id, done) => {
-        try {
-            const result = await pool.query('SELECT * FROM users WHERE user_id = $1', [id])
-            const user = result.rows[0]
-            done(null, user)
-        } catch (err) {
-            done(err, null)
+        if (results.rows.length === 0) {
+          return done(new Error("User not found"));
         }
-    });
+        done(null, results.rows[0]);
+      }
+    );
+  });
 }
 
 module.exports = initialize;
