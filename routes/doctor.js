@@ -79,17 +79,6 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
   }
 });
 
-
-
-router.delete("/logout", (req, res) => {
-  req.logOut(err => {
-    if (err) {
-      return next(err);
-    }
-    res.redirect("/login");
-  });
-});
-
 //----------------------------> functions
 
 async function getAllPatient() {
@@ -179,5 +168,15 @@ function setUserData(req, res, next) {
   }
   next();
 }
+
+router.delete("/logout", (req, res) => {
+  req.logOut(err => {
+    if (err) {
+      return next(err);
+    }
+    res.redirect("/login");
+  });
+});
+
 
 module.exports = router;

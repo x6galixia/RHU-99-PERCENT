@@ -15,6 +15,8 @@ const loginRouter = require('./routes/login');
 const scannerRouter = require('./routes/qrcode-scanner');
 const nurseRouter = require('./routes/nurse');
 const doctorRouter = require('./routes/doctor');
+const medtechRouter = require('./routes/medtech');
+const pharmacyRouter = require('./routes/pharmacy');
 
 pool.connect()
     .then(() => console.log('Connected to database'))
@@ -58,6 +60,8 @@ app.use('/', loginRouter);
 app.use('/', scannerRouter);
 app.use('/', nurseRouter);
 app.use('/', doctorRouter);
+app.use('/', medtechRouter);
+app.use('/', pharmacyRouter);
 
 app.get('/', (req, res) => {
     res.redirect('/login');

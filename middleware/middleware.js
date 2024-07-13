@@ -25,7 +25,7 @@ function checkNotAuthenticated(req, res, next) {
       case "doctor":
         return res.redirect("/doctor/dashboard");
       case "pharmacist":
-        return res.redirect("/pharmacist");
+        return res.redirect("/pharmacy");
       default:
         return res.redirect("/");
     }
