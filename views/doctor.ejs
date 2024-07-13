@@ -1,33 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"
+    />
     <title>Doctor</title>
-</head>
-<body>
-  <form action="/logout?_method=DELETE" method="POST">
-    <div> 
-      <button type="submit">Log out</button>
-    </div>
-</form>
+  </head>
+  <body>
+    <!---------logout-->
+    <form action="/logout?_method=DELETE" method="POST">
+      <div>
+        <button type="submit">Log out</button>
+      </div>
+    </form>
+    <!----------search-->
+    <form action="/search-patient" method="post">
+      <input type="text" name="search" placeholder="Search name" />
+      <button type="submit">Search</button>
+    </form>
+
+    <!----------inventory-->
+    <button onclick="window.location.href='inventory'">Inventory</button>
+
+    <!-----------patients table-->
     <table>
-        <thead>
-          <tr>
-            <th>Lastname</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% if (patientListDrop && patientListDrop.length > 0) { %> <%
-            patientListDrop.forEach(pt => { %>
-            <td><%= pt.last_name %></td>
-          </tr>
-          <% }) %> <% } else { %>
-          <tr>
-            <td colspan="1">No patients.</td>
-          </tr>
-          <% } %>
-        </tbody>
-      </table>
-</body>
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Lastname</th>
+          <th>Firstname</th>
+          <th>Middle name</th>
+          <th>Purok/Street</th>
+          <th>Barangay</th>
+          <th>Town/City</th>
+          <th>Birthdate</th>
+          <th>Gender</th>
+          <th>Age</th>
+          <th>Phone no</th>
+          <th>Email</th>
+          <th>Philhealt no</th>
+          <th>Occupation</th>
+          <th>Guardian</th>
+          <th>Vital Signs</th>
+          <th>Prescribe</th>
+          <th>Request</th>
+          <th>Laboratory request</th>
+          <th>Laboratory result</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (patientListDrop && patientListDrop.length > 0) { %> <%
+        patientListDrop.forEach(pt => { %>
+        <tr>
+          <td><%= pt.unq_id %></td>
+          <td><%= pt.last_name %></td>
+          <td><%= pt.first_name %></td>
+          <td><%= pt.middle_name %></td>
+          <td><%= pt.address %></td>
+          <td><%= pt.barangay %></td>
+          <td><%= pt.town %></td>
+          <td><%= pt.birthdate %></td>
+          <td><%= pt.age %></td>
+          <td><%= pt.gender %></td>
+          <td><%= pt.phone %></td>
+          <td><%= pt.email %></td>
+          <td><%= pt.philhealth_no %></td>
+          <td><%= pt.occupation %></td>
+          <td><%= pt.guardian %></td>
+          <!------balyo-e nala ta yade padi han pop up tas kulaw nala ha doctor.js han mga endpoint
+            ngaim ig bubutang han sulod, ok na at ha backend pag butang nala hat ngade-->
+          <td><button>vital signs</button></td>
+          <td><button>prescribe</button></td>
+          <td><button>request</button></td>
+          <td><button>laboratory request</button></td>
+          <td><button>laboratory result</button></td>
+        </tr>
+
+        <% }) %> <% } else { %>
+        <tr>
+          <td colspan="15">No patients.</td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </body>
 </html>
