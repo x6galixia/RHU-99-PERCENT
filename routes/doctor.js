@@ -41,6 +41,7 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
         philhealth_no: row.philhealth_no,
         occupation: row.occupation,
         guardian: row.guardian,
+        // padi yade an im ibubutang ha vital signs subda nala it ak pag call ha ejs
         height: row.height,
         weight: row.weight,
         systolic: row.systolic,
@@ -50,6 +51,7 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
         respiratory_rate: row.respiratory_rate,
         bmi: row.bmi,
         comment: row.comment,
+        //yade nama an kanan prescription
         diagnoses: row.diagnoses,
         findings: row.findings,
         orders: row.orders,
@@ -58,6 +60,7 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
         quantity: row.quantity,
         tests: row.tests,
         prescription_date: row.prescription_date,
+        //yade nama an lab result 
         lab_result: row.lab_result
       }));
     }
