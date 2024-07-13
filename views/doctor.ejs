@@ -10,6 +10,9 @@
     <title>Doctor</title>
   </head>
   <body>
+    <!------------user-->
+    <%= surname %> <%= firstname %> <%= middle_initial %> <%= profession %>
+
     <!---------logout-->
     <form action="/logout?_method=DELETE" method="POST">
       <div>
@@ -18,7 +21,7 @@
     </form>
     <!----------search-->
     <form action="/search-patient" method="post">
-      <input type="text" name="search" placeholder="Search name" />
+      <input type="text" name="search" placeholder="Search name or unique ID" />
       <button type="submit">Search</button>
     </form>
 

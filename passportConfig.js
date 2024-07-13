@@ -57,7 +57,8 @@ function initialize(passport) {
         if (results.rows.length === 0) {
           return done(new Error("User not found"));
         }
-        done(null, results.rows[0]);
+        const user = results.rows[0];
+        done(null, user);
       }
     );
   });

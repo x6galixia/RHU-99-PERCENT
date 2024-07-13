@@ -5,6 +5,7 @@ const { ensureAuthenticated, checkUserType } = require("../middleware/middleware
 const router = express.Router();
 
 router.use(methodOverride("_method"));
+router.use(setUserData);
 
 router.get("/doctor/dashboard", ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     const patientListDrop = await getAllPatient();
@@ -162,6 +163,21 @@ function formatDate(dateString) {
   };
   const date = new Date(dateString);
   return date.toLocaleDateString("en-US", options);
+}
+
+function setUserData(req, res, next) {
+  if (req.isAuthenticated()) {
+    res.locals.firstname = req.user.firstname
+    res.locals.surname = req.user.surname
+    res.locals.middle_initial = req.user.middle_initial
+    res.locals.profession = req.user.profession
+  } else {
+    res.locals.firstname = null
+    res.locals.surname = null
+    res.locals.middle_initial = null
+    res.locals.profession = null
+  }
+  next();
 }
 
 module.exports = router;
