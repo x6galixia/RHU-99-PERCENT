@@ -73,3 +73,32 @@ CREATE TABLE citizens (
     occupation VARCHAR(250),
     guardian VARCHAR(250)
 );
+
+CREATE TABLE inventory (
+    -- inventory
+        med_id VARCHAR(100) PRIMARY KEY,
+        procurement_date DATE,
+        date_added DATE,
+        generic_name VARCHAR(250),
+        brand_name VARCHAR(250),
+        dosage VARCHAR(50),
+        quantity INT
+);
+
+CREATE TABLE records (
+    -- records of the released medicine
+        beneficiary_name VARCHAR(250),
+        physician VARCHAR(250),
+        diagnosis VARCHAR(250),
+        requesting_party VARCHAR(250),
+        relationship_to_bp VARCHAR(250)
+);
+
+
+//this configuration includes three different databases the : RHU database, CITIZEN database and PHARMACY database
+1. the table users is inside the RHU database.
+2. the patient table is inside also the RHU database.
+3. the citizens table is inside the CITIZEN database.
+4. the inventory table is inside the PHARMACY database.
+
+----> 

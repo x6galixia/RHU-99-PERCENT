@@ -1,8 +1,8 @@
-const express = require('express')
-const router = express.Router()
+const express = require("express");
+const router = express.Router();
 
-router.get('/scanner', (req, res) => {
-    res.render('qrcode-scanner')
-})
+router.get("/scanner", (req, res) => {
+  res.render("qrcode-scanner");
+});
 
-module.exports = router
+module.exports = router;
