@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <title>Inventory</title>
+</head>
+<body>
+    <table>
+        <thead>
+          <tr>
+            <th>medicine ID</th>
+            <th>Procurement date</th>
+            <th>Date added</th>
+            <th>Generic name</th>
+            <th>Brand name</th>
+            <th>Dosage</th>
+            <th>Quantity</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% if (medList && medList.length > 0) { %> <%
+            medList.forEach(med => { %>
+          <tr>
+            <td><%= med.med_id %></td>
+            <td><%= med.procurement_date %></td>
+            <td><%= med.date_added %></td>
+            <td><%= med.generic_name %></td>
+            <td><%= med.brand_name %></td>
+            <td><%= med.dosage %></td>
+            <td><%= med.quantity %></td>
+          </tr>
+  
+          <% }) %> <% } else { %>
+          <tr>
+            <td colspan="7">No stock of medicine.</td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+</body>
+</html>

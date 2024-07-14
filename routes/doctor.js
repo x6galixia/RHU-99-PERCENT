@@ -1,5 +1,6 @@
 const express = require("express");
 const pool = require("../models/localdb");
+const pharmacyPool = require("../models/pharmacydb");
 const methodOverride = require("method-override");
 const { ensureAuthenticated, checkUserType } = require("../middleware/middleware");
 const router = express.Router();
@@ -13,6 +14,16 @@ router.get("/doctor/dashboard", ensureAuthenticated, checkUserType("doctor"), as
       patientListDrop,
       user: req.user,
     });
+});
+
+router.get("/doctor/inventory", ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
+  try {
+    const medList = await inventoryLists();
+    res.render("inventory", { medList }); // Pass medList as an object property
+  } catch (error) {
+    console.error("Error:", error);
+    res.sendStatus(500);
+  }
 });
 
 router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
@@ -42,7 +53,6 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
         philhealth_no: row.philhealth_no,
         occupation: row.occupation,
         guardian: row.guardian,
-        // padi yade an im ibubutang ha vital signs subda nala it ak pag call ha ejs
         height: row.height,
         weight: row.weight,
         systolic: row.systolic,
@@ -52,7 +62,6 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
         respiratory_rate: row.respiratory_rate,
         bmi: row.bmi,
         comment: row.comment,
-        //yade nama an kanan prescription
         diagnoses: row.diagnoses,
         findings: row.findings,
         orders: row.orders,
@@ -61,7 +70,6 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
         quantity: row.quantity,
         tests: row.tests,
         prescription_date: row.prescription_date,
-        //yade nama an lab result 
         lab_result: row.lab_result
       }));
     }
@@ -129,6 +137,29 @@ async function getAllPatient() {
   }
 }
 
+async function inventoryLists() {
+  try {
+    const medicineInventory = await pharmacyPool.query("SELECT * FROM inventory");
+    let medicineList = [];
+
+    if (medicineInventory.rows.length > 0) {
+      medicineList = medicineInventory.rows.map(med => ({
+        med_id: med.med_id,
+        procurement_date: med.procurement_date,
+        date_added: med.date_added,
+        generic_name: med.generic_name,
+        brand_name: med.brand_name,
+        dosage: med.dosage,
+        quantity: med.quantity
+      }));
+    }
+    return medicineList;
+  } catch (err) {
+    console.log("Error: no data");
+    return [];
+  }
+}
+
 function calculateAge(birthdateString) {
   const birthdate = new Date(birthdateString);
   const today = new Date();
@@ -156,15 +187,15 @@ function formatDate(dateString) {
 
 function setUserData(req, res, next) {
   if (req.isAuthenticated()) {
-    res.locals.firstname = req.user.firstname
-    res.locals.surname = req.user.surname
-    res.locals.middle_initial = req.user.middle_initial
-    res.locals.profession = req.user.profession
+    res.locals.firstname = req.user.firstname;
+    res.locals.surname = req.user.surname;
+    res.locals.middle_initial = req.user.middle_initial;
+    res.locals.profession = req.user.profession;
   } else {
-    res.locals.firstname = null
-    res.locals.surname = null
-    res.locals.middle_initial = null
-    res.locals.profession = null
+    res.locals.firstname = null;
+    res.locals.surname = null;
+    res.locals.middle_initial = null;
+    res.locals.profession = null;
   }
   next();
 }
@@ -177,6 +208,5 @@ router.delete("/logout", (req, res) => {
     res.redirect("/login");
   });
 });
-
 
 module.exports = router;
