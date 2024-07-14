@@ -6,6 +6,15 @@
     <title>Inventory</title>
 </head>
 <body>
+      <!------------user-->
+      <%= surname %> <%= firstname %> <%= middle_initial %> <%= profession %>
+
+      <!---------logout-->
+      <form action="/logout?_method=DELETE" method="POST">
+        <div>
+          <button type="submit">Log out</button>
+        </div>
+      </form>
     <table>
         <thead>
           <tr>
