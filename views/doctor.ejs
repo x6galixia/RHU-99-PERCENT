@@ -78,11 +78,10 @@
           <td><%= pt.guardian %></td>
           <!------balyo-e nala ta yade padi han pop up tas kulaw nala ha doctor.js han mga endpoint
             ngaim ig bubutang han sulod, ok na at ha backend pag butang nala hat ngade-->
-          <td><button>vital signs</button></td>
-          <td><button>prescribe</button></td>
-          <td><button>request</button></td>
-          <td><button>laboratory request</button></td>
-          <td><button>laboratory result</button></td>
+          <td><button id="openVitals">vital signs</button></td>
+          <td><button id="openPrescribe">prescribe</button></td>
+          <td><button id="openLabReq">laboratory request</button></td>
+          <td><button id="openLabRes">laboratory result</button></td>
         </tr>
 
         <% }) %> <% } else { %>
@@ -92,5 +91,22 @@
         <% } %>
       </tbody>
     </table>
+<!---vital signs-->
+    <div id="vitalForm">
+
+    </div>
+<!---prescribe-->
+    <div id="prescribeForm">
+
+    </div>
+<!----lab request-->
+    <div id="labRequestForm">
+
+    </div>
+<!-----lab result-->
+    <div id="labResultForm">
+
+    </div>
+
   </body>
 </html>
