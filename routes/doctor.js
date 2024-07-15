@@ -19,7 +19,7 @@ router.get("/doctor/dashboard", ensureAuthenticated, checkUserType("doctor"), as
 router.get("/doctor/inventory", ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
   try {
     const medList = await inventoryLists();
-    res.render("inventory", { medList }); // Pass medList as an object property
+    res.render("inventory", { medList });
   } catch (error) {
     console.error("Error:", error);
     res.sendStatus(500);
@@ -127,7 +127,8 @@ async function getAllPatient() {
         quantity: row.quantity,
         tests: row.tests,
         prescription_date: row.prescription_date,
-        lab_result: row.lab_result
+        lab_result: row.lab_result,
+        date_now: getCurrentDate()
       }));
     }
     return patientsList;
@@ -208,5 +209,14 @@ router.delete("/logout", (req, res) => {
     res.redirect("/login");
   });
 });
+
+function getCurrentDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const day = String(today.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
+}
 
 module.exports = router;
