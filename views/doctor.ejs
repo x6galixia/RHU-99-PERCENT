@@ -31,6 +31,7 @@
       <thead>
         <tr>
           <th>User ID</th>
+          <th>Date</th>
           <th>Lastname</th>
           <th>Firstname</th>
           <th>Middle name</th>
@@ -60,6 +61,7 @@
           <% patientListDrop.forEach(pt => { %>
             <tr>
               <td><%= pt.unq_id %></td>
+              <td><%= pt.check_date %></td>
               <td><%= pt.last_name %></td>
               <td><%= pt.first_name %></td>
               <td><%= pt.middle_name %></td>
@@ -92,8 +94,10 @@
                   data-comment="<%= pt.comment %>">Vital Signs</button>
               </td>
               <td>
+                <!----------prescribe------>
                 <button class="openPrescribe"
                 data-unq-id="<%= pt.unq_id %>"
+                data-check-date="<%= pt.check_date %>"
                 data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
                 data-date="<%= pt.date_now %>"
                 data-age="<%= pt.age %>"
@@ -107,6 +111,7 @@
                 <!-- Lab Request Button -->
                 <button class="openLabReq"
                   data-unq-id="<%= pt.unq_id %>"
+                  data-check-date="<%= pt.check_date %>"
                   data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
                   data-date="<%= pt.date_now %>"
                   data-age="<%= pt.age %>"
@@ -116,8 +121,10 @@
                   data-guardian="<%= pt.guardian %>">Laboratory Request</button>
               </td>
               <td>
+                <!----------lab result-->
                 <button class="openLabRes"
                 data-unq-id="<%= pt.unq_id %>"
+                data-check-date="<%= pt.check_date %>"
                 data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
                 data-date="<%= pt.date_now %>"
                 data-age="<%= pt.age %>"
@@ -130,6 +137,7 @@
                 <!-------diagnoses-->
                 <button class="openDiagnose"
                 data-unq-id="<%= pt.unq_id %>"
+                data-check-date="<%= pt.check_date %>"
                 data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
                 data-date="<%= pt.date_now %>"
                 data-age="<%= pt.age %>"
@@ -142,6 +150,7 @@
                 <!-------findings--->
                 <button class="openFindings"
                 data-unq-id="<%= pt.unq_id %>"
+                data-check-date="<%= pt.check_date %>"
                 data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
                 data-date="<%= pt.date_now %>"
                 data-age="<%= pt.age %>"
@@ -154,7 +163,7 @@
           <% }) %>
         <% } else { %>
           <tr>
-            <td colspan="19">No patients.</td>
+            <td colspan="24">No patients.</td>
           </tr>
         <% } %>
       </tbody>
@@ -187,8 +196,8 @@
         <div id="closePrescribeBtn">&times;</div>
         <h1>PRESCRIBE</h1>
         <input type="text" id="pres_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+        <input type="date" id="pres_check_date" name="check_date" readonly />
         <input type="text" id="pres_full_name" name="full_name" placeholder="Full Name" readonly />
-        <input type="date" id="pres_date_now" name="date_now" readonly />
         <input type="number" id="pres_age" name="age" placeholder="Age" readonly />
         <input type="text" id="pres_gender" name="gender" placeholder="Gender" readonly />
         <input type="date" id="pres_birthdate" name="birthdate" readonly />
@@ -203,8 +212,8 @@
         <div id="closeLabRequestBtn">&times;</div>
         <h1>LABORATORY REQUEST</h1>
         <input type="text" id="req_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+        <input type="date" id="req_check_date" name="check_date" readonly />
         <input type="text" id="req_full_name" name="full_name" placeholder="Full Name" readonly />
-        <input type="date" id="req_date_now" name="date_now" readonly />
         <input type="number" id="req_age" name="age" placeholder="Age" readonly />
         <input type="text" id="req_gender" name="gender" placeholder="Gender" readonly />
         <input type="date" id="req_birthdate" name="birthdate" readonly />
@@ -237,8 +246,8 @@
         <div id="closeLabResultBtn">&times;</div>
         <h1>LABORATORY RESULT</h1>
         <input type="text" id="res_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+        <input type="date" id="res_check_date" name="check_date" readonly />
         <input type="text" id="res_full_name" name="full_name" placeholder="Full Name" readonly />
-        <input type="date" id="res_date_now" name="date_now" readonly />
         <input type="number" id="res_age" name="age" placeholder="Age" readonly />
         <input type="text" id="res_gender" name="gender" placeholder="Gender" readonly />
         <input type="date" id="res_birthdate" name="birthdate" readonly />
@@ -253,8 +262,8 @@
         <div id="closeDiagnoseBtn">&times;</div>
         <h1>Diagnoses</h1>
         <input type="text" id="dia_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+        <input type="date" id="dia_check_date" name="check_date" readonly />
         <input type="text" id="dia_full_name" name="full_name" placeholder="Full Name" readonly />
-        <input type="date" id="dia_date_now" name="date_now" readonly />
         <input type="number" id="dia_age" name="age" placeholder="Age" readonly />
         <input type="text" id="dia_gender" name="gender" placeholder="Gender" readonly />
         <input type="date" id="dia_birthdate" name="birthdate" readonly />
@@ -275,8 +284,8 @@
         <div id="closeFindingsBtn">&times;</div>
         <h1>Findings</h1>
         <input type="text" id="fin_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+        <input type="date" id="fin_check_date" name="check_date" readonly />
         <input type="text" id="fin_full_name" name="full_name" placeholder="Full Name" readonly />
-        <input type="date" id="fin_date_now" name="date_now" readonly />
         <input type="number" id="fin_age" name="age" placeholder="Age" readonly />
         <input type="text" id="fin_gender" name="gender" placeholder="Gender" readonly />
         <input type="date" id="fin_birthdate" name="birthdate" readonly />

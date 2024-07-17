@@ -70,9 +70,9 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
 
         const result = searchResult.rows.map(row => ({
             ...row,
+            check_date: formatDate(row.check_date),
             birthdate: formatDate(row.birthdate),
-            age: calculateAge(formatDate(row.birthdate)),
-            date_now: getCurrentDate()
+            age: calculateAge(formatDate(row.birthdate))
         }));
 
         const patientListDrop = await getAllPatients();
@@ -94,9 +94,9 @@ async function getAllPatients() {
         const viewPatients = await pool.query("SELECT * FROM patients");
         return viewPatients.rows.map(row => ({
             ...row,
+            check_date: formatDate(row.check_date),
             birthdate: formatDate(row.birthdate),
-            age: calculateAge(formatDate(row.birthdate)),
-            date_now: getCurrentDate()
+            age: calculateAge(formatDate(row.birthdate))
         }));
     } catch (err) {
         console.error("Error fetching patients:", err);

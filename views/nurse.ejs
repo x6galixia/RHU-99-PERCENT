@@ -3,15 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link
-    rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
     <title>Nurse</title>
 </head>
 <body>
-        <!------------user-->
-        <%= surname %> <%= firstname %> <%= middle_initial %> <%= profession %>
-        <!---------------logout---------------->
+    <!------------user-->
+    <%= surname %> <%= firstname %> <%= middle_initial %> <%= profession %>
+    <!---------------logout---------------->
     <form action="/logout?_method=DELETE" method="POST">
         <div> 
           <button type="submit">Log out</button>
@@ -26,7 +24,9 @@
         <h1>PATIENT INFO</h1>
         <label for="qrResultInput">Unique ID:</label>
         <input type="text" id="qrResultInput" name="unq_id" value="" readonly>
-        
+
+        <label for="date">Date</label>
+        <input type="date" id="check_date" name="check_date" readonly> 
         <label for="last_name">Lastname</label>
         <input type="text" id="last_name" name="last_name" required>
         <label for="first_name">Firstname</label>
@@ -80,7 +80,6 @@
         <input type="submit" value="Submit">
 
     </form>
-
     <script src="/js/nurse-scanned.js"></script>
 </body>
 </html>
