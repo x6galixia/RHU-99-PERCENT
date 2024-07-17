@@ -45,6 +45,8 @@
           <th>Philhealt no</th>
           <th>Occupation</th>
           <th>Guardian</th>
+          <th>Diagnoses</th>
+          <th>Findings</th>
           <th>Vital Signs</th>
           <th>Prescribe</th>
           <th>Laboratory request</th>
@@ -72,6 +74,8 @@
               <td><%= pt.philhealth_no %></td>
               <td><%= pt.occupation %></td>
               <td><%= pt.guardian %></td>
+              <td><%= pt.diagnoses %></td>
+              <td><%= pt.findings %></td>
               <td>
                 <!-- Vitals Button -->
                 <button class="openVitals"
@@ -245,7 +249,7 @@
 
     <!-- Diagnoses Form -->
     <div id="diagnoseForm" style="display: none">
-      <form>
+      <form action="/add-diagnoses" method="POST">
         <div id="closeDiagnoseBtn">&times;</div>
         <h1>Diagnoses</h1>
         <input type="text" id="dia_unq_id" name="unq_id" placeholder="Unique ID" readonly />
@@ -256,15 +260,18 @@
         <input type="date" id="dia_birthdate" name="birthdate" readonly />
         <input type="text" id="dia_occupation" name="occupation" readonly />
         <input type="text" id="dia_guardian" name="guardian" readonly />
-
+    
         <label for="diagnoses">Diagnoses</label>
-        <input type="tex" name="diagnoses">
+        <input type="text" name="diagnoses" required>
+    
+        <button type="submit">Submit</button>
       </form>
     </div>
+    
 
     <!-- Findings Form -->
     <div id="findingsForm" style="display: none">
-      <form>
+      <form action="/add-findings" method="post">
         <div id="closeFindingsBtn">&times;</div>
         <h1>Findings</h1>
         <input type="text" id="fin_unq_id" name="unq_id" placeholder="Unique ID" readonly />
@@ -277,7 +284,9 @@
         <input type="text" id="fin_guardian" name="guardian" readonly />
 
         <label for="findings">Findings</label>
-        <input type="tex" name="findings">
+        <input type="text" name="findings">
+
+        <button type="submit">Submit</button>
       </form>
     </div>
     <script src="/js/doctor-func.js"></script>
