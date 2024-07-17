@@ -3,16 +3,22 @@ document.addEventListener("DOMContentLoaded", function() {
     const openPrescribeButtons = document.querySelectorAll(".openPrescribe");
     const openLabReqButtons = document.querySelectorAll(".openLabReq");
     const openLabResButtons = document.querySelectorAll(".openLabRes");
+    const openDiagnoseButtons = document.querySelectorAll(".openDiagnose");
+    const openFindingsButtons = document.querySelectorAll(".openFindings");
   
     const vitalForm = document.getElementById("vitalForm");
     const prescribeForm = document.getElementById("prescribeForm");
     const labRequestForm = document.getElementById("labRequestForm");
     const labResultForm = document.getElementById("labResultForm");
+    const diagnoseForm = document.getElementById("diagnoseForm");
+    const findingsForm = document.getElementById("findingsForm");
   
     const closeVitalsBtn = document.getElementById("closeVitalsBtn");
     const closePrescribeBtn = document.getElementById("closePrescribeBtn");
     const closeLabRequestBtn = document.getElementById("closeLabRequestBtn");
     const closeLabResultBtn = document.getElementById("closeLabResultBtn");
+    const closeDiagnoseBtn = document.getElementById("closeDiagnoseBtn");
+    const closeFindingsBtn = document.getElementById("closeFindingsBtn");
   
     // Vitals
     openVitalsButtons.forEach(button => {
@@ -39,6 +45,14 @@ document.addEventListener("DOMContentLoaded", function() {
     // Prescribe
     openPrescribeButtons.forEach(button => {
       button.addEventListener("click", function() {
+        document.getElementById("pres_unq_id").value = this.dataset.unqId;
+        document.getElementById("pres_full_name").value = this.dataset.fullName;
+        document.getElementById("pres_date_now").value = this.dataset.date;
+        document.getElementById("pres_age").value = this.dataset.age;
+        document.getElementById("pres_gender").value = this.dataset.gender;
+        document.getElementById("pres_birthdate").value = new Date(this.dataset.birthdate).toISOString().split("T")[0];
+        document.getElementById("pres_occupation").value = this.dataset.occupation;
+        document.getElementById("pres_guardian").value = this.dataset.guardian;
         prescribeForm.style.display = "block";
       });
     });
@@ -69,6 +83,14 @@ document.addEventListener("DOMContentLoaded", function() {
     // Lab Result
     openLabResButtons.forEach(button => {
       button.addEventListener("click", function() {
+        document.getElementById("res_unq_id").value = this.dataset.unqId;
+        document.getElementById("res_full_name").value = this.dataset.fullName;
+        document.getElementById("res_date_now").value = this.dataset.date;
+        document.getElementById("res_age").value = this.dataset.age;
+        document.getElementById("res_gender").value = this.dataset.gender;
+        document.getElementById("res_birthdate").value = new Date(this.dataset.birthdate).toISOString().split("T")[0];
+        document.getElementById("res_occupation").value = this.dataset.occupation;
+        document.getElementById("res_guardian").value = this.dataset.guardian;
         labResultForm.style.display = "block";
       });
     });
@@ -76,5 +98,44 @@ document.addEventListener("DOMContentLoaded", function() {
     closeLabResultBtn.addEventListener("click", function() {
       labResultForm.style.display = "none";
     });
+
+        // Diagnose
+        openDiagnoseButtons.forEach(button => {
+          button.addEventListener("click", function() {
+            document.getElementById("dia_unq_id").value = this.dataset.unqId;
+            document.getElementById("dia_full_name").value = this.dataset.fullName;
+            document.getElementById("dia_date_now").value = this.dataset.date;
+            document.getElementById("dia_age").value = this.dataset.age;
+            document.getElementById("dia_gender").value = this.dataset.gender;
+            document.getElementById("dia_birthdate").value = new Date(this.dataset.birthdate).toISOString().split("T")[0];
+            document.getElementById("dia_occupation").value = this.dataset.occupation;
+            document.getElementById("dia_guardian").value = this.dataset.guardian;
+            diagnoseForm.style.display = "block";
+          });
+        });
+      
+        closeDiagnoseBtn.addEventListener("click", function() {
+          diagnoseForm.style.display = "none";
+        });
+
+
+        // Findings
+        openFindingsButtons.forEach(button => {
+          button.addEventListener("click", function() {
+            document.getElementById("fin_unq_id").value = this.dataset.unqId;
+            document.getElementById("fin_full_name").value = this.dataset.fullName;
+            document.getElementById("fin_date_now").value = this.dataset.date;
+            document.getElementById("fin_age").value = this.dataset.age;
+            document.getElementById("fin_gender").value = this.dataset.gender;
+            document.getElementById("fin_birthdate").value = new Date(this.dataset.birthdate).toISOString().split("T")[0];
+            document.getElementById("fin_occupation").value = this.dataset.occupation;
+            document.getElementById("fin_guardian").value = this.dataset.guardian;
+            findingsForm.style.display = "block";
+          });
+        });
+      
+        closeFindingsBtn.addEventListener("click", function() {
+          findingsForm.style.display = "none";
+        });
   });
   

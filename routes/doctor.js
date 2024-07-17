@@ -16,16 +16,6 @@ router.get("/doctor/dashboard", ensureAuthenticated, checkUserType("doctor"), as
     });
 });
 
-router.get("/doctor/inventory", ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
-  try {
-    const medList = await inventoryLists();
-    res.render("inventory", { medList });
-  } catch (error) {
-    console.error("Error:", error);
-    res.sendStatus(500);
-  }
-});
-
 router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
   try {
     const { search } = req.body;
@@ -132,29 +122,6 @@ async function getAllPatient() {
       }));
     }
     return patientsList;
-  } catch (err) {
-    console.log("Error: no data");
-    return [];
-  }
-}
-
-async function inventoryLists() {
-  try {
-    const medicineInventory = await pharmacyPool.query("SELECT * FROM inventory");
-    let medicineList = [];
-
-    if (medicineInventory.rows.length > 0) {
-      medicineList = medicineInventory.rows.map(med => ({
-        med_id: med.med_id,
-        procurement_date: med.procurement_date,
-        date_added: med.date_added,
-        generic_name: med.generic_name,
-        brand_name: med.brand_name,
-        dosage: med.dosage,
-        quantity: med.quantity
-      }));
-    }
-    return medicineList;
   } catch (err) {
     console.log("Error: no data");
     return [];

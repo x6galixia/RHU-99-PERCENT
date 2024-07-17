@@ -44,11 +44,11 @@ CREATE TABLE patients (
     -- doctor
     diagnoses VARCHAR(250),
     findings VARCHAR(250),
-    orders VARCHAR(250),
+    category VARCHAR(250),
+    service VARCHAR(250),
     medicine VARCHAR(250),
     instruction VARCHAR(250),
     quantity INT,
-    tests VARCHAR(250),
     prescription_date DATE,
 
     -- medtech
