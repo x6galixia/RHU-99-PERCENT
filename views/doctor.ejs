@@ -3,158 +3,194 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
     <link rel="stylesheet" href="/css/doctor-func.css" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <title>Document</title>
     <title>Doctor</title>
   </head>
   <body>
+    <header class="py-1">
+      <nav id="navbar">
+          <div id="logo2">
+              <img id="logoing" src="/images/group 206.png" alt="">
+            </div>
+           <!-- Logout icon -->
+           <div class="dropdown">
+            <img class="dropbtn" onclick="toggleDropdown()" src="/images/profile.png" alt="">
+            <div id="dropdownContent" class="dropdown-content">
+                <div id="profile-sec">
+                  <div id="meow">
+                    <img id="profile2" src="/images/profile.png" alt="">
+                  </div>
+                  <div id="names">
+                    <p class=" infos" id="info"><%= surname %> <%= firstname %> <%= middle_initial %> </p>
+                    <p class="infor" id="info"><%= profession %></p>
+                  </div>              
+                </div>
+                <hr>
+                <!---------------------------LOGOUT BUTTON---------------------------------------------->
+                <form action="/logout?_method=DELETE" method="POST">
+                  <button id="log-butt" type="submit"><i class="fa fa-sign-out-alt"></i> Log out</button>
+                </form>
+            </div>
+          </div>
+      </nav>
+    </header>
+
+    <main>
     <!-- User Info -->
-    <div>
-      <%= surname %> <%= firstname %> <%= middle_initial %> <%= profession %>
+    <div id="semi-header">
+      <div>
+        <H1>PATIENTS INFORMATION</H1>
+      </div>
+  
+      
+        <!-- Search Form -->
+      <form action="/search-patient" method="post">
+        <div id="searcher" style="margin-right: 40px;">
+          <input id="searching" type="search" name="search" placeholder="Search name or unique ID" />
+          <button id="search-butt" type="submit"><i class="fas fa-search"></i></button>
+        </div>
+      </form>
     </div>
 
-    <!-- Search Form -->
-    <form action="/search-patient" method="post">
-      <input type="text" name="search" placeholder="Search name or unique ID" />
-      <button type="submit">Search</button>
-    </form>
-
-    <!-- Logout Form -->
-    <form action="/logout?_method=DELETE" method="POST">
-      <div>
-        <button type="submit">Log out</button>
-      </div>
-    </form>
 
     <!-- Patients Table -->
-    <table>
-      <thead>
-        <tr>
-          <th>User ID</th>
-          <th>Lastname</th>
-          <th>Firstname</th>
-          <th>Middle name</th>
-          <th>Purok/Street</th>
-          <th>Barangay</th>
-          <th>Town/City</th>
-          <th>Birthdate</th>
-          <th>Gender</th>
-          <th>Age</th>
-          <th>Phone no</th>
-          <th>Email</th>
-          <th>Philhealt no</th>
-          <th>Occupation</th>
-          <th>Guardian</th>
-          <th>Vital Signs</th>
-          <th>Prescribe</th>
-          <th>Laboratory request</th>
-          <th>Laboratory result</th>
-          <th>Diagnoses</th>
-          <th>Findings</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if (patientListDrop && patientListDrop.length > 0) { %>
-          <% patientListDrop.forEach(pt => { %>
+    <div id="body">
+      <div class="table-container">
+        <table>
+          <thead>
             <tr>
-              <td><%= pt.unq_id %></td>
-              <td><%= pt.last_name %></td>
-              <td><%= pt.first_name %></td>
-              <td><%= pt.middle_name %></td>
-              <td><%= pt.address %></td>
-              <td><%= pt.barangay %></td>
-              <td><%= pt.town %></td>
-              <td><%= pt.birthdate %></td>
-              <td><%= pt.gender %></td>
-              <td><%= pt.age %></td>
-              <td><%= pt.phone %></td>
-              <td><%= pt.email %></td>
-              <td><%= pt.philhealth_no %></td>
-              <td><%= pt.occupation %></td>
-              <td><%= pt.guardian %></td>
-              <td>
-                <!-- Vitals Button -->
-                <button class="openVitals"
-                  data-unq-id="<%= pt.unq_id %>"
-                  data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
-                  data-height="<%= pt.height %>"
-                  data-weight="<%= pt.weight %>"
-                  data-systolic="<%= pt.systolic %>"
-                  data-diastolic="<%= pt.diastolic %>"
-                  data-temperature="<%= pt.temperature %>"
-                  data-pulse-rate="<%= pt.pulse_rate %>"
-                  data-respiratory-rate="<%= pt.respiratory_rate %>"
-                  data-bmi="<%= pt.bmi %>"
-                  data-comment="<%= pt.comment %>">Vital Signs</button>
-              </td>
-              <td>
-                <button class="openPrescribe"
-                data-unq-id="<%= pt.unq_id %>"
-                data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
-                data-date="<%= pt.date_now %>"
-                data-age="<%= pt.age %>"
-                data-gender="<%= pt.gender %>"
-                data-birthdate="<%= pt.birthdate %>"
-                data-occupation="<%= pt.occupation %>"
-                data-guardian="<%= pt.guardian %>"
-                >Prescribe</button>
-              </td>
-              <td>
-                <!-- Lab Request Button -->
-                <button class="openLabReq"
-                  data-unq-id="<%= pt.unq_id %>"
-                  data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
-                  data-date="<%= pt.date_now %>"
-                  data-age="<%= pt.age %>"
-                  data-gender="<%= pt.gender %>"
-                  data-birthdate="<%= pt.birthdate %>"
-                  data-occupation="<%= pt.occupation %>"
-                  data-guardian="<%= pt.guardian %>">Laboratory Request</button>
-              </td>
-              <td>
-                <button class="openLabRes"
-                data-unq-id="<%= pt.unq_id %>"
-                data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
-                data-date="<%= pt.date_now %>"
-                data-age="<%= pt.age %>"
-                data-gender="<%= pt.gender %>"
-                data-birthdate="<%= pt.birthdate %>"
-                data-occupation="<%= pt.occupation %>"
-                data-guardian="<%= pt.guardian %>">Laboratory Result</button>
-              </td>
-              <td>
-                <!-------diagnoses-->
-                <button class="openDiagnose"
-                data-unq-id="<%= pt.unq_id %>"
-                data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
-                data-date="<%= pt.date_now %>"
-                data-age="<%= pt.age %>"
-                data-gender="<%= pt.gender %>"
-                data-birthdate="<%= pt.birthdate %>"
-                data-occupation="<%= pt.occupation %>"
-                data-guardian="<%= pt.guardian %>">Diagnoses</button>
-              </td>
-              <td>
-                <!-------findings--->
-                <button class="openFindings"
-                data-unq-id="<%= pt.unq_id %>"
-                data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
-                data-date="<%= pt.date_now %>"
-                data-age="<%= pt.age %>"
-                data-gender="<%= pt.gender %>"
-                data-birthdate="<%= pt.birthdate %>"
-                data-occupation="<%= pt.occupation %>"
-                data-guardian="<%= pt.guardian %>">Findings</button>
-              </td>
+              <th>User ID</th>
+              <th>Lastname</th>
+              <th>Firstname</th>
+              <th>Middle name</th>
+              <th>Purok/Street</th>
+              <th>Barangay</th>
+              <th>Town/City</th>
+              <th>Birthdate</th>
+              <th>Gender</th>
+              <th>Age</th>
+              <th>Phone no</th>
+              <th>Email</th>
+              <th>Philhealt no</th>
+              <th>Occupation</th>
+              <th>Guardian</th>
+              <th>Vital Signs</th>
+              <th>Prescribe</th>
+              <th>Laboratory request</th>
+              <th>Laboratory result</th>
+              <th>Diagnoses</th>
+              <th>Findings</th>
             </tr>
-          <% }) %>
-        <% } else { %>
-          <tr>
-            <td colspan="19">No patients.</td>
-          </tr>
-        <% } %>
-      </tbody>
-    </table>
+          </thead>
+          <tbody>
+            <% if (patientListDrop && patientListDrop.length > 0) { %>
+              <% patientListDrop.forEach(pt => { %>
+                <tr>
+                  <td><%= pt.unq_id %></td>
+                  <td><%= pt.last_name %></td>
+                  <td><%= pt.first_name %></td>
+                  <td><%= pt.middle_name %></td>
+                  <td><%= pt.address %></td>
+                  <td><%= pt.barangay %></td>
+                  <td><%= pt.town %></td>
+                  <td><%= pt.birthdate %></td>
+                  <td><%= pt.gender %></td>
+                  <td><%= pt.age %></td>
+                  <td><%= pt.phone %></td>
+                  <td><%= pt.email %></td>
+                  <td><%= pt.philhealth_no %></td>
+                  <td><%= pt.occupation %></td>
+                  <td><%= pt.guardian %></td>
+                  <td>
+                    <!-- Vitals Button -->
+                    <button class="openVitals"
+                      data-unq-id="<%= pt.unq_id %>"
+                      data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                      data-height="<%= pt.height %>"
+                      data-weight="<%= pt.weight %>"
+                      data-systolic="<%= pt.systolic %>"
+                      data-diastolic="<%= pt.diastolic %>"
+                      data-temperature="<%= pt.temperature %>"
+                      data-pulse-rate="<%= pt.pulse_rate %>"
+                      data-respiratory-rate="<%= pt.respiratory_rate %>"
+                      data-bmi="<%= pt.bmi %>"
+                      data-comment="<%= pt.comment %>">Vital Signs</button>
+                  </td>
+                  <td>
+                    <button class="openPrescribe"
+                    data-unq-id="<%= pt.unq_id %>"
+                    data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                    data-date="<%= pt.date_now %>"
+                    data-age="<%= pt.age %>"
+                    data-gender="<%= pt.gender %>"
+                    data-birthdate="<%= pt.birthdate %>"
+                    data-occupation="<%= pt.occupation %>"
+                    data-guardian="<%= pt.guardian %>"
+                    >Prescribe</button>
+                  </td>
+                  <td>
+                    <!-- Lab Request Button -->
+                    <button class="openLabReq"
+                      data-unq-id="<%= pt.unq_id %>"
+                      data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                      data-date="<%= pt.date_now %>"
+                      data-age="<%= pt.age %>"
+                      data-gender="<%= pt.gender %>"
+                      data-birthdate="<%= pt.birthdate %>"
+                      data-occupation="<%= pt.occupation %>"
+                      data-guardian="<%= pt.guardian %>">Laboratory Request</button>
+                  </td>
+                  <td>
+                    <button class="openLabRes"
+                    data-unq-id="<%= pt.unq_id %>"
+                    data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                    data-date="<%= pt.date_now %>"
+                    data-age="<%= pt.age %>"
+                    data-gender="<%= pt.gender %>"
+                    data-birthdate="<%= pt.birthdate %>"
+                    data-occupation="<%= pt.occupation %>"
+                    data-guardian="<%= pt.guardian %>">Laboratory Result</button>
+                  </td>
+                  <td>
+                    <!-------diagnoses-->
+                    <button class="openDiagnose"
+                    data-unq-id="<%= pt.unq_id %>"
+                    data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                    data-date="<%= pt.date_now %>"
+                    data-age="<%= pt.age %>"
+                    data-gender="<%= pt.gender %>"
+                    data-birthdate="<%= pt.birthdate %>"
+                    data-occupation="<%= pt.occupation %>"
+                    data-guardian="<%= pt.guardian %>">Diagnoses</button>
+                  </td>
+                  <td>
+                    <!-------findings--->
+                    <button class="openFindings"
+                    data-unq-id="<%= pt.unq_id %>"
+                    data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                    data-date="<%= pt.date_now %>"
+                    data-age="<%= pt.age %>"
+                    data-gender="<%= pt.gender %>"
+                    data-birthdate="<%= pt.birthdate %>"
+                    data-occupation="<%= pt.occupation %>"
+                    data-guardian="<%= pt.guardian %>">Findings</button>
+                  </td>
+                </tr>
+              <% }) %>
+            <% } else { %>
+              <tr>
+                <td id="no-pat" colspan="19">No patients.</td>
+              </tr>
+            <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
 
     <!-- Vital Signs Form -->
     <div id="vitalForm" style="display: none">
@@ -280,6 +316,7 @@
         <input type="tex" name="findings">
       </form>
     </div>
+    </main>
     <script src="/js/doctor-func.js"></script>
   </body>
 </html>
