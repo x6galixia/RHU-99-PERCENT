@@ -9,18 +9,36 @@ const scanner = new Html5QrcodeScanner("reader", {
 scanner.render(success, error);
 
 function success(result) {
-  localStorage.setItem("qrResult", result);
+  try {
+    // Parse the JSON data
+    const parsedResult = JSON.parse(result);
 
-  document.getElementById("result").innerHTML = `
-    <h2>Success!</h2>
-    <p><a href="${result}">${result}</a></p>
+    // Store parsed result in localStorage
+    localStorage.setItem("qrResult", JSON.stringify(parsedResult));
+
+    // Display the parsed data on the page
+    document.getElementById("result").innerHTML = `
+      <h2>Success!</h2>
+      <p>Last Name: ${parsedResult.last_name}</p>
+      <p>First Name: ${parsedResult.first_name}</p>
+      <p>Middle Name: ${parsedResult.middle_name}</p>
     `;
 
-  scanner.clear();
-  document.getElementById("reader").remove();
-  setTimeout(() => {
-    window.location.href = "nurse";
-  }, 1000);
+    // Clear the scanner and remove it from the page
+    scanner.clear();
+    document.getElementById("reader").remove();
+
+    // Redirect after a delay (1 second in this example)
+    setTimeout(() => {
+      window.location.href = "nurse"; // Change to your desired URL
+    }, 1000); // 1000 milliseconds = 1 second
+  } catch (e) {
+    console.error("Error processing QR code:", e);
+    document.getElementById("result").innerHTML = `
+      <h2>Error!</h2>
+      <p>Invalid QR Code</p>
+    `;
+  }
 }
 
 function error(err) {

@@ -20,62 +20,67 @@
     <button onclick="window.location.href='scanner'">
         Scan QR code
     </button>
+    <!---------------------generate id and search id------------------>
+ 
+
     <form action="/nurse/send-patient-info" method="post">
         <h1>PATIENT INFO</h1>
         <label for="qrResultInput">Unique ID:</label>
-        <input type="text" id="qrResultInput" name="unq_id" value="" readonly>
+        <input type="text" id="idInput" name="unq_id" value="" placeholder="Enter ID">
+        <button id="generateButton" type="button">Generate ID</button>
+        <button id="searchButton" type="button">Search ID</button>
 
         <label for="date">Date</label>
-        <input type="date" id="check_date" name="check_date" readonly> 
+        <input type="date" id="check_date" name="check_date"> 
         <label for="last_name">Lastname</label>
-        <input type="text" id="last_name" name="last_name" required>
+        <input type="text" id="last_name" name="last_name">
         <label for="first_name">Firstname</label>
-        <input type="text" id="first_name" name="first_name" required>
+        <input type="text" id="first_name" name="first_name">
         <label for="middle_name">Middlename</label>
-        <input type="text" id="middle_name" name="middle_name" required>
+        <input type="text" id="middle_name" name="middle_name">
         <label for="address">Home no./Street</label>
-        <input type="text" id="address" name="address" required>
+        <input type="text" id="address" name="address">
         <label for="barangay">Barangay</label>
-        <input type="text" id="barangay" name="barangay" required>
+        <input type="text" id="barangay" name="barangay">
         <label for="town">Town</label>
-        <input type="text" id="town" name="town" required>
+        <input type="text" id="town" name="town">
         <label for="birthdate">Birthdate</label>
-        <input type="date" id="birthdate" name="birthdate" required>
+        <input type="date" id="birthdate" name="birthdate">
         <label for="gender">Gender</label>
-        <input type="text" id="gender" name="gender" required>
+        <input type="text" id="gender" name="gender">
         <label for="phone">Phone</label>
-        <input type="text" id="phone" name="phone" required>
+        <input type="text" id="phone" name="phone">
         <label for="email">Email</label>
-        <input type="email" id="email" name="email" required>
+        <input type="email" id="email" name="email">
         <label for="philhealth_no">Philhealth no</label>
-        <input type="text" id="philhealth_no" name="philhealth_no" required>
+        <input type="text" id="philhealth_no" name="philhealth_no">
         <label for="occupation">Occupation</label>
-        <input type="text" id="occupation" name="occupation" required>
+        <input type="text" id="occupation" name="occupation">
         <label for="guardian">Guardian</label>
-        <input type="text" id="guardian" name="guardian" required>
+        <input type="text" id="guardian" name="guardian">
 
         <h1>VITAL SIGNS</h1>
 
         <label for="height">Height</label>
-        <input type="text" id="height" name="height" required>
+        <input type="text" id="height" name="height">
         <label for="weight">Weight</label>
-        <input type="text" id="weight" name="weight" required>
+        <input type="text" id="weight" name="weight">
         <label for="temperature">Temperature</label>
-        <input type="text" id="temperature" name="temperature" required>
+        <input type="text" id="temperature" name="temperature">
         <div>
             <label for="bp">Blood pressure</label>
-            <input type="text" id="systolic" name="systolic" required placeholder="systolic">
-            <input type="text" id="diastolic" name="diastolic" required placeholder="diastolic">
+            <input type="text" id="systolic" name="systolic" placeholder="systolic">
+            <input type="text" id="diastolic" name="diastolic" placeholder="diastolic">
         </div>
         <label for="pulse_rate">Pulse rate</label>
-        <input type="text" id="pulse_rate" name="pulse_rate" required>
+        <input type="text" id="pulse_rate" name="pulse_rate">
         <label for="respiratory_rate">Respiratory rate</label>
-        <input type="text" id="respiratory_rate" name="respiratory_rate" required>
+        <input type="text" id="respiratory_rate" name="respiratory_rate">
         <label for="bmi">BMI</label>
-        <input type="text" id="bmi" name="bmi" required>
+        <input type="text" id="bmi" name="bmi">
 
         <label for="comment">Comment</label>
-        <input type="text" id="comment" name="comment" required>
+        <input type="text" id="comment" name="comment">
         <br>
         <input type="submit" value="Submit">
 

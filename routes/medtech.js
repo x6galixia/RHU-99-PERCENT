@@ -12,7 +12,7 @@ router.use(setUserData);
 
 router.get("/medtech", ensureAuthenticated, checkUserType("medtech"), async (req, res) => {
     try {
-      const getPatientsLab = getPatientsForLab()
+      const getPatientsLab = await getPatientsForLab()
         res.render('medtech', {
             getPatientsLab,
             user: req.user
@@ -44,7 +44,7 @@ async function getPatientsForLab() {
           birthdate: formatDate(row.birthdate),
           guardian: row.guardian,
           occupation: row.occupation,
-          date_now: getCurrentDate(),
+          check_date: formatDate(row.check_date),
           category: row.category,
           service: row.service
       }));

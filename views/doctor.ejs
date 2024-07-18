@@ -208,7 +208,7 @@
 
     <!-- Laboratory Request Form -->
     <div id="labRequestForm" style="display: none">
-      <form>
+      <form action="/labrequest" method="POST">
         <div id="closeLabRequestBtn">&times;</div>
         <h1>LABORATORY REQUEST</h1>
         <input type="text" id="req_unq_id" name="unq_id" placeholder="Unique ID" readonly />
@@ -220,23 +220,29 @@
         <input type="text" id="req_occupation" name="occupation" readonly />
         <input type="text" id="req_guardian" name="guardian" readonly />
 
-        <label for="category-dropdown">Category:</label>
-        <select id="category-dropdown" name="category">
-            <option value="default" disabled selected>Select a category</option>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-            <option value="option4" disabled>Option 4 (Disabled)</option>
-        </select>
+        <!-----------------------dropdown -->
+        <div id="category-fields-container">
+          <div class="category-fields">
+            <select id="category-dropdown" name="category">
+              <option value="default" disabled selected>Select a category</option>
+              <option value="option1">Option 1</option>
+              <option value="option2">Option 2</option>
+              <option value="option3">Option 3</option>
+              <option value="option4" disabled>Option 4 (Disabled)</option>
+          </select>
+  
+          <select id="service-dropdown" name="service">
+              <option value="default" disabled selected>Select a service</option>
+              <option value="option1">Option 1</option>
+              <option value="option2">Option 2</option>
+              <option value="option3">Option 3</option>
+              <option value="option4" disabled>Option 4 (Disabled)</option>
+          </select>
+           <button id="addMoreButton" type="button" onclick="addCategoryFields()">Add more</button>
+          </div>
+        </div>
 
-        <label for="service-dropdown">Service:</label>
-        <select id="service-dropdown" name="service">
-            <option value="default" disabled selected>Select a service</option>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-            <option value="option4" disabled>Option 4 (Disabled)</option>
-        </select>
+        <button type="submit">submit</button>
       </form>
     </div>
 

@@ -137,4 +137,37 @@ document.addEventListener("DOMContentLoaded", function() {
       closeFindingsBtn.addEventListener("click", function() {
         findingsForm.style.display = "none";
       });
+
+      function addCategoryFields() {
+        var container = document.getElementById("category-fields-container");
+        var newFields = document.createElement('div');
+        newFields.innerHTML = `
+            <div class="category-fields">
+                <select name="category">
+                    <option value="default" disabled selected>Select a category</option>
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                    <option value="option4" disabled>Option 4 (Disabled)</option>
+                </select>
+    
+                <select name="service">
+                    <option value="default" disabled selected>Select a service</option>
+                    <option value="option1">Option 1</option>
+                    <option value="option2">Option 2</option>
+                    <option value="option3">Option 3</option>
+                    <option value="option4" disabled>Option 4 (Disabled)</option>
+                </select>
+            </div>
+        `;
+        container.appendChild(newFields);
+    }    
+
+    const addMoreButton = document.getElementById("addMoreButton");
+    if (addMoreButton) {
+      addMoreButton.addEventListener("click", function() {
+        addCategoryFields();
+      });
+    }
+      
 });

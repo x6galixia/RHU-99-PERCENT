@@ -20,6 +20,29 @@ router.get(
   }
 );
 
+router.get("/api/citizen/:last_name/:first_name/:middle_name", async (req, res) => {
+  const { last_name, first_name, middle_name } = req.params;
+
+  try {
+    const queryText = `
+      SELECT * FROM citizen
+      WHERE last_name = $1 AND first_name = $2 AND middle_name = $3
+    `;
+    
+    const result = await citizenPool.query(queryText, [last_name, first_name, middle_name]);
+
+    if (result.rows.length > 0) {
+      res.json(result.rows[0]);
+    } else {
+      console.log(`User not found for last_name=${last_name}, first_name=${first_name}, middle_name=${middle_name}`);
+      res.status(404).send("User not found");
+    }
+  } catch (err) {
+    console.error("Error querying database:", err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 router.get("/api/citizen/:id", async (req, res) => {
   const id = req.params.id;
   try {
@@ -37,6 +60,7 @@ router.get("/api/citizen/:id", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
 
 router.post(
   "/nurse/send-patient-info",

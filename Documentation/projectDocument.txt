@@ -109,6 +109,10 @@ CREATE TABLE beneficiary (
 	relationship_beneficiary VARCHAR(250)
 );
 
+CREATE TABLE records (
+    
+)
+
 
 //this configuration includes three different databases the : RHU database, CITIZEN database and PHARMACY database
 1. the table users is inside the RHU database.
