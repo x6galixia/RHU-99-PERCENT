@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", function() {
+document.addEventListener("DOMContentLoaded", function () {
   const openVitalsButtons = document.querySelectorAll(".openVitals");
   const openPrescribeButtons = document.querySelectorAll(".openPrescribe");
   const openLabReqButtons = document.querySelectorAll(".openLabReq");
@@ -21,8 +21,8 @@ document.addEventListener("DOMContentLoaded", function() {
   const closeFindingsBtn = document.getElementById("closeFindingsBtn");
 
   // Vitals
-  openVitalsButtons.forEach(button => {
-    button.addEventListener("click", function() {
+  openVitalsButtons.forEach((button) => {
+    button.addEventListener("click", function () {
       document.getElementById("unq_id").value = this.dataset.unqId;
       document.getElementById("full_name").value = this.dataset.fullName;
       document.getElementById("height").value = this.dataset.height;
@@ -31,143 +31,180 @@ document.addEventListener("DOMContentLoaded", function() {
       document.getElementById("diastolic").value = this.dataset.diastolic;
       document.getElementById("temperature").value = this.dataset.temperature;
       document.getElementById("pulse_rate").value = this.dataset.pulseRate;
-      document.getElementById("respiratory_rate").value = this.dataset.respiratoryRate;
+      document.getElementById("respiratory_rate").value =
+        this.dataset.respiratoryRate;
       document.getElementById("bmi").value = this.dataset.bmi;
       document.getElementById("comment").value = this.dataset.comment;
       vitalForm.style.display = "block";
     });
   });
 
-  closeVitalsBtn.addEventListener("click", function() {
+  closeVitalsBtn.addEventListener("click", function () {
     vitalForm.style.display = "none";
   });
 
   // Prescribe
-  openPrescribeButtons.forEach(button => {
-    button.addEventListener("click", function() {
+  openPrescribeButtons.forEach((button) => {
+    button.addEventListener("click", function () {
       document.getElementById("pres_unq_id").value = this.dataset.unqId;
-      document.getElementById("pres_check_date").value = new Date(this.dataset.checkDate).toISOString().split("T")[0];
+      document.getElementById("pres_check_date").value = new Date(
+        this.dataset.checkDate
+      )
+        .toISOString()
+        .split("T")[0];
       document.getElementById("pres_full_name").value = this.dataset.fullName;
       document.getElementById("pres_age").value = this.dataset.age;
       document.getElementById("pres_gender").value = this.dataset.gender;
-      document.getElementById("pres_birthdate").value = new Date(this.dataset.birthdate).toISOString().split("T")[0];
-      document.getElementById("pres_occupation").value = this.dataset.occupation;
+      document.getElementById("pres_birthdate").value = new Date(
+        this.dataset.birthdate
+      )
+        .toISOString()
+        .split("T")[0];
+      document.getElementById("pres_occupation").value =
+        this.dataset.occupation;
       document.getElementById("pres_guardian").value = this.dataset.guardian;
       prescribeForm.style.display = "block";
     });
   });
 
-  closePrescribeBtn.addEventListener("click", function() {
+  closePrescribeBtn.addEventListener("click", function () {
     prescribeForm.style.display = "none";
   });
 
   // Lab Request
-  openLabReqButtons.forEach(button => {
-    button.addEventListener("click", function() {
+  openLabReqButtons.forEach((button) => {
+    button.addEventListener("click", function () {
       document.getElementById("req_unq_id").value = this.dataset.unqId;
-      document.getElementById("req_check_date").value = new Date(this.dataset.checkDate).toISOString().split("T")[0];
+      document.getElementById("req_check_date").value = new Date(
+        this.dataset.checkDate
+      )
+        .toISOString()
+        .split("T")[0];
       document.getElementById("req_full_name").value = this.dataset.fullName;
       document.getElementById("req_age").value = this.dataset.age;
       document.getElementById("req_gender").value = this.dataset.gender;
-      document.getElementById("req_birthdate").value = new Date(this.dataset.birthdate).toISOString().split("T")[0];
+      document.getElementById("req_birthdate").value = new Date(
+        this.dataset.birthdate
+      )
+        .toISOString()
+        .split("T")[0];
       document.getElementById("req_occupation").value = this.dataset.occupation;
       document.getElementById("req_guardian").value = this.dataset.guardian;
       labRequestForm.style.display = "block";
     });
   });
 
-  closeLabRequestBtn.addEventListener("click", function() {
+  closeLabRequestBtn.addEventListener("click", function () {
     labRequestForm.style.display = "none";
   });
 
   // Lab Result
-  openLabResButtons.forEach(button => {
-    button.addEventListener("click", function() {
+  openLabResButtons.forEach((button) => {
+    button.addEventListener("click", function () {
       document.getElementById("res_unq_id").value = this.dataset.unqId;
-      document.getElementById("res_check_date").value = new Date(this.dataset.checkDate).toISOString().split("T")[0];
+      document.getElementById("res_check_date").value = new Date(
+        this.dataset.checkDate
+      )
+        .toISOString()
+        .split("T")[0];
       document.getElementById("res_full_name").value = this.dataset.fullName;
       document.getElementById("res_age").value = this.dataset.age;
       document.getElementById("res_gender").value = this.dataset.gender;
-      document.getElementById("res_birthdate").value = new Date(this.dataset.birthdate).toISOString().split("T")[0];
+      document.getElementById("res_birthdate").value = new Date(
+        this.dataset.birthdate
+      )
+        .toISOString()
+        .split("T")[0];
       document.getElementById("res_occupation").value = this.dataset.occupation;
       document.getElementById("res_guardian").value = this.dataset.guardian;
       labResultForm.style.display = "block";
     });
   });
 
-  closeLabResultBtn.addEventListener("click", function() {
+  closeLabResultBtn.addEventListener("click", function () {
     labResultForm.style.display = "none";
   });
 
-      // Diagnose
-      openDiagnoseButtons.forEach(button => {
-        button.addEventListener("click", function() {
-          document.getElementById("dia_unq_id").value = this.dataset.unqId;
-          document.getElementById("dia_check_date").value = new Date(this.dataset.checkDate).toISOString().split("T")[0];
-          document.getElementById("dia_full_name").value = this.dataset.fullName;
-          document.getElementById("dia_age").value = this.dataset.age;
-          document.getElementById("dia_gender").value = this.dataset.gender;
-          document.getElementById("dia_birthdate").value = new Date(this.dataset.birthdate).toISOString().split("T")[0];
-          document.getElementById("dia_occupation").value = this.dataset.occupation;
-          document.getElementById("dia_guardian").value = this.dataset.guardian;
-          diagnoseForm.style.display = "block";
-        });
-      });
-    
-      closeDiagnoseBtn.addEventListener("click", function() {
-        diagnoseForm.style.display = "none";
-      });
+  // Diagnose
+  openDiagnoseButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      document.getElementById("dia_unq_id").value = this.dataset.unqId;
+      document.getElementById("dia_check_date").value = new Date(
+        this.dataset.checkDate
+      )
+        .toISOString()
+        .split("T")[0];
+      document.getElementById("dia_full_name").value = this.dataset.fullName;
+      document.getElementById("dia_age").value = this.dataset.age;
+      document.getElementById("dia_gender").value = this.dataset.gender;
+      document.getElementById("dia_birthdate").value = new Date(
+        this.dataset.birthdate
+      )
+        .toISOString()
+        .split("T")[0];
+      document.getElementById("dia_occupation").value = this.dataset.occupation;
+      document.getElementById("dia_guardian").value = this.dataset.guardian;
+      diagnoseForm.style.display = "block";
+    });
+  });
 
+  closeDiagnoseBtn.addEventListener("click", function () {
+    diagnoseForm.style.display = "none";
+  });
 
-      // Findings
-      openFindingsButtons.forEach(button => {
-        button.addEventListener("click", function() {
-          document.getElementById("fin_unq_id").value = this.dataset.unqId;
-          document.getElementById("fin_check_date").value = new Date(this.dataset.checkDate).toISOString().split("T")[0];
-          document.getElementById("fin_full_name").value = this.dataset.fullName;
-          document.getElementById("fin_age").value = this.dataset.age;
-          document.getElementById("fin_gender").value = this.dataset.gender;
-          document.getElementById("fin_birthdate").value = new Date(this.dataset.birthdate).toISOString().split("T")[0];
-          document.getElementById("fin_occupation").value = this.dataset.occupation;
-          document.getElementById("fin_guardian").value = this.dataset.guardian;
-          findingsForm.style.display = "block";
-        });
-      });
-    
-      closeFindingsBtn.addEventListener("click", function() {
-        findingsForm.style.display = "none";
-      });
+  // Findings
+  openFindingsButtons.forEach((button) => {
+    button.addEventListener("click", function () {
+      document.getElementById("fin_unq_id").value = this.dataset.unqId;
+      document.getElementById("fin_check_date").value = new Date(
+        this.dataset.checkDate
+      )
+        .toISOString()
+        .split("T")[0];
+      document.getElementById("fin_full_name").value = this.dataset.fullName;
+      document.getElementById("fin_age").value = this.dataset.age;
+      document.getElementById("fin_gender").value = this.dataset.gender;
+      document.getElementById("fin_birthdate").value = new Date(
+        this.dataset.birthdate
+      )
+        .toISOString()
+        .split("T")[0];
+      document.getElementById("fin_occupation").value = this.dataset.occupation;
+      document.getElementById("fin_guardian").value = this.dataset.guardian;
+      findingsForm.style.display = "block";
+    });
+  });
 
-      function addCategoryFields() {
-        var container = document.getElementById("category-fields-container");
-        var newFields = document.createElement('div');
-        newFields.innerHTML = `
-            <div class="category-fields">
-                <select name="category">
-                    <option value="default" disabled selected>Select a category</option>
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                    <option value="option4" disabled>Option 4 (Disabled)</option>
-                </select>
-    
-                <select name="service">
-                    <option value="default" disabled selected>Select a service</option>
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                    <option value="option4" disabled>Option 4 (Disabled)</option>
-                </select>
-            </div>
-        `;
-        container.appendChild(newFields);
-    }    
-
-    const addMoreButton = document.getElementById("addMoreButton");
-    if (addMoreButton) {
-      addMoreButton.addEventListener("click", function() {
-        addCategoryFields();
-      });
-    }
-      
+  closeFindingsBtn.addEventListener("click", function () {
+    findingsForm.style.display = "none";
+  });
 });
+
+  const addMoreButton = document.getElementById("addMoreButton");
+  if (addMoreButton) {
+    addMoreButton.addEventListener("click", function () {
+      addCategoryFields();
+    });
+  }
+
+  function addCategoryFields() {
+    var container = document.getElementById("category-fields-container");
+    var newFields = document.createElement("div");
+    newFields.className = "category-fields";
+    newFields.innerHTML = `
+        <select name="category">
+            <option value="default" disabled selected>Select a category</option>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+        </select>
+
+        <select name="service">
+            <option value="default" disabled selected>Select a service</option>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+        </select>
+    `;
+    container.appendChild(newFields);
+  }

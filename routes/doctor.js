@@ -25,37 +25,35 @@ router.post('/labrequest', ensureAuthenticated, checkUserType("doctor"), async (
     try {
         const { unq_id, category, service } = req.body;
 
-        // Begin transaction
         await pool.query('BEGIN');
         console.log('Transaction started');
 
-        // Update each patient with their category and service
-        for (let i = 0; i < unq_id.length; i++) {
+        const unq_ids = Array.isArray(unq_id) ? unq_id : [unq_id];
+        const categories = Array.isArray(category) ? category : [category];
+        const services = Array.isArray(service) ? service : [service];
+
+        for (let i = 0; i < unq_ids.length; i++) {
             const query = "UPDATE patients SET category = $1, service = $2 WHERE unq_id = $3";
-            await pool.query(query, [category[i], service[i], unq_id[i]]);
+            await pool.query(query, [categories, services, unq_ids[i]]);
         }
 
-        // Commit transaction
         await pool.query('COMMIT');
         console.log('Transaction committed');
 
-        // Fetch updated patient list and render the dashboard
         const patientListDrop = await getAllPatients();
+        console.log("Updated patient list:", patientListDrop);
         res.render('doctor', {
             patientListDrop,
             user: req.user
         });
 
     } catch (err) {
-        // Rollback transaction in case of error
         await pool.query('ROLLBACK');
         console.error("Error adding request:", err);
         req.flash("error", "An error occurred while adding request: " + err.message);
         res.redirect('/doctor/dashboard');
     }
 });
-
-
 
 router.post('/add-diagnoses', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
