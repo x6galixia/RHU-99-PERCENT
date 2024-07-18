@@ -38,7 +38,7 @@ async function getPatientsForLab() {
   try {
       const viewPatients = await pool.query("SELECT * FROM patients");
       return viewPatients.rows.map(row => ({
-          fullname: row.last_name + row.first_name + row.middle_initial,
+          fullname: row.last_name +" "+ row.first_name +" "+ row.middle_name,
           age: calculateAge(formatDate(row.birthdate)),
           gender: row.gender,
           birthdate: formatDate(row.birthdate),
