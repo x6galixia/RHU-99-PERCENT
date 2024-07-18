@@ -67,6 +67,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/uploads', express.static('uploads'));
+
 //---> initialize router
 app.use("/", loginRouter);
 app.use("/", scannerRouter);

@@ -1,5 +1,8 @@
 const express = require("express");
 const pool = require("../models/localdb");
+const multer = require("multer");
+const fs = require('fs');
+const path = require('path');
 const methodOverride = require("method-override");
 const {
   ensureAuthenticated,
@@ -10,18 +13,64 @@ const router = express.Router();
 router.use(methodOverride("_method"));
 router.use(setUserData);
 
+//------------------------------------MULTER CONFIGURATION--------------------------//
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    const uploadPath = 'uploads/';
+
+    if (!fs.existsSync(uploadPath)) {
+      fs.mkdirSync(uploadPath, { recursive: true });
+    }
+
+    cb(null, uploadPath);
+  },
+  filename: (req, file, cb) => {
+    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
+    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
+  }
+});
+
+const upload = multer({ storage: storage });
+
+router.use("/uploads", express.static("uploads"));
+
+//----------------------------------------------------------------------------------//
+
 router.get("/medtech", ensureAuthenticated, checkUserType("medtech"), async (req, res) => {
     try {
-      const getPatientsLab = await getPatientsForLab()
+      const getPatientsLab = await getPatientsForLab();
         res.render('medtech', {
             getPatientsLab,
             user: req.user
-        })
+        });
     } catch (err) {
         console.error("Error fetching patients:", err);
         req.flash("error", "An error occurred while loading the dashboard.");
         res.redirect('/login');
     }
+});
+
+router.post("/add-LabResult", ensureAuthenticated, checkUserType("medtech"), upload.fields([{ name: "lab_result", maxCount: 1 }]), async (req, res) => {
+  const lab_result = req.files["lab_result"] ? req.files["lab_result"][0].filename : null;
+  const unq_id = req.body.unq_id;
+
+  console.log('req.body:', req.body);
+  console.log('lab_result:', lab_result);
+  console.log('unq_id:', unq_id);
+
+  try {
+    const query = "UPDATE patients SET lab_result = $1 WHERE unq_id = $2";
+    const result = await pool.query(query, [lab_result, unq_id]);
+
+    console.log('Database update result:', result);
+
+    const getPatientsLab = await getPatientsForLab();
+    res.redirect('/medtech');
+  } catch (err) {
+    console.error("Error adding lab result:", err);
+    req.flash("error", "An error occurred while adding a lab result.");
+    res.redirect('/medtech');
+  }
 });
 
 router.delete("/logout", (req, res) => {
@@ -32,25 +81,27 @@ router.delete("/logout", (req, res) => {
     res.redirect("/login");
   });
 });
+
 //------------------------function-----------//
 
 async function getPatientsForLab() {
   try {
-      const viewPatients = await pool.query("SELECT * FROM patients");
-      return viewPatients.rows.map(row => ({
-          fullname: row.last_name +" "+ row.first_name +" "+ row.middle_name,
-          age: calculateAge(formatDate(row.birthdate)),
-          gender: row.gender,
-          birthdate: formatDate(row.birthdate),
-          guardian: row.guardian,
-          occupation: row.occupation,
-          check_date: formatDate(row.check_date),
-          category: row.category,
-          service: row.service
-      }));
+    const viewPatients = await pool.query("SELECT * FROM patients");
+    return viewPatients.rows.map(row => ({
+      unq_id: row.unq_id,
+      fullname: row.last_name + " " + row.first_name + " " + row.middle_name,
+      age: calculateAge(formatDate(row.birthdate)),
+      gender: row.gender,
+      birthdate: formatDate(row.birthdate),
+      guardian: row.guardian,
+      occupation: row.occupation,
+      check_date: formatDate(row.check_date),
+      category: row.category,
+      service: row.service
+    }));
   } catch (err) {
-      console.error("Error fetching patients:", err);
-      return [];
+    console.error("Error fetching patients:", err);
+    return [];
   }
 }
 

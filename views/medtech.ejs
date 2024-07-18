@@ -23,6 +23,7 @@
       <thead>
         <tr>
           <th>Status</th>
+          <th>Unique ID</th>
           <th>Patient name</th>
           <th>Age</th>
           <th>Sex</th>
@@ -38,6 +39,7 @@
           <% if (getPatientsLab && getPatientsLab.length > 0) { %>
             <% getPatientsLab.forEach(pr => { %>
                     <td>blank</td>
+                    <td><%= pr.unq_id %></td>
                     <td><%= pr.fullname %></td>
                     <td><%= pr.age %></td>
                     <td><%= pr.gender %></td>
@@ -49,15 +51,21 @@
                     <td><%= pr.service %></td>
                     <td>
                       <button class="openLabRequests"
-                      
-                      >
-
-                      Laboratory Request</button>
+                      data-unq-id="<%= pr.unq_id %>"
+                      data-check-date="<%= pr.check_date %>"
+                      data-full-name="<%= pr.fullname %>"
+                      data-age="<%= pr.age %>"
+                      data-gender="<%= pr.gender %>"
+                      data-birthdate="<%= pr.birthdate %>"
+                      data-occupation="<%= pr.occupation %>"
+                      data-guardian="<%= pr.guardian %>"
+                      data-category="<%= pr.category %>"
+                      data-service="<%= pr.service %>">Laboratory Request</button>
                     </td>
               <% }) %>
               <% } else { %>
                 <tr>
-                  <td colspan="11">No laboratory request.</td>
+                  <td colspan="12">No laboratory request.</td>
                 </tr>
              <% } %>   
           <tr>
@@ -66,5 +74,28 @@
         </tbody>
       </thead>
     </table>
+
+    <!-- request Form -->
+    <div id="addLabResultForm" style="display: none">
+      <form action="/add-LabResult" method="post" enctype="multipart/form-data">
+        <div id="closeAddLabResultBtn">&times;</div>
+        <h1>Findings</h1>
+        <input type="date" id="add_check_date" name="check_date" readonly />
+        <input type="text" id="add_unq_id" name="unq_id" readonly />
+        <input type="text" id="add_full_name" name="full_name" placeholder="Full Name" readonly />
+        <input type="number" id="add_age" name="age" placeholder="Age" readonly />
+        <input type="text" id="add_gender" name="gender" placeholder="Gender" readonly />
+        <input type="date" id="add_birthdate" name="birthdate" readonly />
+        <input type="text" id="add_occupation" name="occupation" readonly />
+        <input type="text" id="add_guardian" name="guardian" readonly />
+        <input type="text" id="add_category" name="category" readonly />
+        <input type="text" id="add_service" name="service" readonly />
+
+        <input type="file" name="lab_result" required>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    <script src="/js/medtech-func.js"></script>
   </body>
 </html>
