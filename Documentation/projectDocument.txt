@@ -29,6 +29,7 @@ CREATE TABLE patients (
     philhealth_no VARCHAR(100) NOT NULL,
     occupation VARCHAR(250),
     guardian VARCHAR(250),
+    check_date DATE,
     
     -- nurse
     height VARCHAR(50),
@@ -42,13 +43,14 @@ CREATE TABLE patients (
     comment VARCHAR(250),
     
     -- doctor
+    follow_date DATE,
     diagnoses VARCHAR(250),
     findings VARCHAR(250),
-    orders VARCHAR(250),
+    category VARCHAR(250),
+    service VARCHAR(250),
     medicine VARCHAR(250),
     instruction VARCHAR(250),
     quantity INT,
-    tests VARCHAR(250),
     prescription_date DATE,
 
     -- medtech

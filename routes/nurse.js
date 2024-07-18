@@ -46,6 +46,7 @@ router.post(
     try {
       const {
         unq_id,
+        check_date,
         last_name,
         first_name,
         middle_name,
@@ -71,19 +72,20 @@ router.post(
       } = req.body;
 
       const query = `
-            INSERT INTO patients (unq_id, last_name, first_name, middle_name, address, barangay, town,
+            INSERT INTO patients (unq_id, check_date, last_name, first_name, middle_name, address, barangay, town,
             birthdate, gender, phone, email, philhealth_no, occupation,
             guardian, height, weight, systolic, diastolic, temperature,
             pulse_rate, respiratory_rate, bmi, comment)
             VALUES ($1, $2, $3, $4, $5, $6, $7,
             $8, $9, $10, $11, $12, $13,
             $14, $15, $16, $17, $18, $19,
-            $20, $21, $22, $23)
+            $20, $21, $22, $23, $24)
             RETURNING *;
         `;
 
       const values = [
         unq_id,
+        check_date,
         last_name,
         first_name,
         middle_name,

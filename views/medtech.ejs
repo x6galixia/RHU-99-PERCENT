@@ -3,6 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
+
     <title>Medtech</title>
   </head>
   <body>
@@ -16,5 +18,47 @@
       </div>
     </form>
     <h1>DOCTOR'S LABORATORY REQUEST</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th>Patient name</th>
+          <th>Age</th>
+          <th>Sex</th>
+          <th>Birth date</th>
+          <th>Parent/Guardian</th>
+          <th>Occupation</th>
+          <th>Date</th>
+          <th>Categories</th>
+          <th>Services</th>
+          <th>Laboratory request</th>
+        </tr>
+        <tbody>
+          <% if (getPatientsLab && getPatientsLab.length > 0) { %>
+            <% getPatientsLab.forEach(pr => { %>
+                    <td>blank</td>
+                    <td><%= pr.fullname %></td>
+                    <td><%= pr.age %></td>
+                    <td><%= pr.gender %></td>
+                    <td><%= pr.birthdate %></td>
+                    <td><%= pr.guardian %></td>
+                    <td><%= pr.occupation %></td>
+                    <td><%= pr.date_now %></td>
+                    <td><%= pr.category %></td>
+                    <td><%= pr.service %></td>
+                    <td><%= pr.fullname %></td>
+              <% }) %>
+              <% } else { %>
+                <tr>
+                  <td colspan="11">No laboratory request.</td>
+                </tr>
+             <% } %>   
+          <tr>
+
+          </tr>
+        </tbody>
+      </thead>
+    </table>
   </body>
 </html>
