@@ -60,9 +60,11 @@ document.addEventListener("DOMContentLoaded", function () {
       )
         .toISOString()
         .split("T")[0];
+      document.getElementById("pres_full_address").value = this.dataset.fullAddress;
       document.getElementById("pres_occupation").value =
         this.dataset.occupation;
       document.getElementById("pres_guardian").value = this.dataset.guardian;
+      document.getElementById("pres_doctor").value = this.dataset.doctor;
       prescribeForm.style.display = "block";
     });
   });
@@ -98,31 +100,22 @@ document.addEventListener("DOMContentLoaded", function () {
     labRequestForm.style.display = "none";
   });
 
-  // Lab Result
-  openLabResButtons.forEach((button) => {
-    button.addEventListener("click", function () {
+   // Lab Result
+   openLabResButtons.forEach(button => {
+    button.addEventListener("click", function() {
       document.getElementById("res_unq_id").value = this.dataset.unqId;
-      document.getElementById("res_check_date").value = new Date(
-        this.dataset.checkDate
-      )
-        .toISOString()
-        .split("T")[0];
+      document.getElementById("res_check_date").value = new Date(this.dataset.checkDate).toISOString().split("T")[0];
       document.getElementById("res_full_name").value = this.dataset.fullName;
       document.getElementById("res_age").value = this.dataset.age;
       document.getElementById("res_gender").value = this.dataset.gender;
-      document.getElementById("res_birthdate").value = new Date(
-        this.dataset.birthdate
-      )
-        .toISOString()
-        .split("T")[0];
+      document.getElementById("res_birthdate").value = new Date(this.dataset.birthdate).toISOString().split("T")[0];
       document.getElementById("res_occupation").value = this.dataset.occupation;
       document.getElementById("res_guardian").value = this.dataset.guardian;
-      document.getElementById("labResult").src = "/uploads/" + this.dataset.labResult;
       labResultForm.style.display = "block";
     });
   });
 
-  closeLabResultBtn.addEventListener("click", function () {
+  closeLabResultBtn.addEventListener("click", function() {
     labResultForm.style.display = "none";
   });
 
@@ -181,33 +174,60 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   const addMoreButton = document.getElementById("addMoreButton");
-if (addMoreButton) {
-  addMoreButton.addEventListener("click", function () {
-    addCategoryFields();
-  });
-}
+  if (addMoreButton) {
+    addMoreButton.addEventListener("click", function () {
+      addCategoryFields();
+    });
+  }
 
-function addCategoryFields() {
-  var container = document.getElementById("category-fields-container");
-  var newFields = document.createElement("div");
-  newFields.className = "category-fields";
-  newFields.innerHTML = `
-    <select class="category-dropdown" name="category">
-      <option value="default" disabled selected>Select a category</option>
-      <option value="option1">Option 1</option>
-      <option value="option2">Option 2</option>
-      <option value="option3">Option 3</option>
-      <option value="option4" disabled>Option 4 (Disabled)</option>
-    </select>
+  function addCategoryFields() {
+    var container = document.getElementById("category-fields-container");
+    var newFields = document.createElement("div");
+    newFields.className = "category-fields";
+    newFields.innerHTML = `
+      <select class="category-dropdown" name="category">
+        <option value="default" disabled selected>Select a category</option>
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4" disabled>Option 4 (Disabled)</option>
+      </select>
 
-    <select class="service-dropdown" name="service">
-      <option value="default" disabled selected>Select a service</option>
-      <option value="option1">Option 1</option>
-      <option value="option2">Option 2</option>
-      <option value="option3">Option 3</option>
-      <option value="option4" disabled>Option 4 (Disabled)</option>
-    </select>
-  `;
-  container.appendChild(newFields);
-}
+      <select class="service-dropdown" name="service">
+        <option value="default" disabled selected>Select a service</option>
+        <option value="option1">Option 1</option>
+        <option value="option2">Option 2</option>
+        <option value="option3">Option 3</option>
+        <option value="option4" disabled>Option 4 (Disabled)</option>
+      </select>
+    `;
+    container.appendChild(newFields);
+  }
+  //=-----------------------search----------------------------///
+  document.getElementById('search-box').addEventListener('input', function () {
+    const query = this.value;
+    if (query.length > 0) {
+        fetch(`/search?query=${query}`)
+            .then(response => response.json())
+            .then(data => {
+                const suggestions = document.getElementById('suggestions');
+                suggestions.innerHTML = '';
+                data.forEach(item => {
+                    const suggestionDiv = document.createElement('div');
+                    suggestionDiv.classList.add('suggestion');
+                    suggestionDiv.textContent = `${item.product_name} - ${item.dosage} QTY: ${item.product_quantity}`;
+                    suggestionDiv.addEventListener('click', function () {
+                        document.getElementById('search-box').value = item.product_name + " " + item.dosage;
+                        suggestions.innerHTML = '';
+                    });
+                    suggestions.appendChild(suggestionDiv);
+                });
+            })
+            .catch(error => console.error('Error:', error));
+    } else {
+        document.getElementById('suggestions').innerHTML = '';
+    }
+});
+
+//----------------------->>end
 });
