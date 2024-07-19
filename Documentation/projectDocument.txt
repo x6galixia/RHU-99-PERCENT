@@ -14,7 +14,6 @@ CREATE TABLE users (
 );
 
 CREATE TABLE patients (
-    -- patients
     unq_id VARCHAR(100) PRIMARY KEY,
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
@@ -30,32 +29,34 @@ CREATE TABLE patients (
     occupation VARCHAR(250),
     guardian VARCHAR(250),
     check_date DATE,
-    
+
     -- nurse
-    height VARCHAR(50),
-    weight VARCHAR(50),
-    systolic VARCHAR(50),
-    diastolic VARCHAR(50),
-    temperature VARCHAR(50),
-    pulse_rate VARCHAR(50),
-    respiratory_rate VARCHAR(50),
-    bmi VARCHAR(50),
+    height NUMERIC(5,2),
+    weight NUMERIC(5,2),
+    systolic NUMERIC(5,2),
+    diastolic NUMERIC(5,2),
+    temperature NUMERIC(5,2),
+    pulse_rate NUMERIC(5,2),
+    respiratory_rate NUMERIC(5,2),
+    bmi NUMERIC(5,2),
     comment VARCHAR(250),
-    
+
     -- doctor
     follow_date DATE,
     diagnoses VARCHAR(250),
     findings VARCHAR(250),
-    category VARCHAR(250),
-    service VARCHAR(250),
+    category TEXT[],  -- Array of text
+    service TEXT[],   -- Array of text
     medicine VARCHAR(250),
     instruction VARCHAR(250),
     quantity INT,
     prescription_date DATE,
 
-    -- medtech
-    lab_result BYTEA
+    lab_result BYTEA[]
 );
+
+
+
 --  cetizens info
 
 CREATE TABLE citizens (

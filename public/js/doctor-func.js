@@ -100,20 +100,21 @@ document.addEventListener("DOMContentLoaded", function () {
     labRequestForm.style.display = "none";
   });
 
-   // Lab Result
-   openLabResButtons.forEach(button => {
-    button.addEventListener("click", function() {
-      document.getElementById("res_unq_id").value = this.dataset.unqId;
-      document.getElementById("res_check_date").value = new Date(this.dataset.checkDate).toISOString().split("T")[0];
-      document.getElementById("res_full_name").value = this.dataset.fullName;
-      document.getElementById("res_age").value = this.dataset.age;
-      document.getElementById("res_gender").value = this.dataset.gender;
-      document.getElementById("res_birthdate").value = new Date(this.dataset.birthdate).toISOString().split("T")[0];
-      document.getElementById("res_occupation").value = this.dataset.occupation;
-      document.getElementById("res_guardian").value = this.dataset.guardian;
-      labResultForm.style.display = "block";
-    });
-  });
+      // Lab Result
+      openLabResButtons.forEach(button => {
+        button.addEventListener("click", function() {
+          document.getElementById("res_unq_id").value = this.dataset.unqId;
+          document.getElementById("res_check_date").value = new Date(this.dataset.checkDate).toISOString().split("T")[0];
+          document.getElementById("res_full_name").value = this.dataset.fullName;
+          document.getElementById("res_age").value = this.dataset.age;
+          document.getElementById("res_gender").value = this.dataset.gender;
+          document.getElementById("res_birthdate").value = new Date(this.dataset.birthdate).toISOString().split("T")[0];
+          document.getElementById("res_occupation").value = this.dataset.occupation;
+          document.getElementById("res_guardian").value = this.dataset.guardian;
+          document.getElementById("labImage").src = "/uploads/" + this.dataset.labResult;
+          labResultForm.style.display = "block";
+        });
+      });
 
   closeLabResultBtn.addEventListener("click", function() {
     labResultForm.style.display = "none";

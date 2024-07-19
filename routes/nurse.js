@@ -11,14 +11,30 @@ const router = express.Router();
 router.use(methodOverride("_method"));
 router.use(setUserData);
 
-router.get(
-  "/nurse",
+router.get("/nurse",
   ensureAuthenticated,
   checkUserType("nurse"),
   (req, res) => {
     res.render("nurse", { user: req.user });
   }
 );
+
+router.get('/api/search/:searchValue', async (req, res) => {
+  const unq_id = req.params.searchValue;
+
+  try {
+    const result = await pool.query("SELECT * FROM patients WHERE unq_id = $1", [unq_id]);
+    if (result.rows.length > 0) {
+      res.json(result.rows[0]);
+    } else {
+      res.status(404).send("Patient not found");
+    }
+  } catch (err) {
+    console.error("Error querying database:", err.message);
+    res.status(500).send("Server error");
+  }
+});
+
 
 router.get("/api/citizen/:last_name/:first_name/:middle_name", async (req, res) => {
   const { last_name, first_name, middle_name } = req.params;
