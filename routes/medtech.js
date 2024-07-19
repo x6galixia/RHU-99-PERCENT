@@ -11,7 +11,17 @@ router.use(methodOverride("_method"));
 router.use(setUserData);
 
 router.get("/medtech", ensureAuthenticated, checkUserType("medtech"), async (req, res) => {
-    res.render("medtech");
+    try {
+      const getPatientsLab = getPatientsForLab()
+        res.render('medtech', {
+            getPatientsLab,
+            user: req.user
+        })
+    } catch (err) {
+        console.error("Error fetching patients:", err);
+        req.flash("error", "An error occurred while loading the dashboard.");
+        res.redirect('/login');
+    }
 });
 
 router.delete("/logout", (req, res) => {
@@ -23,6 +33,27 @@ router.delete("/logout", (req, res) => {
   });
 });
 //------------------------function-----------//
+
+async function getPatientsForLab() {
+  try {
+      const viewPatients = await pool.query("SELECT * FROM patients");
+      return viewPatients.rows.map(row => ({
+          fullname: row.last_name + row.first_name + row.middle_initial,
+          age: calculateAge(formatDate(row.birthdate)),
+          gender: row.gender,
+          birthdate: formatDate(row.birthdate),
+          guardian: row.guardian,
+          occupation: row.occupation,
+          date_now: getCurrentDate(),
+          category: row.category,
+          service: row.service
+      }));
+  } catch (err) {
+      console.error("Error fetching patients:", err);
+      return [];
+  }
+}
+
 function setUserData(req, res, next) {
   if (req.isAuthenticated()) {
     res.locals.firstname = req.user.firstname;
@@ -61,6 +92,15 @@ function formatDate(dateString) {
   };
   const date = new Date(dateString);
   return date.toLocaleDateString("en-US", options);
+}
+
+function getCurrentDate() {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0');
+  const day = String(today.getDate()).padStart(2, '0');
+
+  return `${year}-${month}-${day}`;
 }
 
 module.exports = router;

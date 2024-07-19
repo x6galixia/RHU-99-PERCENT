@@ -1,6 +1,21 @@
 document.addEventListener("DOMContentLoaded", async () => {
   const qrResult = localStorage.getItem("qrResult");
 
+  function getCurrentDate() {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, "0");
+    const day = String(today.getDate()).padStart(2, "0");
+
+    return `${year}-${month}-${day}`;
+  }
+
+  const date_now_check = getCurrentDate();
+
+  console.log("Formatted Date:", date_now_check);
+
+  document.getElementById("check_date").value = new Date(date_now_check).toISOString().split("T")[0];
+
   if (qrResult) {
     document.getElementById("qrResultInput").value = qrResult;
 
