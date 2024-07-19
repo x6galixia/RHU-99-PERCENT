@@ -64,7 +64,7 @@ router.post('/labrequest', ensureAuthenticated, checkUserType("doctor"), async (
     try {
         const { unq_id, category, service } = req.body;
 
-        await ool.query('BEGIN');
+        await pool.query('BEGIN');
         console.log('Transaction started');
 
         const unq_ids = Array.isArray(unq_id) ? unq_id : [unq_id];
