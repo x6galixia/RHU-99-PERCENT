@@ -29,4 +29,21 @@ document.addEventListener("DOMContentLoaded", function () {
     closeAddLabResultBtn.addEventListener("click", function () {
         addLabResultForm.style.display = "none";
     });
+
+    const addMoreButton = document.getElementById("addMoreButton");
+    if (addMoreButton) {
+      addMoreButton.addEventListener("click", function () {
+        addImageFields();
+      });
+    }
+  
+    function addImageFields() {
+      var container = document.getElementById("imageFieldContainer");
+      var newFields = document.createElement("div");
+      newFields.className = "imageField";
+      newFields.innerHTML = `
+        <input type="file" name="lab_result" multiple required>
+      `;
+      container.appendChild(newFields);
+    }
 });

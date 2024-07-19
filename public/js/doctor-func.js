@@ -117,6 +117,7 @@ document.addEventListener("DOMContentLoaded", function () {
         .split("T")[0];
       document.getElementById("res_occupation").value = this.dataset.occupation;
       document.getElementById("res_guardian").value = this.dataset.guardian;
+      document.getElementById("labResult").src = "/uploads/" + this.dataset.labResult;
       labResultForm.style.display = "block";
     });
   });
@@ -178,33 +179,35 @@ document.addEventListener("DOMContentLoaded", function () {
   closeFindingsBtn.addEventListener("click", function () {
     findingsForm.style.display = "none";
   });
-});
 
   const addMoreButton = document.getElementById("addMoreButton");
-  if (addMoreButton) {
-    addMoreButton.addEventListener("click", function () {
-      addCategoryFields();
-    });
-  }
+if (addMoreButton) {
+  addMoreButton.addEventListener("click", function () {
+    addCategoryFields();
+  });
+}
 
-  function addCategoryFields() {
-    var container = document.getElementById("category-fields-container");
-    var newFields = document.createElement("div");
-    newFields.className = "category-fields";
-    newFields.innerHTML = `
-        <select name="category">
-            <option value="default" disabled selected>Select a category</option>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-        </select>
+function addCategoryFields() {
+  var container = document.getElementById("category-fields-container");
+  var newFields = document.createElement("div");
+  newFields.className = "category-fields";
+  newFields.innerHTML = `
+    <select class="category-dropdown" name="category">
+      <option value="default" disabled selected>Select a category</option>
+      <option value="option1">Option 1</option>
+      <option value="option2">Option 2</option>
+      <option value="option3">Option 3</option>
+      <option value="option4" disabled>Option 4 (Disabled)</option>
+    </select>
 
-        <select name="service">
-            <option value="default" disabled selected>Select a service</option>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-        </select>
-    `;
-    container.appendChild(newFields);
-  }
+    <select class="service-dropdown" name="service">
+      <option value="default" disabled selected>Select a service</option>
+      <option value="option1">Option 1</option>
+      <option value="option2">Option 2</option>
+      <option value="option3">Option 3</option>
+      <option value="option4" disabled>Option 4 (Disabled)</option>
+    </select>
+  `;
+  container.appendChild(newFields);
+}
+});

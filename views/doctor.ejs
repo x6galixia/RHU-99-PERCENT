@@ -131,7 +131,8 @@
                 data-gender="<%= pt.gender %>"
                 data-birthdate="<%= pt.birthdate %>"
                 data-occupation="<%= pt.occupation %>"
-                data-guardian="<%= pt.guardian %>">Laboratory Result</button>
+                data-guardian="<%= pt.guardian %>"
+                data-lab-result="<%= pt.lab_result %>">Laboratory Result</button>
               </td>
               <td>
                 <!-------diagnoses-->
@@ -206,45 +207,49 @@
       </form>
     </div>
 
-    <!-- Laboratory Request Form -->
-    <div id="labRequestForm" style="display: none">
-      <form action="/labrequest" method="POST">
-        <div id="closeLabRequestBtn">&times;</div>
-        <h1>LABORATORY REQUEST</h1>
-        <input type="text" id="req_unq_id" name="unq_id" placeholder="Unique ID" readonly />
-        <input type="date" id="req_check_date" name="check_date" readonly />
-        <input type="text" id="req_full_name" name="full_name" placeholder="Full Name" readonly />
-        <input type="number" id="req_age" name="age" placeholder="Age" readonly />
-        <input type="text" id="req_gender" name="gender" placeholder="Gender" readonly />
-        <input type="date" id="req_birthdate" name="birthdate" readonly />
-        <input type="text" id="req_occupation" name="occupation" readonly />
-        <input type="text" id="req_guardian" name="guardian" readonly />
+ <!-- Laboratory Request Form -->
+<div id="labRequestForm" style="display: none">
+  <form action="/labrequest" method="POST">
+    <div id="closeLabRequestBtn">&times;</div>
+    <h1>LABORATORY REQUEST</h1>
+    <input type="text" id="req_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+    <input type="date" id="req_check_date" name="check_date" readonly />
+    <input type="text" id="req_full_name" name="full_name" placeholder="Full Name" readonly />
+    <input type="number" id="req_age" name="age" placeholder="Age" readonly />
+    <input type="text" id="req_gender" name="gender" placeholder="Gender" readonly />
+    <input type="date" id="req_birthdate" name="birthdate" readonly />
+    <input type="text" id="req_occupation" name="occupation" readonly />
+    <input type="text" id="req_guardian" name="guardian" readonly />
 
-        <!-----------------------dropdown -->
-        <div id="category-fields-container">
-          <div class="category-fields">
-                  <select id="category-dropdown" name="category">
-                    <option value="default" disabled selected>Select a category</option>
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                    <option value="option4" disabled>Option 4 (Disabled)</option>
-                </select>
-        
-                <select id="service-dropdown" name="service">
-                    <option value="default" disabled selected>Select a service</option>
-                    <option value="option1">Option 1</option>
-                    <option value="option2">Option 2</option>
-                    <option value="option3">Option 3</option>
-                    <option value="option4" disabled>Option 4 (Disabled)</option>
-                </select>
-          </div>
-        </div>
-        <button id="addMoreButton" type="button" onclick="addCategoryFields()">Add more</button>
+    <!-- Dynamic Category Fields Container -->
+    <div id="category-fields-container">
+      <!-- Initial Category Fields -->
+      <div class="category-fields">
+        <select class="category-dropdown" name="category">
+          <option value="default" disabled selected>Select a category</option>
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+          <option value="option4" disabled>Option 4 (Disabled)</option>
+        </select>
 
-        <button type="submit">submit</button>
-      </form>
+        <select class="service-dropdown" name="service">
+          <option value="default" disabled selected>Select a service</option>
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+          <option value="option4" disabled>Option 4 (Disabled)</option>
+        </select>
+      </div>
     </div>
+
+    <!-- Add More Button -->
+    <button type="button" id="addMoreButton" onclick="addCategoryFields()">Add more</button>
+
+    <!-- Submit Button -->
+    <button type="submit">Submit</button>
+  </form>
+</div>
 
     <!-- Laboratory Result Form -->
     <div id="labResultForm" style="display: none">
@@ -259,6 +264,7 @@
         <input type="date" id="res_birthdate" name="birthdate" readonly />
         <input type="text" id="res_occupation" name="occupation" readonly />
         <input type="text" id="res_guardian" name="guardian" readonly />
+        <button id="labResult" type="button">lab result</button>
       </form>
     </div>
 

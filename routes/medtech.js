@@ -50,17 +50,27 @@ router.get("/medtech", ensureAuthenticated, checkUserType("medtech"), async (req
     }
 });
 
-router.post("/add-LabResult", ensureAuthenticated, checkUserType("medtech"), upload.fields([{ name: "lab_result", maxCount: 1 }]), async (req, res) => {
-  const lab_result = req.files["lab_result"] ? req.files["lab_result"][0].filename : null;
+router.post("/add-LabResult", ensureAuthenticated, checkUserType("medtech"), upload.fields([{ name: "lab_result", maxCount: 6 }]), async (req, res) => {
+  let lab_results = [];
   const unq_id = req.body.unq_id;
 
+  // Check if lab_result field exists in req.files
+  if (req.files["lab_result"]) {
+    // Read file data and store as BYTEA
+    for (let file of req.files["lab_result"]) {
+      const fileData = await fs.readFile(file.path);
+      lab_results.push(fileData);
+    }
+  }
+
   console.log('req.body:', req.body);
-  console.log('lab_result:', lab_result);
+  console.log('lab_results:', lab_results);
   console.log('unq_id:', unq_id);
 
   try {
+    // Store the binary data in the database
     const query = "UPDATE patients SET lab_result = $1 WHERE unq_id = $2";
-    const result = await pool.query(query, [lab_result, unq_id]);
+    const result = await pool.query(query, [lab_results, unq_id]);
 
     console.log('Database update result:', result);
 
@@ -72,6 +82,7 @@ router.post("/add-LabResult", ensureAuthenticated, checkUserType("medtech"), upl
     res.redirect('/medtech');
   }
 });
+
 
 router.delete("/logout", (req, res) => {
   req.logOut((err) => {
@@ -87,18 +98,21 @@ router.delete("/logout", (req, res) => {
 async function getPatientsForLab() {
   try {
     const viewPatients = await pool.query("SELECT * FROM patients");
-    return viewPatients.rows.map(row => ({
-      unq_id: row.unq_id,
-      fullname: row.last_name + " " + row.first_name + " " + row.middle_name,
-      age: calculateAge(formatDate(row.birthdate)),
-      gender: row.gender,
-      birthdate: formatDate(row.birthdate),
-      guardian: row.guardian,
-      occupation: row.occupation,
-      check_date: formatDate(row.check_date),
-      category: row.category,
-      service: row.service
-    }));
+
+    return viewPatients.rows
+      .filter(row => row.category !== null && row.lab_result === null)
+      .map(row => ({
+        unq_id: row.unq_id,
+        fullname: `${row.last_name} ${row.first_name} ${row.middle_name}`,
+        age: calculateAge(formatDate(row.birthdate)),
+        gender: row.gender,
+        birthdate: formatDate(row.birthdate),
+        guardian: row.guardian,
+        occupation: row.occupation,
+        check_date: formatDate(row.check_date),
+        category: row.category,
+        service: row.service
+      }));
   } catch (err) {
     console.error("Error fetching patients:", err);
     return [];
