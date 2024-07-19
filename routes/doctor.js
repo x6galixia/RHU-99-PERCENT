@@ -165,18 +165,23 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
 async function getAllPatients() {
     try {
         const viewPatients = await pool.query("SELECT * FROM patients");
+
         const patients = viewPatients.rows.map(row => {
             const checkDateFormatted = formatDate(row.check_date);
             const birthdateFormatted = formatDate(row.birthdate);
-            console.log("check_date:", checkDateFormatted);
+            const age = calculateAge(row.birthdate);
+
+            const labResults = Array.isArray(row.lab_result) ? row.lab_result : [];
+
             return {
                 ...row,
                 check_date: checkDateFormatted,
                 birthdate: birthdateFormatted,
-                age: calculateAge(birthdateFormatted)
+                age: age,
+                lab_result: labResults
             };
         });
-
+        
         patients.sort((a, b) => {
             const dateA = new Date(a.check_date);
             const dateB = new Date(b.check_date);
@@ -184,19 +189,13 @@ async function getAllPatients() {
         });
 
         return patients;
-
-        return viewPatients.rows.map(row => ({
-            ...row,
-            check_date: formatDate(row.check_date),
-            birthdate: formatDate(row.birthdate),
-            age: calculateAge(formatDate(row.birthdate)),
-            lab_result: row.lab_result ? row.lab_result.map(result => Buffer.from(result).toString('base64')) : []
-        }));
     } catch (err) {
         console.error("Error fetching patients:", err);
         return [];
     }
 }
+
+
 
 
 function calculateAge(birthdateString) {

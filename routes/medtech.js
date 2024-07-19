@@ -70,9 +70,6 @@ router.post("/add-LabResult", ensureAuthenticated, checkUserType("medtech"), upl
     const query = "UPDATE patients SET lab_result = $1 WHERE unq_id = $2";
     await pool.query(query, [lab_results, unq_id]);
 
-    // Clean up uploaded files
-    req.files["lab_result"].forEach(file => fs.unlinkSync(file.path));
-
     const getPatientsLab = await getPatientsForLab();
     res.redirect('/medtech');
   } catch (err) {

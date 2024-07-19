@@ -43,7 +43,7 @@
           <th>Age</th>
           <th>Phone no</th>
           <th>Email</th>
-          <th>Philhealt no</th>
+          <th>Philhealth no</th>
           <th>Occupation</th>
           <th>Guardian</th>
           <th>Diagnoses</th>
@@ -52,10 +52,9 @@
           <th>Prescribe</th>
           <th>Laboratory request</th>
           <th>Laboratory result</th>
-          <th>Diagnoses</th>
-          <th>Findings</th>
         </tr>
       </thead>
+      
       <tbody>
         <% if (patientListDrop && patientListDrop.length > 0) { %>
           <% patientListDrop.forEach(pt => { %>
@@ -123,6 +122,7 @@
                   data-guardian="<%= pt.guardian %>">Laboratory Request</button>
               </td>
               <td>
+                <!-----------lab result-->
                 <button class="openLabRes"
                   data-unq-id="<%= pt.unq_id %>"
                   data-check-date="<%= pt.check_date %>"
@@ -265,27 +265,25 @@
   </form>
 </div>
 
-    <!-- Laboratory Result Form -->
-    <div id="labResultForm" style="display: none">
-      <form>
-        <div id="closeLabResultBtn">&times;</div>
-        <h1>LABORATORY RESULT</h1>
-        <input type="text" id="res_unq_id" name="unq_id" placeholder="Unique ID" readonly />
-        <input type="date" id="res_check_date" name="check_date" readonly />
-        <input type="text" id="res_full_name" name="full_name" placeholder="Full Name" readonly />
-        <input type="number" id="res_age" name="age" placeholder="Age" readonly />
-        <input type="text" id="res_gender" name="gender" placeholder="Gender" readonly />
-        <input type="date" id="res_birthdate" name="birthdate" readonly />
-        <input type="text" id="res_occupation" name="occupation" readonly />
-        <input type="text" id="res_guardian" name="guardian" readonly />
-        
-        <!-- Container for displaying multiple images -->
-        <div id="imageDisplay" style="display: none; position: relative;">
-          <img id="patientImage" src="" alt="Patient Image" />
-        </div>
-      </form>
-    </div>
-
+      <!-- Laboratory Result Form -->
+      <div id="labResultForm" style="display: none">
+        <form>
+          <div id="closeLabResultBtn">&times;</div>
+          <h1>LABORATORY RESULT</h1>
+          <input type="text" id="res_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+          <input type="date" id="res_check_date" name="check_date" readonly />
+          <input type="text" id="res_full_name" name="full_name" placeholder="Full Name" readonly />
+          <input type="number" id="res_age" name="age" placeholder="Age" readonly />
+          <input type="text" id="res_gender" name="gender" placeholder="Gender" readonly />
+          <input type="date" id="res_birthdate" name="birthdate" readonly />
+          <input type="text" id="res_occupation" name="occupation" readonly />
+          <input type="text" id="res_guardian" name="guardian" readonly />
+          
+          <!-- Container for displaying multiple images -->
+           <ul id="imageList"><img id="labImage" src="" alt="Patient Image" style="max-width: 100%; margin-bottom: 10px;" /></ul>
+          
+        </form>
+      </div>
 
     <!-- Diagnoses Form -->
     <div id="diagnoseForm" style="display: none">
