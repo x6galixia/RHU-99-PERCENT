@@ -51,28 +51,27 @@ router.get("/medtech", ensureAuthenticated, checkUserType("medtech"), async (req
 });
 
 router.post("/add-LabResult", ensureAuthenticated, checkUserType("medtech"), upload.fields([{ name: "lab_result", maxCount: 6 }]), async (req, res) => {
-  let lab_results = [];
   const unq_id = req.body.unq_id;
 
-  // Check if lab_result field exists in req.files
-  if (req.files["lab_result"]) {
-    // Read file data and store as BYTEA
-    for (let file of req.files["lab_result"]) {
-      const fileData = await fs.readFile(file.path);
-      lab_results.push(fileData);
-    }
-  }
-
-  console.log('req.body:', req.body);
-  console.log('lab_results:', lab_results);
-  console.log('unq_id:', unq_id);
+  // Array to hold file data
+  let lab_results = [];
 
   try {
-    // Store the binary data in the database
-    const query = "UPDATE patients SET lab_result = $1 WHERE unq_id = $2";
-    const result = await pool.query(query, [lab_results, unq_id]);
+    // Iterate over each uploaded file and read its data
+    if (req.files["lab_result"]) {
+      for (let file of req.files["lab_result"]) {
+        const fileData = await fs.promises.readFile(file.path);
+        lab_results.push(fileData);
+        console.log(`Processed file: ${file.filename}`);
+      }
+    }
 
-    console.log('Database update result:', result);
+    // Store the array of binary data in the database
+    const query = "UPDATE patients SET lab_result = $1 WHERE unq_id = $2";
+    await pool.query(query, [lab_results, unq_id]);
+
+    // Clean up uploaded files
+    req.files["lab_result"].forEach(file => fs.unlinkSync(file.path));
 
     const getPatientsLab = await getPatientsForLab();
     res.redirect('/medtech');
@@ -82,6 +81,8 @@ router.post("/add-LabResult", ensureAuthenticated, checkUserType("medtech"), upl
     res.redirect('/medtech');
   }
 });
+
+
 
 
 router.delete("/logout", (req, res) => {

@@ -1,5 +1,6 @@
 const express = require("express");
 const pool = require("../models/localdb");
+const pharmacyPool = require("../models/pharmacydb");
 const methodOverride = require("method-override");
 const { ensureAuthenticated, checkUserType } = require("../middleware/middleware");
 const router = express.Router();
@@ -21,11 +22,49 @@ router.get("/doctor/dashboard", ensureAuthenticated, checkUserType("doctor"), as
     }
 });
 
+router.get('/search', async (req, res) => {
+    const { query } = req.query;
+
+    if (!query) {
+        return res.status(400).send('Query parameter is required');
+    }
+
+    try {
+        const result = await pharmacyPool.query(
+            'SELECT product_name, dosage, product_quantity FROM inventory WHERE product_name ILIKE $1 LIMIT 30',
+            [`${query}%`]
+        );
+        res.json(result.rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Server error');
+    }
+});
+
+router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
+    try {
+        const { full_name, age, gender, check_date, full_address, guardian, doctor_name } = req.body;
+        
+        await pharmacyPool.query("INSERT INTO prescription (full_name, age, gender, check_date, full_address, guardian, doctor_name) VALUES ($1, $2, $3, $4, $5, $6, $7)", [full_name, age, gender, check_date, full_address, guardian, doctor_name]);
+
+        const patientListDrop = await getAllPatients();
+        res.render('doctor', {
+            patientListDrop,
+            user: req.user
+        });
+    } catch (err) {
+        console.error("Error Sending prescription:", err);
+        req.flash("error", "An error occurred while sending the prescription: " + err.message);
+        res.redirect('/doctor/dashboard');
+    }
+});
+
+
 router.post('/labrequest', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
         const { unq_id, category, service } = req.body;
 
-        await pool.query('BEGIN');
+        await ool.query('BEGIN');
         console.log('Transaction started');
 
         const unq_ids = Array.isArray(unq_id) ? unq_id : [unq_id];
@@ -126,11 +165,13 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
 async function getAllPatients() {
     try {
         const viewPatients = await pool.query("SELECT * FROM patients");
+
         return viewPatients.rows.map(row => ({
             ...row,
             check_date: formatDate(row.check_date),
             birthdate: formatDate(row.birthdate),
-            age: calculateAge(formatDate(row.birthdate))
+            age: calculateAge(formatDate(row.birthdate)),
+            lab_result: row.lab_result ? row.lab_result.map(result => Buffer.from(result).toString('base64')) : []
         }));
     } catch (err) {
         console.error("Error fetching patients:", err);

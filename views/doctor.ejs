@@ -103,8 +103,10 @@
                 data-age="<%= pt.age %>"
                 data-gender="<%= pt.gender %>"
                 data-birthdate="<%= pt.birthdate %>"
+                data-full-address="<%= pt.address %> <%= pt.barangay %> <%= pt.town %>"
                 data-occupation="<%= pt.occupation %>"
                 data-guardian="<%= pt.guardian %>"
+                data-doctor="<%= profession %> <%= surname %> <%= firstname %> <%= middle_initial %>"
                 >Prescribe</button>
               </td>
               <td>
@@ -121,18 +123,17 @@
                   data-guardian="<%= pt.guardian %>">Laboratory Request</button>
               </td>
               <td>
-                <!----------lab result-->
                 <button class="openLabRes"
-                data-unq-id="<%= pt.unq_id %>"
-                data-check-date="<%= pt.check_date %>"
-                data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
-                data-date="<%= pt.date_now %>"
-                data-age="<%= pt.age %>"
-                data-gender="<%= pt.gender %>"
-                data-birthdate="<%= pt.birthdate %>"
-                data-occupation="<%= pt.occupation %>"
-                data-guardian="<%= pt.guardian %>"
-                data-lab-result="<%= pt.lab_result %>">Laboratory Result</button>
+                  data-unq-id="<%= pt.unq_id %>"
+                  data-check-date="<%= pt.check_date %>"
+                  data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                  data-date="<%= pt.date_now %>"
+                  data-age="<%= pt.age %>"
+                  data-gender="<%= pt.gender %>"
+                  data-birthdate="<%= pt.birthdate %>"
+                  data-occupation="<%= pt.occupation %>"
+                  data-guardian="<%= pt.guardian %>"
+                  data-lab-result="<%= pt.lab_result %>">Laboratory Result</button>
               </td>
               <td>
                 <!-------diagnoses-->
@@ -193,7 +194,7 @@
 
     <!-- Prescribe Form -->
     <div id="prescribeForm" style="display: none">
-      <form>
+      <form action="/send-prescription" method="post">
         <div id="closePrescribeBtn">&times;</div>
         <h1>PRESCRIBE</h1>
         <input type="text" id="pres_unq_id" name="unq_id" placeholder="Unique ID" readonly />
@@ -202,8 +203,21 @@
         <input type="number" id="pres_age" name="age" placeholder="Age" readonly />
         <input type="text" id="pres_gender" name="gender" placeholder="Gender" readonly />
         <input type="date" id="pres_birthdate" name="birthdate" readonly />
+        <input type="text" id="pres_full_address" name="full_address" readonly />
         <input type="text" id="pres_occupation" name="occupation" readonly />
         <input type="text" id="pres_guardian" name="guardian" readonly />
+ 
+        <input type="text" id="pres_reciever" name="reciever" placeholder="reciever">
+        <input type="text" id="pres_relationship" name="relationship" placeholder="relationship">
+        <input type="text" id="search-box" placeholder="Search...">
+        <div id="suggestions" class="suggestions"></div>
+        <input type="text" id="pres_instruction" name="instruction" placeholder="instruction">
+        <label for="pres_quantity">quantity:</label>
+        <input type="number" id="pres_quantity" name="quantity">
+
+        <input type="text" id="pres_doctor" name="doctor_name" placeholder="Doctor" readonly>
+
+        <button type="submit">submit</button>
       </form>
     </div>
 
@@ -264,9 +278,14 @@
         <input type="date" id="res_birthdate" name="birthdate" readonly />
         <input type="text" id="res_occupation" name="occupation" readonly />
         <input type="text" id="res_guardian" name="guardian" readonly />
-        <button id="labResult" type="button">lab result</button>
+        
+        <!-- Container for displaying multiple images -->
+        <div id="imageDisplay" style="display: none; position: relative;">
+          <img id="patientImage" src="" alt="Patient Image" />
+        </div>
       </form>
     </div>
+
 
     <!-- Diagnoses Form -->
     <div id="diagnoseForm" style="display: none">

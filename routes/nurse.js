@@ -135,7 +135,7 @@ router.post(
       ];
 
       const result = await pool.query(query, values);
-      res.render("nurse", { user: req.user });
+      res.redirect('/nurse');
     } catch (err) {
       console.error(err);
       res.sendStatus(500);
