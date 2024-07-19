@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     while (result.length < 12) {
         result += Math.floor(Math.random() * 10);
     }
-    return `RHU-${result}`;
+    return `RHU-${result}-ver`;
   }
 
   // Function to fetch citizen data and populate form fields
