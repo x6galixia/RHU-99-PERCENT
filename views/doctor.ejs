@@ -133,7 +133,7 @@
                   data-birthdate="<%= pt.birthdate %>"
                   data-occupation="<%= pt.occupation %>"
                   data-guardian="<%= pt.guardian %>"
-                  data-lab-result="<%= pt.lab_result %>">Laboratory Result</button>
+                  data-lab-results='<%= JSON.stringify(pt.lab_result) %>'>Laboratory Result</button>
               </td>
               <td>
                 <!-------diagnoses-->
@@ -280,9 +280,15 @@
           <input type="text" id="res_guardian" name="guardian" readonly />
           
           <!-- Container for displaying multiple images -->
-           <ul id="imageList"><img id="labImage" src="" alt="Patient Image" style="max-width: 100%; margin-bottom: 10px;" /></ul>
-          
+          <ul id="labResultList"></ul>
         </form>
+      </div>
+
+      <!-- Modal for displaying large image -->
+      <div id="imageModal" class="modal" style="display: none;">
+        <span class="close">&times;</span>
+        <img id="modalImage" class="modal-content" />
+        <div id="caption"></div>
       </div>
 
     <!-- Diagnoses Form -->
