@@ -1,7 +1,6 @@
 -- database configuration
 
-//-- user login configuration --//
-
+-- user login configuration --
 CREATE TABLE users (
     user_id VARCHAR(50) PRIMARY KEY,
     surname VARCHAR(50) NOT NULL,
@@ -13,6 +12,7 @@ CREATE TABLE users (
     user_type VARCHAR(50) NOT NULL
 );
 
+--  rhu
 CREATE TABLE patients (
     unq_id VARCHAR(100) PRIMARY KEY,
     last_name VARCHAR(50) NOT NULL,
@@ -55,12 +55,23 @@ CREATE TABLE patients (
     lab_result TEXT[]
 );
 
-
+CREATE TABLE prescription (
+    full_name VARCHAR(250),
+    age INT,
+    gender VARCHAR(10),
+    check_date DATE,
+    full_address VARCHAR(250),
+    guardian VARCHAR(250),
+    medicine VARCHAR(250),
+    instruction VARCHAR(250),
+    quantity INT,
+    reciever VARCHAR(250),
+    relationship VARCHAR(250),
+    doctor_name VARCHAR(250)
+);
 
 --  cetizens info
-
 CREATE TABLE citizens (
--- cItizen
     unq_id VARCHAR(100) PRIMARY KEY,
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
@@ -77,8 +88,8 @@ CREATE TABLE citizens (
     guardian VARCHAR(250)
 );
 
+-- pharmacy
 CREATE TABLE inventory (
-    -- inventory
     product_id VARCHAR(250),
 	product_code VARCHAR(250),
 	product_name VARCHAR(250),
@@ -109,25 +120,6 @@ CREATE TABLE beneficiary (
 	requesting_person VARCHAR(250),
 	relationship_beneficiary VARCHAR(250)
 );
-
-CREATE TABLE records (
-    
-)
-
-CREATE TABLE prescription (
-    full_name VARCHAR(250),
-    age INT,
-    gender VARCHAR(10),
-    check_date DATE,
-    full_address VARCHAR(250),
-    guardian VARCHAR(250),
-    medicine VARCHAR(250),
-    instruction VARCHAR(250),
-    quantity INT,
-    reciever VARCHAR(250),
-    relationship VARCHAR(250),
-    doctor_name VARCHAR(250)
-)
 
 //this configuration includes three different databases the : RHU database, CITIZEN database and PHARMACY database
 1. the table users is inside the RHU database.
