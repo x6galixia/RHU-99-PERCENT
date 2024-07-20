@@ -25,7 +25,6 @@
         <button type="submit">Log out</button>
       </div>
     </form>
-
     <!-- Patients Table -->
     <table>
       <thead>
@@ -48,10 +47,14 @@
           <th>Guardian</th>
           <th>Diagnoses</th>
           <th>Findings</th>
+          <th>Medicine</th>
+          <th>instruction</th>
           <th>Vital Signs</th>
           <th>Prescribe</th>
           <th>Laboratory request</th>
           <th>Laboratory result</th>
+          <th>Diagnoses</th>
+          <th>Findings</th>
         </tr>
       </thead>
       
@@ -77,6 +80,8 @@
               <td><%= pt.guardian %></td>
               <td><%= pt.diagnoses %></td>
               <td><%= pt.findings %></td>
+              <td><%= pt.medicine %></td>
+              <td><%= pt.instruction %></td>
               <td>
                 <!-- Vitals Button -->
                 <button class="openVitals"
@@ -165,7 +170,7 @@
           <% }) %>
         <% } else { %>
           <tr>
-            <td colspan="24">No patients.</td>
+            <td colspan="26">No patients.</td>
           </tr>
         <% } %>
       </tbody>
@@ -209,7 +214,7 @@
  
         <input type="text" id="pres_reciever" name="reciever" placeholder="reciever">
         <input type="text" id="pres_relationship" name="relationship" placeholder="relationship">
-        <input type="text" id="search-box" placeholder="Search...">
+        <input type="text" id="search-box" name="medicine" placeholder="Search...">
         <div id="suggestions" class="suggestions"></div>
         <input type="text" id="pres_instruction" name="instruction" placeholder="instruction">
         <label for="pres_quantity">quantity:</label>
@@ -326,6 +331,7 @@
         <button type="submit">Submit</button>
       </form>
     </div>
+    <script src="/js/websocket.js"></script>
     <script src="/js/doctor-func.js"></script>
   </body>
 </html>

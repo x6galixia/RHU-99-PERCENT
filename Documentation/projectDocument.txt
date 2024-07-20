@@ -121,9 +121,13 @@ CREATE TABLE prescription (
     check_date DATE,
     full_address VARCHAR(250),
     guardian VARCHAR(250),
+    medicine VARCHAR(250),
+    instruction VARCHAR(250),
+    quantity INT,
+    reciever VARCHAR(250),
+    relationship VARCHAR(250),
     doctor_name VARCHAR(250)
 )
-
 
 //this configuration includes three different databases the : RHU database, CITIZEN database and PHARMACY database
 1. the table users is inside the RHU database.
