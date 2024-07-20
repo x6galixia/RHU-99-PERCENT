@@ -24,44 +24,61 @@
  
     <form action="/nurse/send-patient-info" method="post">
         <h1>PATIENT INFO</h1>
-        <label for="qrResultInput"><input type="text" id="idInput" name="unq_id" value="" placeholder="Enter ID" required>UniqueID:</label>
+        <label for="qrResultInput">Unique ID:</label>
         <button id="generateButton" type="button">Generate ID</button>
         <button id="searchButton" type="button">Search ID</button>
 
-        <label for="date"><input type="date" id="check_date" name="check_date"> Date</label>
-        <label for="last_name"><input type="text" id="last_name" name="last_name">Lastname</label>
-        <label for="first_name"><input type="text" id="first_name" name="first_name">Firstname</label>
-        <label for="middle_name"><input type="text" id="middle_name" name="middle_name">Middlename</label>
-        <label for="address"><input type="text" id="address" name="address">Home no./Street</label>
-        <label for="barangay"><input type="text" id="barangay" name="barangay">Barangay</label>
-        <label for="town"><input type="text" id="town" name="town">Town</label>
-        <label for="birthdate"><input type="date" id="birthdate" name="birthdate">Birthdate</label>
-        <label for="gender"><input type="text" id="gender" name="gender">Gender</label>
-        <label for="phone"><input type="text" id="phone" name="phone">Phone</label>
-        <label for="email"><input type="email" id="email" name="email">Email</label>
-        <label for="philhealth_no"><input type="text" id="philhealth_no" name="philhealth_no">Philhealth no</label>
-        <label for="occupation"><input type="text" id="occupation" name="occupation">Occupation</label>
-        <label for="guardian"><input type="text" id="guardian" name="guardian">Guardian</label>
-        
+        <label for="date">Date</label>
+        <input type="date" id="check_date" name="check_date"> 
+        <label for="last_name">Lastname</label>
+        <input type="text" id="last_name" name="last_name">
+        <label for="first_name">Firstname</label>
+        <input type="text" id="first_name" name="first_name">
+        <label for="middle_name">Middlename</label>
+        <input type="text" id="middle_name" name="middle_name">
+        <label for="address">Home no./Street</label>
+        <input type="text" id="address" name="address">
+        <label for="barangay">Barangay</label>
+        <input type="text" id="barangay" name="barangay">
+        <label for="town">Town</label>
+        <input type="text" id="town" name="town">
+        <label for="birthdate">Birthdate</label>
+        <input type="date" id="birthdate" name="birthdate">
+        <label for="gender">Gender</label>
+        <input type="text" id="gender" name="gender">
+        <label for="phone">Phone</label>
+        <input type="text" id="phone" name="phone">
+        <label for="email">Email</label>
+        <input type="email" id="email" name="email">
+        <label for="philhealth_no">Philhealth no</label>
+        <input type="text" id="philhealth_no" name="philhealth_no">
+        <label for="occupation">Occupation</label>
+        <input type="text" id="occupation" name="occupation">
+        <label for="guardian">Guardian</label>
+        <input type="text" id="guardian" name="guardian">
 
         <h1>VITAL SIGNS</h1>
 
-        <label for="height"><input type="text" id="height" name="height">Height</label>
-        <label for="weight"><input type="text" id="weight" name="weight">Weight</label>
-        <label for="temperature"><input type="text" id="temperature" name="temperature">Temperature</label>
-        
+        <label for="height">Height</label>
+        <input type="text" id="height" name="height">
+        <label for="weight">Weight</label>
+        <input type="text" id="weight" name="weight">
+        <label for="temperature">Temperature</label>
+        <input type="text" id="temperature" name="temperature">
         <div>
-            <label for="bp">
-                <input type="text" id="systolic" name="systolic" placeholder="systolic">
-                <input type="text" id="diastolic" name="diastolic" placeholder="diastolic">
-                Blood pressure</label>  
+            <label for="bp">Blood pressure</label>
+            <input type="text" id="systolic" name="systolic" placeholder="systolic">
+            <input type="text" id="diastolic" name="diastolic" placeholder="diastolic">
         </div>
+        <label for="pulse_rate">Pulse rate</label>
+        <input type="text" id="pulse_rate" name="pulse_rate">
+        <label for="respiratory_rate">Respiratory rate</label>
+        <input type="text" id="respiratory_rate" name="respiratory_rate">
+        <label for="bmi">BMI</label>
+        <input type="text" id="bmi" name="bmi">
 
-        <label for="pulse_rate"><input type="text" id="pulse_rate" name="pulse_rate">Pulse rate</label>
-        <label for="respiratory_rate"><input type="text" id="respiratory_rate" name="respiratory_rate">Respiratory rate</label>
-        <label for="bmi"><input type="text" id="bmi" name="bmi">BMI</label>
-        <label for="comment"><input type="text" id="comment" name="comment">Comment</label>
-        
+        <label for="comment">Comment</label>
+        <input type="text" id="comment" name="comment">
         <br>
         <input type="submit" value="Submit">
 
