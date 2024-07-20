@@ -37,50 +37,48 @@ router.use("/uploads", express.static("uploads"));
 //----------------------------------------------------------------------------------//
 
 router.get("/medtech", ensureAuthenticated, checkUserType("medtech"), async (req, res) => {
-    try {
-      const getPatientsLab = await getPatientsForLab();
-        res.render('medtech', {
-            getPatientsLab,
-            user: req.user
-        });
-    } catch (err) {
-        console.error("Error fetching patients:", err);
-        req.flash("error", "An error occurred while loading the dashboard.");
-        res.redirect('/login');
-    }
+  try {
+    const getPatientsLab = await getPatientsForLab();
+    res.render('medtech', {
+      getPatientsLab,
+      user: req.user
+    });
+  } catch (err) {
+    console.error("Error fetching patients:", err);
+    req.flash("error", "An error occurred while loading the dashboard.");
+    res.redirect('/login');
+  }
 });
 
-router.post("/add-LabResult", ensureAuthenticated, checkUserType("medtech"), upload.fields([{ name: "lab_result", maxCount: 6 }]), async (req, res) => {
+router.post('/add-LabResult', ensureAuthenticated, checkUserType('medtech'), upload.fields([{ name: 'lab_result', maxCount: 6 }]), async (req, res) => {
   const unq_id = req.body.unq_id;
-
-  // Array to hold file data
   let lab_results = [];
 
+  console.log("Received request for /add-LabResult");
+
   try {
-    // Iterate over each uploaded file and read its data
-    if (req.files["lab_result"]) {
-      for (let file of req.files["lab_result"]) {
-        const fileData = await fs.promises.readFile(file.path);
-        lab_results.push(fileData);
+    if (req.files && req.files['lab_result']) {
+      for (let file of req.files['lab_result']) {
+        lab_results.push(file.filename);
         console.log(`Processed file: ${file.filename}`);
       }
+    } else {
+      console.log("No files received");
     }
 
-    // Store the array of binary data in the database
-    const query = "UPDATE patients SET lab_result = $1 WHERE unq_id = $2";
-    await pool.query(query, [lab_results, unq_id]);
+    const labResultsArray = `{${lab_results.map(filename => `"${filename}"`).join(",")}}`;
+
+    const query = 'UPDATE patients SET lab_result = $1 WHERE unq_id = $2';
+    await pool.query(query, [labResultsArray, unq_id]);
 
     const getPatientsLab = await getPatientsForLab();
     res.redirect('/medtech');
   } catch (err) {
-    console.error("Error adding lab result:", err);
-    req.flash("error", "An error occurred while adding a lab result.");
+    console.error('Error adding lab result:', err);
+    req.flash('error', 'An error occurred while adding a lab result.');
     res.redirect('/medtech');
   }
 });
-
-
-
 
 router.delete("/logout", (req, res) => {
   req.logOut((err) => {

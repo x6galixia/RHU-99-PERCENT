@@ -100,22 +100,41 @@ document.addEventListener("DOMContentLoaded", function () {
     labRequestForm.style.display = "none";
   });
 
-      // Lab Result
-      openLabResButtons.forEach(button => {
-        button.addEventListener("click", function() {
-          document.getElementById("res_unq_id").value = this.dataset.unqId;
-          document.getElementById("res_check_date").value = new Date(this.dataset.checkDate).toISOString().split("T")[0];
-          document.getElementById("res_full_name").value = this.dataset.fullName;
-          document.getElementById("res_age").value = this.dataset.age;
-          document.getElementById("res_gender").value = this.dataset.gender;
-          document.getElementById("res_birthdate").value = new Date(this.dataset.birthdate).toISOString().split("T")[0];
-          document.getElementById("res_occupation").value = this.dataset.occupation;
-          document.getElementById("res_guardian").value = this.dataset.guardian;
-          document.getElementById("labImage").src = "/uploads/" + this.dataset.labResult;
-          labResultForm.style.display = "block";
+  //l-----------------lab results--------------
+  openLabResButtons.forEach(button => {
+    button.addEventListener("click", function() {
+      document.getElementById("res_unq_id").value = this.dataset.unqId;
+      document.getElementById("res_check_date").value = new Date(this.dataset.checkDate).toISOString().split("T")[0];
+      document.getElementById("res_full_name").value = this.dataset.fullName;
+      document.getElementById("res_age").value = this.dataset.age;
+      document.getElementById("res_gender").value = this.dataset.gender;
+      document.getElementById("res_birthdate").value = new Date(this.dataset.birthdate).toISOString().split("T")[0];
+      document.getElementById("res_occupation").value = this.dataset.occupation;
+      document.getElementById("res_guardian").value = this.dataset.guardian;
+  
+      // Handle multiple images
+      const labResults = this.dataset.labResults ? JSON.parse(this.dataset.labResults) : [];
+      const labResultsContainer = document.querySelector("#labResultForm ul");
+      labResultsContainer.innerHTML = "";
+  
+      if (labResults.length > 0) {
+        labResults.forEach(filename => {
+          const listItem = document.createElement("li");
+          const link = document.createElement("a");
+          link.href = `/uploads/${filename}`;
+          link.target = "_blank";
+          link.textContent = filename;
+          listItem.appendChild(link);
+          labResultsContainer.appendChild(listItem);
         });
-      });
-
+      } else {
+        labResultsContainer.innerHTML = "<p>No lab results available.</p>";
+      }
+  
+      labResultForm.style.display = "block";
+    });
+  });
+  
   closeLabResultBtn.addEventListener("click", function() {
     labResultForm.style.display = "none";
   });

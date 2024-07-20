@@ -31,14 +31,14 @@ CREATE TABLE patients (
     check_date DATE,
 
     -- nurse
-    height NUMERIC(5,2),
-    weight NUMERIC(5,2),
-    systolic NUMERIC(5,2),
-    diastolic NUMERIC(5,2),
-    temperature NUMERIC(5,2),
-    pulse_rate NUMERIC(5,2),
-    respiratory_rate NUMERIC(5,2),
-    bmi NUMERIC(5,2),
+    height VARCHAR(50),
+    weight VARCHAR(50),
+    systolic VARCHAR(50),
+    diastolic VARCHAR(50),
+    temperature VARCHAR(50),
+    pulse_rate VARCHAR(50),
+    respiratory_rate VARCHAR(50),
+    bmi VARCHAR(50),
     comment VARCHAR(250),
 
     -- doctor
@@ -52,7 +52,7 @@ CREATE TABLE patients (
     quantity INT,
     prescription_date DATE,
 
-    lab_result BYTEA[]
+    lab_result TEXT[]
 );
 
 
@@ -145,9 +145,9 @@ CREATE TABLE prescription (
 this project is agile and is prepared for upgrade.
 
 //DEVELOPERS 
-    backend & frontend: Kim A. Galicia
-    frontend: Adriane Garcia
-    Designers: Mark Jhondrex Alde
-               Chrizza Mae Lovina
-               Mark Philip Catalo
+    kim Galicia
+    adriane Garcia
+    mark jhondrex Alde
+    chrizza Mae Lovina
+    mark philip Catalo
 ----> 
