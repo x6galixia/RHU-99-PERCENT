@@ -43,9 +43,9 @@ router.get('/search', async (req, res) => {
 
 router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
-        const { full_name, age, gender, check_date, full_address, guardian, doctor_name } = req.body;
+        const { full_name, age, gender, check_date, full_address, guardian, medicine, instruction, quantity, reciever, relationship, doctor_name } = req.body;
         
-        await pharmacyPool.query("INSERT INTO prescription (full_name, age, gender, check_date, full_address, guardian, doctor_name) VALUES ($1, $2, $3, $4, $5, $6, $7)", [full_name, age, gender, check_date, full_address, guardian, doctor_name]);
+        await pool.query("INSERT INTO prescription (full_name, age, gender, check_date, full_address, guardian, medicine, instruction, quantity, reciever, relationship, doctor_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [full_name, age, gender, check_date, full_address, guardian, medicine, instruction, quantity, reciever, relationship, doctor_name]);
 
         const patientListDrop = await getAllPatients();
         res.render('doctor', {
