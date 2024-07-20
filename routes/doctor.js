@@ -43,9 +43,17 @@ router.get('/search', async (req, res) => {
 
 router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
-        const { full_name, age, gender, check_date, full_address, guardian, medicine, instruction, quantity, reciever, relationship, doctor_name } = req.body;
+        const { unq_id, full_name, age, gender, check_date, full_address, guardian, medicine, instruction, quantity, reciever, relationship, doctor_name } = req.body;
         
-        await pool.query("INSERT INTO prescription (full_name, age, gender, check_date, full_address, guardian, medicine, instruction, quantity, reciever, relationship, doctor_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [full_name, age, gender, check_date, full_address, guardian, medicine, instruction, quantity, reciever, relationship, doctor_name]);
+        await pool.query(
+            "INSERT INTO prescription (full_name, age, gender, check_date, full_address, guardian, medicine, instruction, quantity, reciever, relationship, doctor_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", 
+            [full_name, age, gender, check_date, full_address, guardian, medicine, instruction, quantity, reciever, relationship, doctor_name]
+        );
+
+        await pool.query(
+            "UPDATE patients SET medicine = $1, instruction = $2 WHERE unq_id = $3", 
+            [medicine, instruction, unq_id]
+        );
 
         const patientListDrop = await getAllPatients();
         res.render('doctor', {
@@ -58,7 +66,6 @@ router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), 
         res.redirect('/doctor/dashboard');
     }
 });
-
 
 router.post('/labrequest', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
