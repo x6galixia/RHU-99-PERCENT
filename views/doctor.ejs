@@ -217,7 +217,8 @@
         <input type="text" id="search-box" name="medicine" placeholder="Search...">
         <div id="suggestions" class="suggestions"></div>
         <input type="text" id="pres_instruction" name="instruction" placeholder="instruction">
-        <label for="pres_quantity"><input type="number" id="pres_quantity" name="quantity">quantity:</label>
+        <label for="pres_quantity">quantity:</label>
+        <input type="number" id="pres_quantity" name="quantity">
         <input type="text" id="pres_doctor" name="doctor_name" placeholder="Doctor" readonly>
 
         <button type="submit">submit</button>
@@ -300,8 +301,10 @@
         <input type="date" id="dia_birthdate" name="birthdate" readonly />
         <input type="text" id="dia_occupation" name="occupation" readonly />
         <input type="text" id="dia_guardian" name="guardian" readonly />
-        <label for="diagnoses"><input type="text" name="diagnoses" required>Diagnoses</label>
-        
+    
+        <label for="diagnoses">Diagnoses</label>
+        <input type="text" name="diagnoses" required>
+    
         <button type="submit">Submit</button>
       </form>
     </div>
@@ -320,7 +323,9 @@
         <input type="date" id="fin_birthdate" name="birthdate" readonly />
         <input type="text" id="fin_occupation" name="occupation" readonly />
         <input type="text" id="fin_guardian" name="guardian" readonly />
-        <label for="findings"><input type="text" name="findings">Findings</label>
+
+        <label for="findings">Findings</label>
+        <input type="text" name="findings">
 
         <button type="submit">Submit</button>
       </form>
