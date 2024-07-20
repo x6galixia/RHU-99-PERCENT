@@ -14,7 +14,6 @@ CREATE TABLE users (
 );
 
 CREATE TABLE patients (
-    -- patients
     unq_id VARCHAR(100) PRIMARY KEY,
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
@@ -30,7 +29,7 @@ CREATE TABLE patients (
     occupation VARCHAR(250),
     guardian VARCHAR(250),
     check_date DATE,
-    
+
     -- nurse
     height VARCHAR(50),
     weight VARCHAR(50),
@@ -41,21 +40,23 @@ CREATE TABLE patients (
     respiratory_rate VARCHAR(50),
     bmi VARCHAR(50),
     comment VARCHAR(250),
-    
+
     -- doctor
     follow_date DATE,
     diagnoses VARCHAR(250),
     findings VARCHAR(250),
-    category VARCHAR(250),
-    service VARCHAR(250),
+    category TEXT[],  -- Array of text
+    service TEXT[],   -- Array of text
     medicine VARCHAR(250),
     instruction VARCHAR(250),
     quantity INT,
     prescription_date DATE,
 
-    -- medtech
-    lab_result BYTEA
+    lab_result TEXT[]
 );
+
+
+
 --  cetizens info
 
 CREATE TABLE citizens (
@@ -109,6 +110,24 @@ CREATE TABLE beneficiary (
 	relationship_beneficiary VARCHAR(250)
 );
 
+CREATE TABLE records (
+    
+)
+
+CREATE TABLE prescription (
+    full_name VARCHAR(250),
+    age INT,
+    gender VARCHAR(10),
+    check_date DATE,
+    full_address VARCHAR(250),
+    guardian VARCHAR(250),
+    medicine VARCHAR(250),
+    instruction VARCHAR(250),
+    quantity INT,
+    reciever VARCHAR(250),
+    relationship VARCHAR(250),
+    doctor_name VARCHAR(250)
+)
 
 //this configuration includes three different databases the : RHU database, CITIZEN database and PHARMACY database
 1. the table users is inside the RHU database.
@@ -130,9 +149,9 @@ CREATE TABLE beneficiary (
 this project is agile and is prepared for upgrade.
 
 //DEVELOPERS 
-    backend & frontend: Kim A. Galicia
-    frontend: Adriane Garcia
-    Designers: Mark Jhondrex Alde
-               Chrizza Mae Lovina
-               Mark Philip Catalo
+    kim Galicia
+    adriane Garcia
+    mark jhondrex Alde
+    chrizza Mae Lovina
+    mark philip Catalo
 ----> 

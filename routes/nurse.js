@@ -11,14 +11,53 @@ const router = express.Router();
 router.use(methodOverride("_method"));
 router.use(setUserData);
 
-router.get(
-  "/nurse",
+router.get("/nurse",
   ensureAuthenticated,
   checkUserType("nurse"),
   (req, res) => {
     res.render("nurse", { user: req.user });
   }
 );
+
+router.get('/api/search/:searchValue', async (req, res) => {
+  const unq_id = req.params.searchValue;
+
+  try {
+    const result = await pool.query("SELECT * FROM patients WHERE unq_id = $1", [unq_id]);
+    if (result.rows.length > 0) {
+      res.json(result.rows[0]);
+    } else {
+      res.status(404).send("Patient not found");
+    }
+  } catch (err) {
+    console.error("Error querying database:", err.message);
+    res.status(500).send("Server error");
+  }
+});
+
+
+router.get("/api/citizen/:last_name/:first_name/:middle_name", async (req, res) => {
+  const { last_name, first_name, middle_name } = req.params;
+
+  try {
+    const queryText = `
+      SELECT * FROM citizen
+      WHERE last_name = $1 AND first_name = $2 AND middle_name = $3
+    `;
+    
+    const result = await citizenPool.query(queryText, [last_name, first_name, middle_name]);
+
+    if (result.rows.length > 0) {
+      res.json(result.rows[0]);
+    } else {
+      console.log(`User not found for last_name=${last_name}, first_name=${first_name}, middle_name=${middle_name}`);
+      res.status(404).send("User not found");
+    }
+  } catch (err) {
+    console.error("Error querying database:", err.message);
+    res.status(500).send("Server error");
+  }
+});
 
 router.get("/api/citizen/:id", async (req, res) => {
   const id = req.params.id;
@@ -37,6 +76,7 @@ router.get("/api/citizen/:id", async (req, res) => {
     res.status(500).send("Server error");
   }
 });
+
 
 router.post(
   "/nurse/send-patient-info",
@@ -111,7 +151,7 @@ router.post(
       ];
 
       const result = await pool.query(query, values);
-      res.render("nurse", { user: req.user });
+      res.redirect('/nurse');
     } catch (err) {
       console.error(err);
       res.sendStatus(500);

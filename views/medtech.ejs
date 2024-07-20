@@ -3,7 +3,10 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"
+    />
 
     <title>Medtech</title>
   </head>
@@ -23,6 +26,7 @@
       <thead>
         <tr>
           <th>Status</th>
+          <th>Unique ID</th>
           <th>Patient name</th>
           <th>Age</th>
           <th>Sex</th>
@@ -34,31 +38,93 @@
           <th>Services</th>
           <th>Laboratory request</th>
         </tr>
-        <tbody>
-          <% if (getPatientsLab && getPatientsLab.length > 0) { %>
-            <% getPatientsLab.forEach(pr => { %>
-                    <td>blank</td>
-                    <td><%= pr.fullname %></td>
-                    <td><%= pr.age %></td>
-                    <td><%= pr.gender %></td>
-                    <td><%= pr.birthdate %></td>
-                    <td><%= pr.guardian %></td>
-                    <td><%= pr.occupation %></td>
-                    <td><%= pr.date_now %></td>
-                    <td><%= pr.category %></td>
-                    <td><%= pr.service %></td>
-                    <td><%= pr.fullname %></td>
-              <% }) %>
-              <% } else { %>
-                <tr>
-                  <td colspan="11">No laboratory request.</td>
-                </tr>
-             <% } %>   
-          <tr>
-
-          </tr>
-        </tbody>
       </thead>
+      <tbody>
+        <% if (getPatientsLab && getPatientsLab.length > 0) { %> <%
+        getPatientsLab.forEach(pr => { %>
+        <tr>
+          <td>blank</td>
+          <td><%= pr.unq_id %></td>
+          <td><%= pr.fullname %></td>
+          <td><%= pr.age %></td>
+          <td><%= pr.gender %></td>
+          <td><%= pr.birthdate %></td>
+          <td><%= pr.guardian %></td>
+          <td><%= pr.occupation %></td>
+          <td><%= pr.check_date %></td>
+          <td><%= pr.category %></td>
+          <td><%= pr.service %></td>
+          <td>
+            <button
+              class="openLabRequests"
+              data-unq-id="<%= pr.unq_id %>"
+              data-check-date="<%= pr.check_date %>"
+              data-full-name="<%= pr.fullname %>"
+              data-age="<%= pr.age %>"
+              data-gender="<%= pr.gender %>"
+              data-birthdate="<%= pr.birthdate %>"
+              data-occupation="<%= pr.occupation %>"
+              data-guardian="<%= pr.guardian %>"
+              data-category="<%= pr.category %>"
+              data-service="<%= pr.service %>"
+            >
+              Laboratory Request
+            </button>
+          </td>
+        </tr>
+        <% }) %> <% } else { %>
+        <tr>
+          <td colspan="12">No laboratory request.</td>
+        </tr>
+        <% } %>
+      </tbody>
     </table>
+
+    <!-- request Form -->
+    <div id="addLabResultForm" style="display: none">
+      <form action="/add-LabResult" method="post" enctype="multipart/form-data">
+        <div id="closeAddLabResultBtn">&times;</div>
+        <h1>Findings</h1>
+        <input type="date" id="add_check_date" name="check_date" readonly />
+        <input type="text" id="add_unq_id" name="unq_id" readonly />
+        <input
+          type="text"
+          id="add_full_name"
+          name="full_name"
+          placeholder="Full Name"
+          readonly
+        />
+        <input
+          type="number"
+          id="add_age"
+          name="age"
+          placeholder="Age"
+          readonly
+        />
+        <input
+          type="text"
+          id="add_gender"
+          name="gender"
+          placeholder="Gender"
+          readonly
+        />
+        <input type="date" id="add_birthdate" name="birthdate" readonly />
+        <input type="text" id="add_occupation" name="occupation" readonly />
+        <input type="text" id="add_guardian" name="guardian" readonly />
+        <input type="text" id="add_category" name="category" readonly />
+        <input type="text" id="add_service" name="service" readonly />
+
+        <div id="imageFieldContainer" class="imageFieldContainer">
+          <div class="imageField">
+            <input type="file" name="lab_result" multiple required />
+          </div>
+        </div>
+        <button id="addMoreButton" type="button">Add more</button>
+
+        <button type="submit">Submit</button>
+      </form>
+    </div>
+    <script src="/js/websocket.js"></script>
+    <script src="/js/medtech-func.js"></script>
   </body>
 </html>

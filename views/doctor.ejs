@@ -46,6 +46,7 @@
       <div>
         <H1>PATIENTS INFORMATION</H1>
       </div>
+
   
       
         <!-- Search Form -->
@@ -191,6 +192,158 @@
         </table>
       </div>
     </div>
+    
+    </form>
+    <!-- Patients Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Date</th>
+          <th>Lastname</th>
+          <th>Firstname</th>
+          <th>Middle name</th>
+          <th>Purok/Street</th>
+          <th>Barangay</th>
+          <th>Town/City</th>
+          <th>Birthdate</th>
+          <th>Gender</th>
+          <th>Age</th>
+          <th>Phone no</th>
+          <th>Email</th>
+          <th>Philhealth no</th>
+          <th>Occupation</th>
+          <th>Guardian</th>
+          <th>Diagnoses</th>
+          <th>Findings</th>
+          <th>Medicine</th>
+          <th>instruction</th>
+          <th>Vital Signs</th>
+          <th>Prescribe</th>
+          <th>Laboratory request</th>
+          <th>Laboratory result</th>
+          <th>Diagnoses</th>
+          <th>Findings</th>
+        </tr>
+      </thead>
+      
+      <tbody>
+        <% if (patientListDrop && patientListDrop.length > 0) { %>
+          <% patientListDrop.forEach(pt => { %>
+            <tr>
+              <td><%= pt.unq_id %></td>
+              <td><%= pt.check_date %></td>
+              <td><%= pt.last_name %></td>
+              <td><%= pt.first_name %></td>
+              <td><%= pt.middle_name %></td>
+              <td><%= pt.address %></td>
+              <td><%= pt.barangay %></td>
+              <td><%= pt.town %></td>
+              <td><%= pt.birthdate %></td>
+              <td><%= pt.gender %></td>
+              <td><%= pt.age %></td>
+              <td><%= pt.phone %></td>
+              <td><%= pt.email %></td>
+              <td><%= pt.philhealth_no %></td>
+              <td><%= pt.occupation %></td>
+              <td><%= pt.guardian %></td>
+              <td><%= pt.diagnoses %></td>
+              <td><%= pt.findings %></td>
+              <td><%= pt.medicine %></td>
+              <td><%= pt.instruction %></td>
+              <td>
+                <!-- Vitals Button -->
+                <button class="openVitals"
+                  data-unq-id="<%= pt.unq_id %>"
+                  data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                  data-height="<%= pt.height %>"
+                  data-weight="<%= pt.weight %>"
+                  data-systolic="<%= pt.systolic %>"
+                  data-diastolic="<%= pt.diastolic %>"
+                  data-temperature="<%= pt.temperature %>"
+                  data-pulse-rate="<%= pt.pulse_rate %>"
+                  data-respiratory-rate="<%= pt.respiratory_rate %>"
+                  data-bmi="<%= pt.bmi %>"
+                  data-comment="<%= pt.comment %>">Vital Signs</button>
+              </td>
+              <td>
+                <!----------prescribe------>
+                <button class="openPrescribe"
+                data-unq-id="<%= pt.unq_id %>"
+                data-check-date="<%= pt.check_date %>"
+                data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                data-date="<%= pt.date_now %>"
+                data-age="<%= pt.age %>"
+                data-gender="<%= pt.gender %>"
+                data-birthdate="<%= pt.birthdate %>"
+                data-full-address="<%= pt.address %> <%= pt.barangay %> <%= pt.town %>"
+                data-occupation="<%= pt.occupation %>"
+                data-guardian="<%= pt.guardian %>"
+                data-doctor="<%= profession %> <%= surname %> <%= firstname %> <%= middle_initial %>"
+                >Prescribe</button>
+              </td>
+              <td>
+                <!-- Lab Request Button -->
+                <button class="openLabReq"
+                  data-unq-id="<%= pt.unq_id %>"
+                  data-check-date="<%= pt.check_date %>"
+                  data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                  data-date="<%= pt.date_now %>"
+                  data-age="<%= pt.age %>"
+                  data-gender="<%= pt.gender %>"
+                  data-birthdate="<%= pt.birthdate %>"
+                  data-occupation="<%= pt.occupation %>"
+                  data-guardian="<%= pt.guardian %>">Laboratory Request</button>
+              </td>
+              <td>
+                <!-----------lab result-->
+                <button class="openLabRes"
+                  data-unq-id="<%= pt.unq_id %>"
+                  data-check-date="<%= pt.check_date %>"
+                  data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                  data-date="<%= pt.date_now %>"
+                  data-age="<%= pt.age %>"
+                  data-gender="<%= pt.gender %>"
+                  data-birthdate="<%= pt.birthdate %>"
+                  data-occupation="<%= pt.occupation %>"
+                  data-guardian="<%= pt.guardian %>"
+                  data-lab-results='<%= JSON.stringify(pt.lab_result) %>'>Laboratory Result</button>
+              </td>
+              <td>
+                <!-------diagnoses-->
+                <button class="openDiagnose"
+                data-unq-id="<%= pt.unq_id %>"
+                data-check-date="<%= pt.check_date %>"
+                data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                data-date="<%= pt.date_now %>"
+                data-age="<%= pt.age %>"
+                data-gender="<%= pt.gender %>"
+                data-birthdate="<%= pt.birthdate %>"
+                data-occupation="<%= pt.occupation %>"
+                data-guardian="<%= pt.guardian %>">Diagnoses</button>
+              </td>
+              <td>
+                <!-------findings--->
+                <button class="openFindings"
+                data-unq-id="<%= pt.unq_id %>"
+                data-check-date="<%= pt.check_date %>"
+                data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                data-date="<%= pt.date_now %>"
+                data-age="<%= pt.age %>"
+                data-gender="<%= pt.gender %>"
+                data-birthdate="<%= pt.birthdate %>"
+                data-occupation="<%= pt.occupation %>"
+                data-guardian="<%= pt.guardian %>">Findings</button>
+              </td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr>
+            <td colspan="26">No patients.</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
 
     <!-- Vital Signs Form -->
     <div id="vitalForm" style="display: none">
@@ -215,7 +368,7 @@
 
     <!-- Prescribe Form -->
     <div id="prescribeForm" style="display: none">
-      <form>
+      <form action="/send-prescription" method="post">
         <div id="closePrescribeBtn">&times;</div>
         <h1>PRESCRIBE</h1>
         <input type="text" id="pres_unq_id" name="unq_id" placeholder="Unique ID" readonly />
@@ -224,8 +377,21 @@
         <input type="number" id="pres_age" name="age" placeholder="Age" readonly />
         <input type="text" id="pres_gender" name="gender" placeholder="Gender" readonly />
         <input type="date" id="pres_birthdate" name="birthdate" readonly />
+        <input type="text" id="pres_full_address" name="full_address" readonly />
         <input type="text" id="pres_occupation" name="occupation" readonly />
         <input type="text" id="pres_guardian" name="guardian" readonly />
+ 
+        <input type="text" id="pres_reciever" name="reciever" placeholder="reciever">
+        <input type="text" id="pres_relationship" name="relationship" placeholder="relationship">
+        <input type="text" id="search-box" name="medicine" placeholder="Search...">
+        <div id="suggestions" class="suggestions"></div>
+        <input type="text" id="pres_instruction" name="instruction" placeholder="instruction">
+        <label for="pres_quantity">quantity:</label>
+        <input type="number" id="pres_quantity" name="quantity">
+
+        <input type="text" id="pres_doctor" name="doctor_name" placeholder="Doctor" readonly>
+
+        <button type="submit">submit</button>
       </form>
     </div>
 
@@ -242,25 +408,41 @@
         <input type="date" id="req_birthdate" name="birthdate" readonly />
         <input type="text" id="req_occupation" name="occupation" readonly />
         <input type="text" id="req_guardian" name="guardian" readonly />
+        
+ <!-- Laboratory Request Form -->
+<div id="labRequestForm" style="display: none">
+  <form action="/labrequest" method="POST">
+    <div id="closeLabRequestBtn">&times;</div>
+    <h1>LABORATORY REQUEST</h1>
+    <input type="text" id="req_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+    <input type="date" id="req_check_date" name="check_date" readonly />
+    <input type="text" id="req_full_name" name="full_name" placeholder="Full Name" readonly />
+    <input type="number" id="req_age" name="age" placeholder="Age" readonly />
+    <input type="text" id="req_gender" name="gender" placeholder="Gender" readonly />
+    <input type="date" id="req_birthdate" name="birthdate" readonly />
+    <input type="text" id="req_occupation" name="occupation" readonly />
+    <input type="text" id="req_guardian" name="guardian" readonly />
 
-        <label for="category-dropdown">Category:</label>
-        <select id="category-dropdown" name="category">
-            <option value="default" disabled selected>Select a category</option>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-            <option value="option4" disabled>Option 4 (Disabled)</option>
+    <!-- Dynamic Category Fields Container -->
+    <div id="category-fields-container">
+      <!-- Initial Category Fields -->
+      <div class="category-fields">
+        <select class="category-dropdown" name="category">
+          <option value="default" disabled selected>Select a category</option>
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+          <option value="option4" disabled>Option 4 (Disabled)</option>
         </select>
 
-        <label for="service-dropdown">Service:</label>
-        <select id="service-dropdown" name="service">
-            <option value="default" disabled selected>Select a service</option>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-            <option value="option4" disabled>Option 4 (Disabled)</option>
+        <select class="service-dropdown" name="service">
+          <option value="default" disabled selected>Select a service</option>
+          <option value="option1">Option 1</option>
+          <option value="option2">Option 2</option>
+          <option value="option3">Option 3</option>
+          <option value="option4" disabled>Option 4 (Disabled)</option>
         </select>
-      </form>
+      </div>
     </div>
 
     <!-- Laboratory Result Form -->
@@ -278,6 +460,33 @@
         <input type="text" id="res_guardian" name="guardian" readonly />
       </form>
     </div>
+    
+    <!-- Add More Button -->
+    <button type="button" id="addMoreButton" onclick="addCategoryFields()">Add more</button>
+
+    <!-- Submit Button -->
+    <button type="submit">Submit</button>
+  </form>
+</div>
+
+      <!-- Laboratory Result Form -->
+      <div id="labResultForm" style="display: none">
+        <form>
+          <div id="closeLabResultBtn">&times;</div>
+          <h1>LABORATORY RESULT</h1>
+          <input type="text" id="res_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+          <input type="date" id="res_check_date" name="check_date" readonly />
+          <input type="text" id="res_full_name" name="full_name" placeholder="Full Name" readonly />
+          <input type="number" id="res_age" name="age" placeholder="Age" readonly />
+          <input type="text" id="res_gender" name="gender" placeholder="Gender" readonly />
+          <input type="date" id="res_birthdate" name="birthdate" readonly />
+          <input type="text" id="res_occupation" name="occupation" readonly />
+          <input type="text" id="res_guardian" name="guardian" readonly />
+          
+          <!-- Container for displaying multiple images -->
+          <ul id="labResultList"></ul>
+        </form>
+      </div>
 
     <!-- Diagnoses Form -->
     <div id="diagnoseForm" style="display: none">
@@ -316,7 +525,9 @@
         <input type="tex" name="findings">
       </form>
     </div>
+
     </main>
+    <script src="/js/websocket.js"></script>
     <script src="/js/doctor-func.js"></script>
   </body>
 </html>

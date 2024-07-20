@@ -1,10 +1,30 @@
 const express = require("express");
 const app = express();
-//--->DATABASES----
+const http = require("http");
+const WebSocket = require("ws");
+
+const server = http.createServer(app);
+
+const wss = new WebSocket.Server({ server });
+
+wss.on('connection', function connection(ws) {
+    console.log('A new client connected!');
+
+    ws.send('Welcome to the WebSocket server!');
+
+    ws.on('message', function incoming(message) {
+        console.log('received: %s', message);
+        ws.send(`You said: ${message}`);
+    });
+
+    ws.on('close', function close() {
+        console.log('Client disconnected');
+    });
+});
+
 const pool = require("./models/localdb");
 const citizenPool = require("./models/citizendb");
 const pharmacyPool = require("./models/pharmacydb");
-//----->
 const path = require("path");
 const passport = require("passport");
 require("dotenv").config();
@@ -67,6 +87,8 @@ app.use((req, res, next) => {
   next();
 });
 
+app.use('/uploads', express.static('uploads'));
+
 //---> initialize router
 app.use("/", loginRouter);
 app.use("/", scannerRouter);
@@ -79,6 +101,7 @@ app.get("/", (req, res) => {
   res.redirect("/login");
 });
 
-app.listen(process.env.PORT, () => {
+// Start the server
+server.listen(process.env.PORT, () => {
   console.log(`Server is up and running on port ${process.env.PORT}`);
 });
