@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", async () => {
   const idInput = document.getElementById("idInput");
   const generateButton = document.getElementById("generateButton");
   const searchButton = document.getElementById("searchButton");
+  
 
   generateButton.addEventListener("click", () => {
     const generatedId = generateId();
