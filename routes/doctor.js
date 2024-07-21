@@ -51,10 +51,10 @@ router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), 
         );
 
         await pool.query(
-            "UPDATE patients SET medicine = $1, instruction = $2 WHERE unq_id = $3", 
-            [medicine, instruction, unq_id]
-        );
-
+            "UPDATE patients SET medicine = medicine || $1, instruction = instruction || $2 WHERE unq_id = $3",
+            [[medicine], [instruction], unq_id]
+        );        
+        
         const patientListDrop = await getAllPatients();
         res.render('doctor', {
             patientListDrop,

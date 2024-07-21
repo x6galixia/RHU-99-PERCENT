@@ -47,8 +47,8 @@ CREATE TABLE patients (
     findings VARCHAR(250),
     category TEXT[],  -- Array of text
     service TEXT[],   -- Array of text
-    medicine VARCHAR(250),
-    instruction VARCHAR(250),
+    medicine TEXT[],
+    instruction TEXT[],
     quantity INT,
     prescription_date DATE,
 
