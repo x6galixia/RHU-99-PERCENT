@@ -55,6 +55,10 @@ CREATE TABLE patients (
     lab_result TEXT[]
 );
 
+-- i alter the table medicine and instruction to handle an array
+ALTER TABLE patients ALTER COLUMN medicine TYPE text[] USING array[medicine];
+ALTER TABLE patients ALTER COLUMN instruction TYPE text[] USING array[instruction];
+
 CREATE TABLE prescription (
     full_name VARCHAR(250),
     age INT,
