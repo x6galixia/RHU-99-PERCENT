@@ -75,7 +75,7 @@ CREATE TABLE prescription (
 );
 
 --  cetizens info
-CREATE TABLE citizens (
+CREATE TABLE citizen (
     unq_id VARCHAR(100) PRIMARY KEY,
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
@@ -103,6 +103,7 @@ CREATE TABLE inventory (
 	dosage VARCHAR(50),
 	reorder_level INT,
 	batch_number VARCHAR(250),
+    date_added DATE,
 	expiration DATE,
     product_quantity INT
 );
