@@ -18,12 +18,48 @@
       </div>
     </form>
 
-    <!----------inventory-->
-    <form action="/pharmacy/inventory" method="get">
-      <button type="submit">Inventory</button>
-    </form>
-
     <h1>PHARMACY</h1>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Product ID</th>
+          <th>Product code</th>
+          <th>Product name</th>
+          <th>Brand name</th>
+          <th>Supplier</th>
+          <th>Dosage form</th>
+          <th>Dosage</th>
+          <th>Reorder level</th>
+          <th>Batch number</th>
+          <th>Exiration</th>
+          <th>Quantity</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (medList && medList.length > 0) { %> <%
+          medList.forEach(med => { %>
+        <tr>
+          <td><%= med.product_id %></td>
+          <td><%= med.product_code %></td>
+          <td><%= med.product_name %></td>
+          <td><%= med.brand_name %></td>
+          <td><%= med.supplier %></td>
+          <td><%= med.dosage_form %></td>
+          <td><%= med.dosage %></td>
+          <td><%= med.reorder_level %></td>
+          <td><%= med.batch_number %></td>
+          <td><%= med.expiration %></td>
+          <td><%= med.product_quantity %></td>
+        </tr>
+
+        <% }) %> <% } else { %>
+        <tr>
+          <td colspan="7">No stock of medicine.</td>
+        </tr>
+        <% } %>
+      </tbody>
+    </table>
     <script src="/js/websocket.js"></script>
   </body>
 </html>

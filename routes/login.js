@@ -41,7 +41,7 @@ router.post("/login", checkNotAuthenticated, (req, res, next) => {
         case "doctor":
           return res.redirect("/doctor/dashboard");
         case "pharmacist":
-          return res.redirect("/pharmacy");
+          return res.redirect("/pharmacy/inventory");
         default:
           return res.redirect("/");
       }

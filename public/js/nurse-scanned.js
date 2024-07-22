@@ -23,10 +23,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     localStorage.removeItem("qrResult");
   }
-
+  
   const idInput = document.getElementById("idInput");
   const generateButton = document.getElementById("generateButton");
   const searchButton = document.getElementById("searchButton");
+  
 
   generateButton.addEventListener("click", () => {
     const generatedId = generateId();
@@ -49,10 +50,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   function generateId() {
     let result = '';
-    while (result.length < 12) {
+    const d = new Date().getTime().toString();
+    while (result.length < 4) {
         result += Math.floor(Math.random() * 10);
     }
-    return `RHU-${result}-ver`;
+    return `RHU-${d}${result}-unqid`;
   }
 
   // Function to fetch citizen data and populate form fields
