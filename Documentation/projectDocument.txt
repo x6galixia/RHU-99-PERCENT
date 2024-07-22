@@ -94,7 +94,7 @@ CREATE TABLE citizen (
 
 -- pharmacy
 CREATE TABLE inventory (
-    product_id VARCHAR(250),
+    product_id VARCHAR(250) PRIMARY KEY,
 	product_code VARCHAR(250),
 	product_name VARCHAR(250),
 	brand_name VARCHAR(250),
@@ -109,21 +109,23 @@ CREATE TABLE inventory (
 );
 
 CREATE TABLE beneficiary (
-	beneficiary_name VARCHAR(250),
-	beneficiary_gender VARCHAR(250),
+    id SERIAL PRIMARY KEY,
+	beneficiary_name VARCHAR(250) NOT NULL,
+	beneficiary_gender VARCHAR(50) NOT NULL,
 	beneficiary_address VARCHAR(250),
-	beneficiary_contact VARCHAR(250),
-	beneficiary_age INT,
-	senior_citizen VARCHAR(10),
-	pwd VARCHAR(10),
-	transaction_number VARCHAR(250),
-	quantity INT,
-	batch_number VARCHAR(250),
-	expiration_date DATE,
-	date_issued DATE,
-	prescribing_doctor VARCHAR(250),
-	requesting_person VARCHAR(250),
-	relationship_beneficiary VARCHAR(250)
+	beneficiary_contact VARCHAR(50),
+	beneficiary_age INT CHECK (beneficiary_age >= 0),
+	senior_citizen BOOLEAN,
+	pwd BOOLEAN,
+	transaction_number TEXT[],
+    product_details TEXT[],
+	quantity INT[],
+	batch_number TEXT[],
+	expiration_date DATE[],
+	date_issued DATE[],
+	prescribing_doctor TEXT[],
+	requesting_person TEXT[],
+	relationship_beneficiary TEXT[]
 );
 
 //this configuration includes three different databases the : RHU database, CITIZEN database and PHARMACY database
