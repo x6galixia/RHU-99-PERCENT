@@ -50,11 +50,11 @@
           <th>Medicine</th>
           <th>instruction</th>
           <th>Vital Signs</th>
-          <th>Prescribe</th>
           <th>Laboratory request</th>
           <th>Laboratory result</th>
           <th>Diagnose</th>
           <th>Findings</th>
+          <th>Prescribe</th>
         </tr>
       </thead>
       
@@ -98,26 +98,10 @@
                   data-comment="<%= pt.comment %>">Vital Signs</button>
               </td>
               <td>
-                <!----------prescribe------>
-                <button class="openPrescribe"
-                data-unq-id="<%= pt.unq_id %>"
-                data-check-date="<%= pt.check_date %>"
-                data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
-                data-date="<%= pt.date_now %>"
-                data-age="<%= pt.age %>"
-                data-gender="<%= pt.gender %>"
-                data-birthdate="<%= pt.birthdate %>"
-                data-full-address="<%= pt.address %> <%= pt.barangay %> <%= pt.town %>"
-                data-occupation="<%= pt.occupation %>"
-                data-guardian="<%= pt.guardian %>"
-                data-doctor="<%= profession %> <%= surname %> <%= firstname %> <%= middle_initial %>"
-                >Prescribe</button>
-              </td>
-              <td>
                 <!-- Lab Request Button -->
                 <button class="openLabReq"
-                  data-unq-id="<%= pt.unq_id %>"
-                  data-check-date="<%= pt.check_date %>"
+                data-unq-id="<%= pt.unq_id %>"
+                data-check-date="<%= pt.check_date %>"
                   data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
                   data-date="<%= pt.date_now %>"
                   data-age="<%= pt.age %>"
@@ -166,16 +150,32 @@
                 data-occupation="<%= pt.occupation %>"
                 data-guardian="<%= pt.guardian %>">Findings</button>
               </td>
+              <td>
+                <!----------prescribe------>
+                <button class="openPrescribe"
+                data-unq-id="<%= pt.unq_id %>"
+                data-check-date="<%= pt.check_date %>"
+                data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                data-date="<%= pt.date_now %>"
+                data-age="<%= pt.age %>"
+                data-gender="<%= pt.gender %>"
+                data-birthdate="<%= pt.birthdate %>"
+                data-full-address="<%= pt.address %> <%= pt.barangay %> <%= pt.town %>"
+                data-occupation="<%= pt.occupation %>"
+                data-guardian="<%= pt.guardian %>"
+                data-doctor="<%= profession %> <%= surname %> <%= firstname %> <%= middle_initial %>"
+                >Prescribe</button>
+              </td>
             </tr>
           <% }) %>
         <% } else { %>
           <tr>
             <td colspan="26">No patients.</td>
           </tr>
-        <% } %>
+          <% } %>
       </tbody>
     </table>
-
+    
     <!-- Vital Signs Form -->
     <div id="vitalForm" style="display: none">
       <form>
