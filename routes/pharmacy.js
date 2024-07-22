@@ -30,6 +30,31 @@ router.delete("/logout", (req, res) => {
   });
 });
 
+router.get("/pharmacy/beneficiary-records", async(req, res) => {
+  try {
+    const getListBeneficiary = await beneficiaryList();
+    res.render("beneficiary", {getListBeneficiary});
+  } catch (error) {
+    console.error("Error:", error);
+    res.sendStatus(500);
+  }
+});
+
+router.get("/pharmacy/dispense", async(req, res) => {
+  try {
+    const dispenseMed = await forDispense();
+    res.render("dispense", {dispenseMed});
+  } catch (error) {
+    console.error("Error:", error);
+    res.sendStatus(500);
+  }
+});
+
+router.get("/pharmacy/add-medicine", (req, res) => {
+  res.render("addmedicine");
+});
+
+
 //-------------------functions---------///
 
 async function inventoryLists() {
@@ -50,6 +75,36 @@ async function inventoryLists() {
   }
 }
 
+async function beneficiaryList() {
+  try {
+    const beneficiary = await pharmacyPool.query("SELECT * FROM beneficiary");
+    const peopleList = [];
+
+    if (beneficiary.rows.lenght > 0 ) {
+      peopleList = beneficiary.rows.map(list => ({
+        ...list
+      }))
+    }
+  } catch (err) {
+    console.log("Error: no data");
+  }
+}
+
+async function forDispense() {
+  try {
+    const dispense = await pool.query("SELECT * FROM prescription");
+    const dispenseList = [];
+
+    if (dispense.rows.length > 0) {
+      dispenseList = dispense.rows.map(list => ({
+        ...rows,
+        check_date: formatDate(list.check_date)
+      }))
+    }
+  } catch (err) {
+    console.log("Error: no data");
+  }
+}
 
 function setUserData(req, res, next) {
   if (req.isAuthenticated()) {
