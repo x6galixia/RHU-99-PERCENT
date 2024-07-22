@@ -127,13 +127,6 @@ CREATE TABLE beneficiary (
 	requesting_person TEXT[],
 	relationship_beneficiary TEXT[]
 );
-
-//this configuration includes three different databases the : RHU database, CITIZEN database and PHARMACY database
-1. the table users is inside the RHU database.
-2. the patient table is inside also the RHU database.
-3. the citizens table is inside the CITIZEN database.
-4. the inventory table is inside the PHARMACY database.
-
 ----> 
 
 //first create 3(three) separate database named {CITIZEN}{RHU}{PHARMACY} remember all caps.
@@ -142,15 +135,17 @@ CREATE TABLE beneficiary (
 //this configuration includes three different databases the : RHU database, CITIZEN database and PHARMACY database
 1. the table users is inside the RHU database.
 2. the patient table is inside also the RHU database.
-3. the citizens table is inside the CITIZEN database.
-4. the inventory table is inside the PHARMACY database.
+3. the prescription table is inside also the RHU database.
+4. the citizen table is inside the CITIZEN database.
+5. the inventory table is inside the PHARMACY database.
+5. the beneficiary table is inside the PHARMACY database.
 
 this project is agile and is prepared for upgrade.
 
 //DEVELOPERS 
-    kim Galicia
-    adriane Garcia
-    mark jhondrex Alde
-    chrizza Mae Lovina
-    mark philip Catalo
+    kim Galicia -- fullstack dev/ui/ux   
+    adriane Garcia -- frontend/ui/ux
+    mark jhondrex Alde -- frontend/ui/ux
+    chrizza Mae Lovina -- frontend/ui/ux
+    mark philip Catalo -- frontend/ui/ux
 ----> 
