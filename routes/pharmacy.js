@@ -11,14 +11,10 @@ const router = express.Router();
 router.use(methodOverride("_method"));
 router.use(setUserData);
 
-router.get("/pharmacy", ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
-    res.render("pharmacy");
-});
-
 router.get("/pharmacy/inventory", ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   try {
     const medList = await inventoryLists();
-    res.render("inventory", { medList });
+    res.render("pharmacy", { medList });
   } catch (error) {
     console.error("Error:", error);
     res.sendStatus(500);
@@ -43,13 +39,8 @@ async function inventoryLists() {
 
     if (medicineInventory.rows.length > 0) {
       medicineList = medicineInventory.rows.map(med => ({
-        med_id: med.med_id,
-        procurement_date: med.procurement_date,
-        date_added: med.date_added,
-        generic_name: med.generic_name,
-        brand_name: med.brand_name,
-        dosage: med.dosage,
-        quantity: med.quantity
+        ...med,
+        expiration: formatDate(med.expiration)
       }));
     }
     return medicineList;
