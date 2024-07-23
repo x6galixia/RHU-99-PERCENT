@@ -43,8 +43,41 @@
       <div>
         <H1>PATIENTS INFORMATION</H1>
       </div>
-
-  
+      
+    </form>
+    <!-- Patients Table -->
+    <table>
+      <thead>
+        <tr>
+          <th>User ID</th>
+          <th>Date</th>
+          <th>Lastname</th>
+          <th>Firstname</th>
+          <th>Middle name</th>
+          <th>Purok/Street</th>
+          <th>Barangay</th>
+          <th>Town/City</th>
+          <th>Birthdate</th>
+          <th>Gender</th>
+          <th>Age</th>
+          <th>Phone no</th>
+          <th>Email</th>
+          <th>Philhealth no</th>
+          <th>Occupation</th>
+          <th>Guardian</th>
+          <th>Diagnoses</th>
+          <th>Findings</th>
+          <th>Medicine</th>
+          <th>instruction</th>
+          <th>quantity</th>
+          <th>Vital Signs</th>
+          <th>Laboratory request</th>
+          <th>Laboratory result</th>
+          <th>Diagnose</th>
+          <th>Findings</th>
+          <th>Prescribe</th>
+        </tr>
+      </thead>
       
         <!-- Search Form -->
       <form action="/" method="/">
@@ -60,32 +93,112 @@
         <table>
           <thead>
             <tr>
-              <th>User ID</th>
-              <th>Date</th>
-              <th>Lastname</th>
-              <th>Firstname</th>
-              <th>Middle name</th>
-              <th>Purok/Street</th>
-              <th>Barangay</th>
-              <th>Town/City</th>
-              <th>Birthdate</th>
-              <th>Gender</th>
-              <th>Age</th>
-              <th>Phone no</th>
-              <th>Email</th>
-              <th>Philhealth no</th>
-              <th>Occupation</th>
-              <th>Guardian</th>
-              <th>Diagnoses</th>
-              <th>Findings</th>
-              <th>Medicine</th>
-              <th>instruction</th>
-              <th>Vital Signs</th>
-              <th>Laboratory request</th>
-              <th>Laboratory result</th>
-              <th>Diagnose</th>
-              <th>Findings</th>
-              <th>Prescribe</th>
+              <td><%= pt.unq_id %></td>
+              <td><%= pt.check_date %></td>
+              <td><%= pt.last_name %></td>
+              <td><%= pt.first_name %></td>
+              <td><%= pt.middle_name %></td>
+              <td><%= pt.address %></td>
+              <td><%= pt.barangay %></td>
+              <td><%= pt.town %></td>
+              <td><%= pt.birthdate %></td>
+              <td><%= pt.gender %></td>
+              <td><%= pt.age %></td>
+              <td><%= pt.phone %></td>
+              <td><%= pt.email %></td>
+              <td><%= pt.philhealth_no %></td>
+              <td><%= pt.occupation %></td>
+              <td><%= pt.guardian %></td>
+              <td><%= pt.diagnoses %></td>
+              <td><%= pt.findings %></td>
+              <td><%= pt.medicine %></td>
+              <td><%= pt.instruction %></td>
+              <td><%= pt.quantity %></td>
+              <td>
+                <!-- Vitals Button -->
+                <button class="openVitals"
+                  data-unq-id="<%= pt.unq_id %>"
+                  data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                  data-height="<%= pt.height %>"
+                  data-weight="<%= pt.weight %>"
+                  data-systolic="<%= pt.systolic %>"
+                  data-diastolic="<%= pt.diastolic %>"
+                  data-temperature="<%= pt.temperature %>"
+                  data-pulse-rate="<%= pt.pulse_rate %>"
+                  data-respiratory-rate="<%= pt.respiratory_rate %>"
+                  data-bmi="<%= pt.bmi %>"
+                  data-comment="<%= pt.comment %>">Vital Signs</button>
+              </td>
+              <td>
+                <!-- Lab Request Button -->
+                <button class="openLabReq"
+                data-unq-id="<%= pt.unq_id %>"
+                data-check-date="<%= pt.check_date %>"
+                  data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                  data-date="<%= pt.date_now %>"
+                  data-age="<%= pt.age %>"
+                  data-gender="<%= pt.gender %>"
+                  data-birthdate="<%= pt.birthdate %>"
+                  data-occupation="<%= pt.occupation %>"
+                  data-guardian="<%= pt.guardian %>">Laboratory Request</button>
+              </td>
+              <td>
+                <!-----------lab result-->
+                <button class="openLabRes"
+                  data-unq-id="<%= pt.unq_id %>"
+                  data-check-date="<%= pt.check_date %>"
+                  data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                  data-date="<%= pt.date_now %>"
+                  data-age="<%= pt.age %>"
+                  data-gender="<%= pt.gender %>"
+                  data-birthdate="<%= pt.birthdate %>"
+                  data-occupation="<%= pt.occupation %>"
+                  data-guardian="<%= pt.guardian %>"
+                  data-lab-results='<%= JSON.stringify(pt.lab_result) %>'>Laboratory Result</button>
+              </td>
+              <td>
+                <!-------diagnoses-->
+                <button class="openDiagnose"
+                data-unq-id="<%= pt.unq_id %>"
+                data-check-date="<%= pt.check_date %>"
+                data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                data-date="<%= pt.date_now %>"
+                data-age="<%= pt.age %>"
+                data-gender="<%= pt.gender %>"
+                data-birthdate="<%= pt.birthdate %>"
+                data-occupation="<%= pt.occupation %>"
+                data-guardian="<%= pt.guardian %>">Diagnose</button>
+              </td>
+              <td>
+                <!-------findings--->
+                <button class="openFindings"
+                data-unq-id="<%= pt.unq_id %>"
+                data-check-date="<%= pt.check_date %>"
+                data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                data-date="<%= pt.date_now %>"
+                data-age="<%= pt.age %>"
+                data-gender="<%= pt.gender %>"
+                data-birthdate="<%= pt.birthdate %>"
+                data-occupation="<%= pt.occupation %>"
+                data-guardian="<%= pt.guardian %>">Findings</button>
+              </td>
+              <td>
+                <!----------prescribe------>
+                <button class="openPrescribe"
+                data-unq-id="<%= pt.unq_id %>"
+                data-check-date="<%= pt.check_date %>"
+                data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                data-date="<%= pt.date_now %>"
+                data-age="<%= pt.age %>"
+                data-gender="<%= pt.gender %>"
+                data-birthdate="<%= pt.birthdate %>"
+                data-contact-number="<%= pt.phone %>"
+                data-full-address="<%= pt.address %> <%= pt.barangay %> <%= pt.town %>"
+                data-occupation="<%= pt.occupation %>"
+                data-guardian="<%= pt.guardian %>"
+                data-doctor="<%= profession %> <%= surname %> <%= firstname %> <%= middle_initial %>"
+                >Prescribe</button>
+              </td>
             </tr>
           </thead>
           
@@ -280,7 +393,34 @@
       </form>
     </div>
 
-    
+    <!-- Prescribe Form -->
+    <div id="prescribeForm" style="display: none">
+      <form action="/send-prescription" method="post">
+        <div id="closePrescribeBtn">&times;</div>
+        <h1>PRESCRIBE</h1>
+        <input type="text" id="pres_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+        <input type="date" id="pres_check_date" name="check_date" readonly />
+        <input type="text" id="pres_full_name" name="full_name" placeholder="Full Name" readonly />
+        <input type="number" id="pres_age" name="age" placeholder="Age" readonly />
+        <input type="text" id="pres_gender" name="gender" placeholder="Gender" readonly />
+        <input type="date" id="pres_birthdate" name="birthdate" readonly />
+        <input type="text" id="pres_phone" name="phone" readonly style="display: none;"> 
+        <input type="text" id="pres_full_address" name="full_address" readonly />
+        <input type="text" id="pres_occupation" name="occupation" readonly />
+        <input type="text" id="pres_guardian" name="guardian" readonly />
+ 
+        <input type="text" id="pres_reciever" name="reciever" placeholder="reciever">
+        <input type="text" id="pres_relationship" name="relationship" placeholder="relationship">
+        <input type="text" id="search-box" name="medicine" placeholder="Search...">
+        <div id="suggestions" class="suggestions"></div>
+        <input type="text" id="pres_instruction" name="instruction" placeholder="instruction">
+        <label for="pres_quantity">quantity:</label>
+        <input type="number" id="pres_quantity" name="quantity">
+        <input type="text" id="pres_doctor" name="doctor_name" placeholder="Doctor" readonly>
+
+        <button type="submit">submit</button>
+      </form>
+    </div>
 
  <!-- Laboratory Request Form -->
 <div id="labRequestForm" style="display: none">

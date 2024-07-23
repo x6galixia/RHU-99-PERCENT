@@ -18,6 +18,22 @@
       </div>
     </form>
 
+    <form action="/pharmacy/inventory" method="GET">
+      <button type="submit">Home</button>
+    </form>
+    <!--------beneficiary records-->
+    <form action="/pharmacy/beneficiary-records" method="GET">
+      <button type="submit">Beneficiary List</button>
+    </form>
+    <!------------dispense-->
+    <form action="/pharmacy/dispense" method="GET">
+      <button type="submit">Dispense</button>
+    </form>
+    <!------------add medicine-->
+    <form action="/pharmacy/add-medicine" method="GET">
+      <button type="submit">Add medicine</button>
+    </form>
+
     <h1>PHARMACY</h1>
 
     <table>
@@ -55,7 +71,7 @@
 
         <% }) %> <% } else { %>
         <tr>
-          <td colspan="7">No stock of medicine.</td>
+          <td colspan="11">No stock of medicine.</td>
         </tr>
         <% } %>
       </tbody>
