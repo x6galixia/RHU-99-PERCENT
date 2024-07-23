@@ -67,6 +67,32 @@ router.post("/pharmacy/add-medicine", async (req, res) => {
   }
 });
 
+router.get('/get', async (req, res) => {
+  const { query } = req.query;
+
+  if (!query) {
+      return res.status(400).send('Query parameter is required');
+  }
+
+  try {
+      const result = await pharmacyPool.query(
+          'SELECT batch_number, expiration FROM inventory WHERE product_name ILIKE $1 LIMIT 1',
+          [`${query}%`]
+      );
+
+      if (result.rows.length > 0) {
+          res.json(result.rows[0]);
+      } else {
+          res.json({});
+      }
+  } catch (err) {
+      console.error('Database query error:', err);
+      res.status(500).send('Server error');
+  }
+});
+
+
+
 //-------------------functions---------///
 
 async function inventoryLists() {
