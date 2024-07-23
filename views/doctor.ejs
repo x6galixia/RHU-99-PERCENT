@@ -49,6 +49,7 @@
           <th>Findings</th>
           <th>Medicine</th>
           <th>instruction</th>
+          <th>quantity</th>
           <th>Vital Signs</th>
           <th>Laboratory request</th>
           <th>Laboratory result</th>
@@ -82,6 +83,7 @@
               <td><%= pt.findings %></td>
               <td><%= pt.medicine %></td>
               <td><%= pt.instruction %></td>
+              <td><%= pt.quantity %></td>
               <td>
                 <!-- Vitals Button -->
                 <button class="openVitals"
@@ -160,6 +162,7 @@
                 data-age="<%= pt.age %>"
                 data-gender="<%= pt.gender %>"
                 data-birthdate="<%= pt.birthdate %>"
+                data-contact-number="<%= pt.phone %>"
                 data-full-address="<%= pt.address %> <%= pt.barangay %> <%= pt.town %>"
                 data-occupation="<%= pt.occupation %>"
                 data-guardian="<%= pt.guardian %>"
@@ -208,6 +211,7 @@
         <input type="number" id="pres_age" name="age" placeholder="Age" readonly />
         <input type="text" id="pres_gender" name="gender" placeholder="Gender" readonly />
         <input type="date" id="pres_birthdate" name="birthdate" readonly />
+        <input type="text" id="pres_phone" name="phone" readonly style="display: none;"> 
         <input type="text" id="pres_full_address" name="full_address" readonly />
         <input type="text" id="pres_occupation" name="occupation" readonly />
         <input type="text" id="pres_guardian" name="guardian" readonly />
