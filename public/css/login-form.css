@@ -6,8 +6,7 @@ body {
     background-position: center;
     margin: 0;
     padding: 0;
-    height: 100vh;
-    overflow: hidden; /* Hide scrollbars */
+    height: 100vh; /* Hide scrollbars */
   }
   #login-form {
     display: flex;

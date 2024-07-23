@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const openDiagnoseButtons = document.querySelectorAll(".openDiagnose");
   const openFindingsButtons = document.querySelectorAll(".openFindings");
 
+  const overlay = document.getElementById('overlay');
   const vitalForm = document.getElementById("vitalForm");
   const prescribeForm = document.getElementById("prescribeForm");
   const labRequestForm = document.getElementById("labRequestForm");
@@ -35,13 +36,19 @@ document.addEventListener("DOMContentLoaded", function () {
         this.dataset.respiratoryRate;
       document.getElementById("bmi").value = this.dataset.bmi;
       document.getElementById("comment").value = this.dataset.comment;
+      overlay.style.display = "block";
       vitalForm.style.display = "block";
     });
   });
 
   closeVitalsBtn.addEventListener("click", function () {
+    overlay.style.display = "none";
     vitalForm.style.display = "none";
   });
+  overlay.addEventListener('click', function () {
+    overlay.style.display = "none";
+    vitalForm.style.display = "none";
+});
 
   // Prescribe
   openPrescribeButtons.forEach((button) => {
@@ -251,3 +258,24 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //----------------------->>end
 });
+
+function toggleDropdown() {
+  document.getElementById("dropdownContent").classList.toggle("show");
+}
+
+window.onclick = function(event) {
+  if (!event.target.matches('.dropbtn')) {
+    var dropdowns = document.getElementsByClassName("dropdown-content");
+    for (var i = 0; i < dropdowns.length; i++) {
+      var openDropdown = dropdowns[i];
+      if (openDropdown.classList.contains('show')) {
+        openDropdown.classList.remove('show');
+      }
+    }
+  }
+}
+
+function logout() {
+  alert("Logging out...");
+  // Perform logout actions here, such as redirecting to a logout endpoint
+}

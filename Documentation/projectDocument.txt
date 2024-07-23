@@ -75,7 +75,7 @@ CREATE TABLE prescription (
 );
 
 --  cetizens info
-CREATE TABLE citizens (
+CREATE TABLE citizen (
     unq_id VARCHAR(100) PRIMARY KEY,
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
