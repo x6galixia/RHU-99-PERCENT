@@ -69,7 +69,7 @@ router.post("/pharmacy/add-medicine", ensureAuthenticated, checkUserType("pharma
 
 router.get('/get', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   const { query } = req.query;
-  console.log("hrllo",query);
+  console.log("Received query:", query);
 
   if (!query) {
       return res.status(400).send('Query parameter is required');
@@ -82,8 +82,10 @@ router.get('/get', ensureAuthenticated, checkUserType("pharmacist"), async (req,
       );
 
       if (result.rows.length > 0) {
+          console.log("Database query result:", result.rows[0]);
           res.json(result.rows[0]);
       } else {
+          console.log("No matching data found");
           res.json({});
       }
   } catch (err) {
@@ -91,6 +93,7 @@ router.get('/get', ensureAuthenticated, checkUserType("pharmacist"), async (req,
       res.status(500).send('Server error');
   }
 });
+
 
 router.post('/search-medicine', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   try {
@@ -114,6 +117,88 @@ router.post('/search-medicine', ensureAuthenticated, checkUserType("pharmacist")
       console.error("Error searching product:", err);
       req.flash("error", "An error occurred while searching for product: " + err.message);
       res.redirect('/pharmacy/inventory');
+  }
+});
+    
+router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
+  const client = await pharmacyPool.connect();
+  try {
+    const {
+      dosage, beneficiary_name, beneficiary_gender, beneficiary_address, beneficiary_contact, beneficiary_age,
+      transaction_number, batch_number, expiration_date, date_issued, product_details, quantity, prescribing_doctor,
+      requesting_person, relationship_beneficiary, unq_id
+    } = req.body;
+
+    const medinfo = product_details + dosage;
+
+    await client.query('BEGIN');
+
+    const formatArray = (value) => value ? Array.isArray(value) ? value : [value] : [];
+
+    await client.query(
+      `UPDATE beneficiary 
+       SET transaction_number = transaction_number || $1, 
+           batch_number = batch_number || $2, 
+           expiration_date = expiration_date || $3, 
+           date_issued = date_issued || $4, 
+           product_details = product_details || $5, 
+           quantity = quantity || $6, 
+           prescribing_doctor = prescribing_doctor || $7, 
+           requesting_person = requesting_person || $8, 
+           relationship_beneficiary = relationship_beneficiary || $9 
+       WHERE beneficiary_name = $10 
+         AND beneficiary_gender = $11 
+         AND beneficiary_address = $12 
+         AND beneficiary_contact = $13 
+         AND beneficiary_age = $14`,
+      [
+        formatArray(transaction_number),
+        formatArray(batch_number),
+        formatArray(expiration_date),
+        formatArray(date_issued),
+        formatArray(medinfo),
+        formatArray(quantity),
+        formatArray(prescribing_doctor),
+        formatArray(requesting_person),
+        formatArray(relationship_beneficiary),
+        beneficiary_name, beneficiary_gender, beneficiary_address, beneficiary_contact, beneficiary_age
+      ]
+    );
+
+    // Update inventory
+    const inventoryResult = await pharmacyPool.query(
+      'SELECT product_quantity FROM inventory WHERE product_name = $1 AND batch_number = $2 AND expiration = $3',
+      [product_details, batch_number, expiration_date]
+    );
+
+    if (inventoryResult.rows.length > 0) {
+      const currentQuantity = inventoryResult.rows[0].product_quantity;
+
+      if (currentQuantity >= quantity) {
+        const newQuantity = currentQuantity - quantity;
+
+        await pharmacyPool.query(
+          'UPDATE inventory SET product_quantity = $1 WHERE product_name = $2 AND batch_number = $3 AND expiration = $4',
+          [newQuantity, product_details, batch_number, expiration_date]
+        );
+
+        // Delete request from prescription table
+        await pool.query("DELETE FROM prescription WHERE unq_id = $1", [unq_id]);
+
+        await client.query('COMMIT');
+        res.redirect('/pharmacy/dispense');
+      } else {
+        throw new Error('Insufficient quantity in inventory');
+      }
+    } else {
+      throw new Error('Medicine not found in inventory');
+    }
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error("Error Adding dispense:", error);
+    res.redirect('/pharmacy/dispense');
+  } finally {
+    client.release();
   }
 });
 

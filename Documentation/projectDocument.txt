@@ -56,6 +56,7 @@ CREATE TABLE patients (
 );
 
 CREATE TABLE prescription (
+    unq_id SERIAL PRIMARY KEY,
     full_name VARCHAR(250),
     age INT,
     gender VARCHAR(10),
@@ -67,10 +68,11 @@ CREATE TABLE prescription (
     dosage VARCHAR(50),
     instruction VARCHAR(250),
     quantity INT,
-    reciever VARCHAR(250),
+    receiver VARCHAR(250),
     relationship VARCHAR(250),
     doctor_name VARCHAR(250)
 );
+
 
 --  cetizens info
 CREATE TABLE citizen (

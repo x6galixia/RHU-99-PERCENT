@@ -61,8 +61,8 @@ router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), 
         }
         
         await pool.query(
-            "INSERT INTO prescription (full_name, age, gender, check_date, full_address, phone, guardian, medicine, instruction, quantity, dosage, reciever, relationship, doctor_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14)", 
-            [full_name, age, gender, check_date, full_address, phone, guardian, medicine, instruction, quantity, dosage, reciever, relationship, doctor_name]
+            "INSERT INTO prescription (unq_id, full_name, age, gender, check_date, full_address, phone, guardian, medicine, instruction, quantity, dosage, reciever, relationship, doctor_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)", 
+            [unq_id, full_name, age, gender, check_date, full_address, phone, guardian, medicine, instruction, quantity, dosage, reciever, relationship, doctor_name]
         );       
         
         const patientListDrop = await getAllPatients();
