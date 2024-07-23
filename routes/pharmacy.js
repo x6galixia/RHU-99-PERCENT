@@ -30,7 +30,7 @@ router.delete("/logout", (req, res) => {
   });
 });
 
-router.get("/pharmacy/beneficiary-records", async(req, res) => {
+router.get("/pharmacy/beneficiary-records", ensureAuthenticated, checkUserType("pharmacist"), async(req, res) => {
   try {
     const getListBeneficiary = await beneficiaryList();
     const getListBeneficiaryIndex = await beneficiaryIndexList();
@@ -41,7 +41,7 @@ router.get("/pharmacy/beneficiary-records", async(req, res) => {
   }
 });
 
-router.get("/pharmacy/dispense", async(req, res) => {
+router.get("/pharmacy/dispense", ensureAuthenticated, checkUserType("pharmacist"), async(req, res) => {
   try {
     const dispenseMed = await forDispense();
     res.render("dispense", {dispenseMed});
@@ -55,7 +55,7 @@ router.get("/pharmacy/add-medicine", (req, res) => {
   res.render("addmedicine");
 });
 
-router.post("/pharmacy/add-medicine", async (req, res) => {
+router.post("/pharmacy/add-medicine", ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   try {
     const {product_id, product_code, product_name, brand_name, supplier, dosage_form, dosage, reorder_level, batch_number, date_added, expiration, product_quantity} = req.body;
   
@@ -67,8 +67,9 @@ router.post("/pharmacy/add-medicine", async (req, res) => {
   }
 });
 
-router.get('/get', async (req, res) => {
+router.get('/get', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   const { query } = req.query;
+  console.log("hrllo",query);
 
   if (!query) {
       return res.status(400).send('Query parameter is required');
@@ -76,7 +77,7 @@ router.get('/get', async (req, res) => {
 
   try {
       const result = await pharmacyPool.query(
-          'SELECT batch_number, expiration FROM inventory WHERE product_name ILIKE $1 LIMIT 1',
+          'SELECT batch_number, expiration FROM inventory WHERE product_name ILIKE $1',
           [`${query}%`]
       );
 
@@ -91,7 +92,30 @@ router.get('/get', async (req, res) => {
   }
 });
 
+router.post('/search-medicine', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
+  try {
+      const { search } = req.body;
 
+      const searchResult = await pool.query(
+          "SELECT * FROM inventory WHERE product_id ILIKE $1 OR product_name ILIKE $2",
+          [`%${search}%`, `%${search}%`]
+      );
+
+      const result = searchResult.rows.map(row => ({
+          ...row
+      }));
+
+      const medList = await inventoryLists();
+      res.render('pharmacy', {
+          medList: result,
+          user: req.user
+      });
+  } catch (err) {
+      console.error("Error searching product:", err);
+      req.flash("error", "An error occurred while searching for product: " + err.message);
+      res.redirect('/pharmacy/inventory');
+  }
+});
 
 //-------------------functions---------///
 
