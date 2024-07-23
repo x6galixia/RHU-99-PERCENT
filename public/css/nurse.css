@@ -277,8 +277,13 @@ html{
     border-radius: 20px;
     color: white;
     font-size: 20px;
+    cursor: pointer;
 }
 #submitted{
     display: flex;
     justify-content: end;
+}
+.label .required::after {
+    content: " *";
+    color: red;
 }
