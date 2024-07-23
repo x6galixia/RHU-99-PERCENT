@@ -60,6 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
       )
         .toISOString()
         .split("T")[0];
+      document.getElementById("pres_phone").value = this.dataset.contactNumber;
       document.getElementById("pres_full_address").value = this.dataset.fullAddress;
       document.getElementById("pres_occupation").value =
         this.dataset.occupation;

@@ -49,7 +49,7 @@ CREATE TABLE patients (
     service TEXT[],   -- Array of text
     medicine TEXT[],
     instruction TEXT[],
-    quantity INT,
+    quantity INT[],
     prescription_date DATE,
 
     lab_result TEXT[]
@@ -65,8 +65,10 @@ CREATE TABLE prescription (
     gender VARCHAR(10),
     check_date DATE,
     full_address VARCHAR(250),
+    phone VARCHAR(100),
     guardian VARCHAR(250),
     medicine VARCHAR(250),
+    dosage VARCHAR(50),
     instruction VARCHAR(250),
     quantity INT,
     reciever VARCHAR(250),
@@ -143,7 +145,7 @@ CREATE TABLE beneficiary (
 this project is agile and is prepared for upgrade.
 
 //DEVELOPERS 
-    kim Galicia -- fullstack dev/ui/ux   
+    kim Galicia -- fullstackdev/ui/ux   
     adriane Garcia -- frontend/ui/ux
     mark jhondrex Alde -- frontend/ui/ux
     chrizza Mae Lovina -- frontend/ui/ux

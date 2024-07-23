@@ -38,9 +38,10 @@
             <th>Full name</th>
             <th>Gender</th>
             <th>Address</th>
-            <th>Contact number</th>
             <th>Age</th>
+            <th>Phone no</th>
             <th>Medicine</th>
+            <th>Dosage</th>
             <th>Quantity</th>
             <th>Physician</th>
             <th>Requesting party</th>
@@ -53,10 +54,11 @@
           <tr>
             <td><%= list.full_name %></td>
             <td><%= list.gender %></td>
-            <td><%= list.address %></td>
-            <td><input type="text" name="contact_no" placeholder="contact no"></td>
+            <td><%= list.full_address %></td>
             <td><%= list.age %></td>
+            <td><%= list.phone %></td>
             <td><%= list.medicine %></td>
+            <td><%= list.dosage %></td>
             <td><%= list.quantity %></td>
             <td><%= list.doctor_name %></td>
             <td><%= list.reciever %></td>
@@ -65,7 +67,7 @@
   
           <% }) %> <% } else { %>
           <tr>
-            <td colspan="7">No list for dispense</td>
+            <td colspan="9">No list for dispense</td>
           </tr>
           <% } %>
         </tbody>
