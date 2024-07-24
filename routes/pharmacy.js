@@ -128,7 +128,6 @@ function formatDatefr(date) {
   return `${year}-${month}-${day}`;
 }
 
-// Update formatArray to use formatDate
 const formatArray = (data, type) => {
   if (Array.isArray(data)) {
     return data;
@@ -142,7 +141,6 @@ const formatArray = (data, type) => {
   return [data];
 };
 
-
 router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   const client = await pharmacyPool.connect();
   try {
@@ -152,7 +150,7 @@ router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist
       requesting_person, relationship_beneficiary, unq_id
     } = req.body;
 
-    const medinfo = product_details+ " " + dosage;
+    const medinfo = product_details + " " + dosage;
 
     const formattedData = {
       transaction_number: formatArray(transaction_number, 'text'),
@@ -166,7 +164,6 @@ router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist
       relationship_beneficiary: formatArray(relationship_beneficiary, 'text'),
       beneficiary_name,
       beneficiary_gender,
-      beneficiary_address,
       beneficiary_contact,
       beneficiary_age
     };
@@ -176,6 +173,29 @@ router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist
 
     await client.query('BEGIN');
 
+    // Check if beneficiary exists
+    const beneficiaryCheckQuery = `
+      SELECT id FROM beneficiary
+      WHERE beneficiary_name = $1
+        AND beneficiary_gender = $2
+        AND beneficiary_contact = $3
+        AND beneficiary_age = $4
+    `;
+    const beneficiaryCheckParams = [
+      formattedData.beneficiary_name,
+      formattedData.beneficiary_gender,
+      formattedData.beneficiary_contact,
+      formattedData.beneficiary_age
+    ];
+
+    const checkResult = await client.query(beneficiaryCheckQuery, beneficiaryCheckParams);
+    console.log('Beneficiary check result:', checkResult.rows);
+
+    if (checkResult.rows.length === 0) {
+      throw new Error('Beneficiary not found');
+    }
+
+    // Update beneficiary records
     const updateResult = await client.query(
       `UPDATE beneficiary 
        SET transaction_number = transaction_number || $1::text[], 
@@ -189,9 +209,8 @@ router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist
            relationship_beneficiary = relationship_beneficiary || $9::text[] 
        WHERE beneficiary_name = $10 
          AND beneficiary_gender = $11 
-         AND beneficiary_address = $12 
-         AND beneficiary_contact = $13 
-         AND beneficiary_age = $14`,
+         AND beneficiary_contact = $12 
+         AND beneficiary_age = $13`,
       [
         formattedData.transaction_number,
         formattedData.batch_number,
@@ -204,11 +223,10 @@ router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist
         formattedData.relationship_beneficiary,
         formattedData.beneficiary_name,
         formattedData.beneficiary_gender,
-        formattedData.beneficiary_address,
         formattedData.beneficiary_contact,
         formattedData.beneficiary_age
       ]
-    );    
+    );
 
     // Log the result of the update query
     console.log('Update result:', updateResult.rows);
