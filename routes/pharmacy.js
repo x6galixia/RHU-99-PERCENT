@@ -30,6 +30,227 @@ router.delete("/logout", (req, res) => {
   });
 });
 
+router.get("/pharmacy/beneficiary-records", ensureAuthenticated, checkUserType("pharmacist"), async(req, res) => {
+  try {
+    const getListBeneficiary = await beneficiaryList();
+    const getListBeneficiaryIndex = await beneficiaryIndexList();
+    res.render("beneficiary", {getListBeneficiary, getListBeneficiaryIndex});
+  } catch (error) {
+    console.error("Error:", error);
+    res.sendStatus(500);
+  }
+});
+
+router.get("/pharmacy/dispense", ensureAuthenticated, checkUserType("pharmacist"), async(req, res) => {
+  try {
+    const dispenseMed = await forDispense();
+    res.render("dispense", {dispenseMed});
+  } catch (error) {
+    console.error("Error:", error);
+    res.sendStatus(500);
+  }
+});
+
+router.get("/pharmacy/add-medicine", (req, res) => {
+  res.render("addmedicine");
+});
+
+router.post("/pharmacy/add-medicine", ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
+  try {
+    const {product_id, product_code, product_name, brand_name, supplier, dosage_form, dosage, reorder_level, batch_number, date_added, expiration, product_quantity} = req.body;
+  
+  await pharmacyPool.query("INSERT INTO inventory (product_id, product_code, product_name, brand_name, supplier, dosage_form, dosage, reorder_level, batch_number, date_added, expiration, product_quantity) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [product_id, product_code, product_name, brand_name, supplier, dosage_form, dosage, reorder_level, batch_number, date_added, expiration, product_quantity]);
+
+  res.render("addmedicine");
+  } catch (error) {
+    console.log("ERrror: Error adding medicine");
+  }
+});
+
+router.get('/get', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
+  const { query } = req.query;
+  console.log("Received query:", query);
+
+  if (!query) {
+      return res.status(400).send('Query parameter is required');
+  }
+
+  try {
+      const result = await pharmacyPool.query(
+          'SELECT batch_number, expiration FROM inventory WHERE product_name ILIKE $1',
+          [`${query}%`]
+      );
+
+      if (result.rows.length > 0) {
+          console.log("Database query result:", result.rows[0]);
+          res.json(result.rows[0]);
+      } else {
+          console.log("No matching data found");
+          res.json({});
+      }
+  } catch (err) {
+      console.error('Database query error:', err);
+      res.status(500).send('Server error');
+  }
+});
+
+
+router.post('/search-medicine', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
+  try {
+      const { search } = req.body;
+
+      const searchResult = await pool.query(
+          "SELECT * FROM inventory WHERE product_id ILIKE $1 OR product_name ILIKE $2",
+          [`%${search}%`, `%${search}%`]
+      );
+
+      const result = searchResult.rows.map(row => ({
+          ...row
+      }));
+
+      const medList = await inventoryLists();
+      res.render('pharmacy', {
+          medList: result,
+          user: req.user
+      });
+  } catch (err) {
+      console.error("Error searching product:", err);
+      req.flash("error", "An error occurred while searching for product: " + err.message);
+      res.redirect('/pharmacy/inventory');
+  }
+});
+    
+function formatDatefr(date) {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+// Update formatArray to use formatDate
+const formatArray = (data, type) => {
+  if (Array.isArray(data)) {
+    return data;
+  }
+  if (type === 'int') {
+    return [parseInt(data, 10)];
+  }
+  if (type === 'date') {
+    return [formatDatefr(data)];
+  }
+  return [data];
+};
+
+
+router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
+  const client = await pharmacyPool.connect();
+  try {
+    const {
+      dosage, beneficiary_name, beneficiary_gender, beneficiary_address, beneficiary_contact, beneficiary_age,
+      transaction_number, batch_number, expiration_date, date_issued, product_details, quantity, prescribing_doctor,
+      requesting_person, relationship_beneficiary, unq_id
+    } = req.body;
+
+    const medinfo = product_details+ " " + dosage;
+
+    const formattedData = {
+      transaction_number: formatArray(transaction_number, 'text'),
+      batch_number: formatArray(batch_number, 'text'),
+      expiration_date: formatArray(expiration_date, 'date'),
+      date_issued: formatArray(date_issued, 'date'),
+      product_details: formatArray(medinfo, 'text'),
+      quantity: formatArray(quantity, 'int'),
+      prescribing_doctor: formatArray(prescribing_doctor, 'text'),
+      requesting_person: formatArray(requesting_person, 'text'),
+      relationship_beneficiary: formatArray(relationship_beneficiary, 'text'),
+      beneficiary_name,
+      beneficiary_gender,
+      beneficiary_address,
+      beneficiary_contact,
+      beneficiary_age
+    };
+
+    // Log the data being updated
+    console.log('Data being updated:', formattedData);
+
+    await client.query('BEGIN');
+
+    const updateResult = await client.query(
+      `UPDATE beneficiary 
+       SET transaction_number = transaction_number || $1::text[], 
+           batch_number = batch_number || $2::text[], 
+           expiration_date = expiration_date || $3::date[], 
+           date_issued = date_issued || $4::date[], 
+           product_details = product_details || $5::text[], 
+           quantity = quantity || $6::int[], 
+           prescribing_doctor = prescribing_doctor || $7::text[], 
+           requesting_person = requesting_person || $8::text[], 
+           relationship_beneficiary = relationship_beneficiary || $9::text[] 
+       WHERE beneficiary_name = $10 
+         AND beneficiary_gender = $11 
+         AND beneficiary_address = $12 
+         AND beneficiary_contact = $13 
+         AND beneficiary_age = $14`,
+      [
+        formattedData.transaction_number,
+        formattedData.batch_number,
+        formattedData.expiration_date,
+        formattedData.date_issued,
+        formattedData.product_details,
+        formattedData.quantity,
+        formattedData.prescribing_doctor,
+        formattedData.requesting_person,
+        formattedData.relationship_beneficiary,
+        formattedData.beneficiary_name,
+        formattedData.beneficiary_gender,
+        formattedData.beneficiary_address,
+        formattedData.beneficiary_contact,
+        formattedData.beneficiary_age
+      ]
+    );    
+
+    // Log the result of the update query
+    console.log('Update result:', updateResult.rows);
+
+    // Continue with other operations
+    const inventoryResult = await pharmacyPool.query(
+      'SELECT product_quantity FROM inventory WHERE product_name = $1 AND batch_number = $2 AND expiration = $3',
+      [product_details, batch_number, expiration_date]
+    );
+
+    if (inventoryResult.rows.length > 0) {
+      const currentQuantity = inventoryResult.rows[0].product_quantity;
+
+      if (currentQuantity >= quantity) {
+        const newQuantity = currentQuantity - quantity;
+
+        await pharmacyPool.query(
+          'UPDATE inventory SET product_quantity = $1 WHERE product_name = $2 AND batch_number = $3 AND expiration = $4',
+          [newQuantity, product_details, batch_number, expiration_date]
+        );
+
+        // Delete request from prescription table
+        await pool.query("DELETE FROM prescription WHERE unq_id = $1", [unq_id]);
+
+        await client.query('COMMIT');
+        res.redirect('/pharmacy/dispense');
+      } else {
+        throw new Error('Insufficient quantity in inventory');
+      }
+    } else {
+      throw new Error('Medicine not found in inventory');
+    }
+  } catch (error) {
+    await client.query('ROLLBACK');
+    console.error("Error Adding dispense:", error);
+    res.redirect('/pharmacy/dispense');
+  } finally {
+    client.release();
+  }
+});
+
+
 //-------------------functions---------///
 
 async function inventoryLists() {
@@ -50,6 +271,74 @@ async function inventoryLists() {
   }
 }
 
+async function beneficiaryList() {
+  try {
+    const beneficiary = await pharmacyPool.query("SELECT * FROM beneficiary");
+    let peopleList = [];
+
+    if (beneficiary.rows.length > 0) {
+      peopleList = beneficiary.rows.map(list => ({
+        ...list
+      }));
+    }
+    return peopleList;
+  } catch (err) {
+    console.log("Error: no data");
+    return [];
+  }
+}
+
+async function beneficiaryIndexList() {
+  try {
+    const result = await pharmacyPool.query("SELECT * FROM beneficiary");
+    const peopleList = result.rows.map(row => {
+      const transactionNumber = Array.isArray(row.transaction_number) ? row.transaction_number : [];
+      const productDetails = Array.isArray(row.product_details) ? row.product_details : [];
+      const productQuantity = Array.isArray(row.quantity) ? row.quantity : [];
+      const batchNumber = Array.isArray(row.batch_number) ? row.batch_number : [];
+      const expirationDate = Array.isArray(row.expiration_date) ? row.expiration_date : [];
+      const dateIssued = Array.isArray(row.date_issued) ? row.date_issued : [];
+      const prescribingDoctor = Array.isArray(row.prescribing_doctor) ? row.prescribing_doctor : [];
+      const requestingPerson = Array.isArray(row.requesting_person) ? row.requesting_person : [];
+      const relationshipToBeneficiary = Array.isArray(row.relationship_beneficiary) ? row.relationship_beneficiary : [];
+      
+      return {
+        ...row,
+        transaction_number: transactionNumber,
+        product_details: productDetails,
+        quantity: productQuantity,
+        batch_number: batchNumber,
+        expiration_date: expirationDate,
+        date_issued: dateIssued,
+        prescribing_doctor: prescribingDoctor,
+        requesting_person: requestingPerson,
+        relationship_beneficiary: relationshipToBeneficiary
+      };
+    });
+    return peopleList;
+  } catch (err) {
+    console.error("Error: no data", err);
+    return [];
+  }
+}
+
+async function forDispense() {
+  try {
+    const dispense = await pool.query("SELECT * FROM prescription");
+    let dispenseList = [];
+
+    if (dispense.rows.length > 0) {
+      dispenseList = dispense.rows.map(list => ({
+        ...list,
+        check_date: formatDate(list.check_date)
+      }));
+    }
+    return dispenseList;
+  } catch (err) {
+    console.log("Error: no data");
+    return [];
+  }
+}
 
 function setUserData(req, res, next) {
   if (req.isAuthenticated()) {

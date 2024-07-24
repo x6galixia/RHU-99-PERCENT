@@ -36,16 +36,16 @@ document.addEventListener("DOMContentLoaded", function () {
         this.dataset.respiratoryRate;
       document.getElementById("bmi").value = this.dataset.bmi;
       document.getElementById("comment").value = this.dataset.comment;
-      overlay.style.display = "block";
       vitalForm.style.display = "block";
     });
   });
 
   closeVitalsBtn.addEventListener("click", function () {
-    overlay.style.display = "none";
+     overlay.style.display = "none";
     vitalForm.style.display = "none";
   });
-  overlay.addEventListener('click', function () {
+  
+    overlay.addEventListener('click', function () {
     overlay.style.display = "none";
     vitalForm.style.display = "none";
 });
@@ -67,6 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
       )
         .toISOString()
         .split("T")[0];
+      document.getElementById("pres_phone").value = this.dataset.contactNumber;
       document.getElementById("pres_full_address").value = this.dataset.fullAddress;
       document.getElementById("pres_occupation").value =
         this.dataset.occupation;
@@ -106,12 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
   closeLabRequestBtn.addEventListener("click", function () {
     labRequestForm.style.display = "none";
   });
-  overlay.addEventListener('click', function () {
-    overlay.style.display = "none";
-    labRequestForm.style.display = "none";
-});
-
-  
 
   //l-----------------lab results--------------
   openLabResButtons.forEach(button => {
@@ -263,25 +258,9 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 //----------------------->>end
-});
-
-function toggleDropdown() {
-  document.getElementById("dropdownContent").classList.toggle("show");
-}
-
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    for (var i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-
-function logout() {
+  
+  function logout() {
   alert("Logging out...");
   // Perform logout actions here, such as redirecting to a logout endpoint
 }
+});

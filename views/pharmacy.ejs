@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
-
+    <script src="/js/websocket.js"></script>
     <title>Pharmacy</title>
   </head>
   <body>
@@ -18,7 +18,28 @@
       </div>
     </form>
 
+    <form action="/pharmacy/inventory" method="GET">
+      <button type="submit">Home</button>
+    </form>
+    <!--------beneficiary records-->
+    <form action="/pharmacy/beneficiary-records" method="GET">
+      <button type="submit">Beneficiary List</button>
+    </form>
+    <!------------dispense-->
+    <form action="/pharmacy/dispense" method="GET">
+      <button type="submit">Dispense</button>
+    </form>
+    <!------------add medicine-->
+    <form action="/pharmacy/add-medicine" method="GET">
+      <button type="submit">Add medicine</button>
+    </form>
+
     <h1>PHARMACY</h1>
+
+    <form action="/search-medicine" method="post">
+      <input type="text" name="search" placeholder="search medicine">
+      <button type="submit">Search</button>
+    </form>
 
     <table>
       <thead>
@@ -55,11 +76,10 @@
 
         <% }) %> <% } else { %>
         <tr>
-          <td colspan="7">No stock of medicine.</td>
+          <td colspan="11">No stock of medicine.</td>
         </tr>
         <% } %>
       </tbody>
     </table>
-    <script src="/js/websocket.js"></script>
   </body>
 </html>

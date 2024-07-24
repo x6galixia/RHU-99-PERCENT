@@ -49,30 +49,30 @@ CREATE TABLE patients (
     service TEXT[],   -- Array of text
     medicine TEXT[],
     instruction TEXT[],
-    quantity INT,
+    quantity INT[],
     prescription_date DATE,
 
     lab_result TEXT[]
 );
 
--- i alter the table medicine and instruction to handle an array
-ALTER TABLE patients ALTER COLUMN medicine TYPE text[] USING array[medicine];
-ALTER TABLE patients ALTER COLUMN instruction TYPE text[] USING array[instruction];
-
 CREATE TABLE prescription (
+    unq_id SERIAL PRIMARY KEY,
     full_name VARCHAR(250),
     age INT,
     gender VARCHAR(10),
     check_date DATE,
     full_address VARCHAR(250),
+    phone VARCHAR(100),
     guardian VARCHAR(250),
     medicine VARCHAR(250),
+    dosage VARCHAR(50),
     instruction VARCHAR(250),
     quantity INT,
-    reciever VARCHAR(250),
+    receiver VARCHAR(250),
     relationship VARCHAR(250),
     doctor_name VARCHAR(250)
 );
+
 
 --  cetizens info
 CREATE TABLE citizen (
@@ -94,7 +94,7 @@ CREATE TABLE citizen (
 
 -- pharmacy
 CREATE TABLE inventory (
-    product_id VARCHAR(250),
+    product_id VARCHAR(250) PRIMARY KEY,
 	product_code VARCHAR(250),
 	product_name VARCHAR(250),
 	brand_name VARCHAR(250),
@@ -103,34 +103,30 @@ CREATE TABLE inventory (
 	dosage VARCHAR(50),
 	reorder_level INT,
 	batch_number VARCHAR(250),
+    date_added DATE,
 	expiration DATE,
     product_quantity INT
 );
 
 CREATE TABLE beneficiary (
-	beneficiary_name VARCHAR(250),
-	beneficiary_gender VARCHAR(250),
+    id SERIAL PRIMARY KEY,
+	beneficiary_name VARCHAR(250) NOT NULL,
+	beneficiary_gender VARCHAR(50) NOT NULL,
 	beneficiary_address VARCHAR(250),
-	beneficiary_contact VARCHAR(250),
-	beneficiary_age INT,
-	senior_citizen VARCHAR(10),
-	pwd VARCHAR(10),
-	transaction_number VARCHAR(250),
-	quantity INT,
-	batch_number VARCHAR(250),
-	expiration_date DATE,
-	date_issued DATE,
-	prescribing_doctor VARCHAR(250),
-	requesting_person VARCHAR(250),
-	relationship_beneficiary VARCHAR(250)
+	beneficiary_contact VARCHAR(50),
+	beneficiary_age INT CHECK (beneficiary_age >= 0),
+	senior_citizen BOOLEAN,
+	pwd BOOLEAN,
+	transaction_number TEXT[],
+    product_details TEXT[],
+	quantity INT[],
+	batch_number TEXT[],
+	expiration_date DATE[],
+	date_issued DATE[],
+	prescribing_doctor TEXT[],
+	requesting_person TEXT[],
+	relationship_beneficiary TEXT[]
 );
-
-//this configuration includes three different databases the : RHU database, CITIZEN database and PHARMACY database
-1. the table users is inside the RHU database.
-2. the patient table is inside also the RHU database.
-3. the citizens table is inside the CITIZEN database.
-4. the inventory table is inside the PHARMACY database.
-
 ----> 
 
 //first create 3(three) separate database named {CITIZEN}{RHU}{PHARMACY} remember all caps.
@@ -139,15 +135,17 @@ CREATE TABLE beneficiary (
 //this configuration includes three different databases the : RHU database, CITIZEN database and PHARMACY database
 1. the table users is inside the RHU database.
 2. the patient table is inside also the RHU database.
-3. the citizens table is inside the CITIZEN database.
-4. the inventory table is inside the PHARMACY database.
+3. the prescription table is inside also the RHU database.
+4. the citizen table is inside the CITIZEN database.
+5. the inventory table is inside the PHARMACY database.
+5. the beneficiary table is inside the PHARMACY database.
 
 this project is agile and is prepared for upgrade.
 
 //DEVELOPERS 
-    kim Galicia
-    adriane Garcia
-    mark jhondrex Alde
-    chrizza Mae Lovina
-    mark philip Catalo
+    kim Galicia -- fullstackdev/ui/ux   
+    adriane Garcia -- frontend/ui/ux
+    mark jhondrex Alde -- frontend/ui/ux
+    chrizza Mae Lovina -- frontend/ui/ux
+    mark philip Catalo -- frontend/ui/ux
 ----> 

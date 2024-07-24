@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="/css/doctor-func.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <script src="/js/websocket.js"></script>
     <title>Doctor</title>
   </head>
   <body>
@@ -80,6 +81,7 @@
               <th>Findings</th>
               <th>Medicine</th>
               <th>instruction</th>
+              <th>Quantity</th>
               <th>Vital Signs</th>
               <th>Laboratory request</th>
               <th>Laboratory result</th>
@@ -113,11 +115,12 @@
                   <td><%= pt.findings %></td>
                   <td><%= pt.medicine %></td>
                   <td><%= pt.instruction %></td>
+                  <td><%= pt.quantity %></td>
                   <td>
                     <!-- Vitals Button -->
                     <button class="openVitals"
                       data-unq-id="<%= pt.unq_id %>"
-                      data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                      data-full-name="<%= pt.first_name %> <%= pt.middle_name %> <%= pt.last_name %>"
                       data-height="<%= pt.height %>"
                       data-weight="<%= pt.weight %>"
                       data-systolic="<%= pt.systolic %>"
@@ -133,7 +136,7 @@
                     <button class="openLabReq"
                     data-unq-id="<%= pt.unq_id %>"
                     data-check-date="<%= pt.check_date %>"
-                      data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                      data-full-name="<%= pt.first_name %> <%= pt.middle_name %> <%= pt.last_name %>"
                       data-date="<%= pt.date_now %>"
                       data-age="<%= pt.age %>"
                       data-gender="<%= pt.gender %>"
@@ -146,7 +149,7 @@
                     <button class="openLabRes"
                       data-unq-id="<%= pt.unq_id %>"
                       data-check-date="<%= pt.check_date %>"
-                      data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                      data-full-name="<%= pt.first_name %> <%= pt.middle_name %> <%= pt.last_name %>"
                       data-date="<%= pt.date_now %>"
                       data-age="<%= pt.age %>"
                       data-gender="<%= pt.gender %>"
@@ -160,7 +163,7 @@
                     <button class="openDiagnose"
                     data-unq-id="<%= pt.unq_id %>"
                     data-check-date="<%= pt.check_date %>"
-                    data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                    data-full-name="<%= pt.first_name %> <%= pt.middle_name %> <%= pt.last_name %>"
                     data-date="<%= pt.date_now %>"
                     data-age="<%= pt.age %>"
                     data-gender="<%= pt.gender %>"
@@ -173,7 +176,7 @@
                     <button class="openFindings"
                     data-unq-id="<%= pt.unq_id %>"
                     data-check-date="<%= pt.check_date %>"
-                    data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                    data-full-name="<%= pt.first_name %> <%= pt.middle_name %> <%= pt.last_name %>"
                     data-date="<%= pt.date_now %>"
                     data-age="<%= pt.age %>"
                     data-gender="<%= pt.gender %>"
@@ -186,7 +189,7 @@
                     <button class="openPrescribe"
                     data-unq-id="<%= pt.unq_id %>"
                     data-check-date="<%= pt.check_date %>"
-                    data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                    data-full-name="<%= pt.first_name %> <%= pt.middle_name %> <%= pt.last_name %>"
                     data-date="<%= pt.date_now %>"
                     data-age="<%= pt.age %>"
                     data-gender="<%= pt.gender %>"
@@ -430,7 +433,6 @@
     </div>
     </div>
     </main>
-    <script src="/js/websocket.js"></script>
     <script src="/js/doctor-func.js"></script>
   </body>
 </html>
