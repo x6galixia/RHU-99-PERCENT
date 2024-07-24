@@ -120,6 +120,29 @@ router.post('/search-medicine', ensureAuthenticated, checkUserType("pharmacist")
   }
 });
     
+function formatDatefr(date) {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0'); // Months are zero-based
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+// Update formatArray to use formatDate
+const formatArray = (data, type) => {
+  if (Array.isArray(data)) {
+    return data;
+  }
+  if (type === 'int') {
+    return [parseInt(data, 10)];
+  }
+  if (type === 'date') {
+    return [formatDatefr(data)];
+  }
+  return [data];
+};
+
+
 router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   const client = await pharmacyPool.connect();
   try {
@@ -129,43 +152,68 @@ router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist
       requesting_person, relationship_beneficiary, unq_id
     } = req.body;
 
-    const medinfo = product_details + dosage;
+    const medinfo = product_details+ " " + dosage;
+
+    const formattedData = {
+      transaction_number: formatArray(transaction_number, 'text'),
+      batch_number: formatArray(batch_number, 'text'),
+      expiration_date: formatArray(expiration_date, 'date'),
+      date_issued: formatArray(date_issued, 'date'),
+      product_details: formatArray(medinfo, 'text'),
+      quantity: formatArray(quantity, 'int'),
+      prescribing_doctor: formatArray(prescribing_doctor, 'text'),
+      requesting_person: formatArray(requesting_person, 'text'),
+      relationship_beneficiary: formatArray(relationship_beneficiary, 'text'),
+      beneficiary_name,
+      beneficiary_gender,
+      beneficiary_address,
+      beneficiary_contact,
+      beneficiary_age
+    };
+
+    // Log the data being updated
+    console.log('Data being updated:', formattedData);
 
     await client.query('BEGIN');
 
-    const formatArray = (value) => value ? Array.isArray(value) ? value : [value] : [];
-
-    await client.query(
+    const updateResult = await client.query(
       `UPDATE beneficiary 
-       SET transaction_number = transaction_number || $1, 
-           batch_number = batch_number || $2, 
-           expiration_date = expiration_date || $3, 
-           date_issued = date_issued || $4, 
-           product_details = product_details || $5, 
-           quantity = quantity || $6, 
-           prescribing_doctor = prescribing_doctor || $7, 
-           requesting_person = requesting_person || $8, 
-           relationship_beneficiary = relationship_beneficiary || $9 
+       SET transaction_number = transaction_number || $1::text[], 
+           batch_number = batch_number || $2::text[], 
+           expiration_date = expiration_date || $3::date[], 
+           date_issued = date_issued || $4::date[], 
+           product_details = product_details || $5::text[], 
+           quantity = quantity || $6::int[], 
+           prescribing_doctor = prescribing_doctor || $7::text[], 
+           requesting_person = requesting_person || $8::text[], 
+           relationship_beneficiary = relationship_beneficiary || $9::text[] 
        WHERE beneficiary_name = $10 
          AND beneficiary_gender = $11 
          AND beneficiary_address = $12 
          AND beneficiary_contact = $13 
          AND beneficiary_age = $14`,
       [
-        formatArray(transaction_number),
-        formatArray(batch_number),
-        formatArray(expiration_date),
-        formatArray(date_issued),
-        formatArray(medinfo),
-        formatArray(quantity),
-        formatArray(prescribing_doctor),
-        formatArray(requesting_person),
-        formatArray(relationship_beneficiary),
-        beneficiary_name, beneficiary_gender, beneficiary_address, beneficiary_contact, beneficiary_age
+        formattedData.transaction_number,
+        formattedData.batch_number,
+        formattedData.expiration_date,
+        formattedData.date_issued,
+        formattedData.product_details,
+        formattedData.quantity,
+        formattedData.prescribing_doctor,
+        formattedData.requesting_person,
+        formattedData.relationship_beneficiary,
+        formattedData.beneficiary_name,
+        formattedData.beneficiary_gender,
+        formattedData.beneficiary_address,
+        formattedData.beneficiary_contact,
+        formattedData.beneficiary_age
       ]
-    );
+    );    
 
-    // Update inventory
+    // Log the result of the update query
+    console.log('Update result:', updateResult.rows);
+
+    // Continue with other operations
     const inventoryResult = await pharmacyPool.query(
       'SELECT product_quantity FROM inventory WHERE product_name = $1 AND batch_number = $2 AND expiration = $3',
       [product_details, batch_number, expiration_date]
@@ -201,6 +249,7 @@ router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist
     client.release();
   }
 });
+
 
 //-------------------functions---------///
 
