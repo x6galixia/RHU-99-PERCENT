@@ -24,6 +24,11 @@ body {
   }
   #rectang {
     width: 70%;
+    min-width: 350px;  /* Minimum width to ensure content fits */
+    max-width: 90%;  /* Maximum width to prevent overflow */
+    min-height: 450px;  /* Minimum height to ensure content fits */
+    max-height: 90%;  /* Maximum height to prevent overflow */
+
     background-color: white;
     margin-top: 10px;
     border-radius: 20px;

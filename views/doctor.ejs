@@ -285,11 +285,25 @@
  <!-- Laboratory Request Form -->
 <div id="labRequestForm" style="display: none">
   <form action="/labrequest" method="POST">
-    <div id="closeLabRequestBtn">&times;</div>
-    <h1>LABORATORY REQUEST</h1>
-    <input type="text" id="req_unq_id" name="unq_id" placeholder="Unique ID" readonly />
-    <input type="date" id="req_check_date" name="check_date" readonly />
+    <div class="popup-header">
+      <div id="head-pop">
+          <img id="heart" src="/images/Vector.png" alt="">
+          <h2>Laboratory Request</h2>
+      </div>
+      
+      <div id="closeLabRequestBtn">&times;</div>
+  </div>
+  <div class="row">
+    <label for="full_name">Name: </label>
     <input type="text" id="req_full_name" name="full_name" placeholder="Full Name" readonly />
+    <label for="unq_id">Unique ID: </label>
+    <input type="text" id="req_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+    <label for="check_date">Date: </label>
+    <input style="text-decoration: underline;" type="date" id="req_check_date" name="check_date" readonly />
+</div>
+    
+    <input type="date" id="req_check_date" name="check_date" readonly />
+    
     <input type="number" id="req_age" name="age" placeholder="Age" readonly />
     <input type="text" id="req_gender" name="gender" placeholder="Gender" readonly />
     <input type="date" id="req_birthdate" name="birthdate" readonly />

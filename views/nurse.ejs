@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="/css/nurse.css">
     
     <title>Nurse</title>
@@ -62,7 +64,7 @@
                     <div>
                         <input type="text" id="idInput" name="unq_id" placeholder="unique id">
                         <button id="generateButton" type="button">Generate ID</button>
-                       <button id="searchButton" type="button">Search ID</button> 
+                       <button id="searchButton" type="button"><i class="fas fa-search"></i></button> 
                     </div>
                         </div>
                         
@@ -83,12 +85,14 @@
                 <input type="text" id="middle_name" name="middle_name">
                 </div>
                 </div>
-                <label for="address">Home no./Street</label>
+                <div id="cheese">
+                    <label for="address">Home no./Street</label>
                 <input type="text" id="address" name="address">
                 <label for="barangay">Barangay</label>
                 <input type="text" id="barangay" name="barangay">
                 <label for="town">Town</label>
                 <input type="text" id="town" name="town">
+                </div>
                 <div id="separate">
                     <div class="label">
                         <label for="birthdate">Birthdate</label>

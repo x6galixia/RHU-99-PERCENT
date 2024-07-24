@@ -106,6 +106,12 @@ document.addEventListener("DOMContentLoaded", function () {
   closeLabRequestBtn.addEventListener("click", function () {
     labRequestForm.style.display = "none";
   });
+  overlay.addEventListener('click', function () {
+    overlay.style.display = "none";
+    labRequestForm.style.display = "none";
+});
+
+  
 
   //l-----------------lab results--------------
   openLabResButtons.forEach(button => {

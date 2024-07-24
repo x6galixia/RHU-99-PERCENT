@@ -152,6 +152,8 @@ html{
     border-bottom-left-radius: 20px;
     box-shadow: 0px 10px 10px 0px rgba(21, 21, 21, 0.25);
     width: 40%;
+    height: 660px; /* Set the desired height */
+    overflow-y: auto; /* Enable vertical scroll */
   }
   #tunga input{
     height: 30px;
@@ -160,7 +162,15 @@ html{
     border: 1px solid #393939;
     padding-left: 10px;
     font-size: 15px;
-    margin-bottom: 5px;
+    margin-bottom: 15px;
+  }
+  .address{
+    border-radius: 20px;
+    border-style: none;
+    border: 1px solid #393939;
+    padding-left: 10px;
+    font-size: 15px;
+    margin-bottom: 15px;
   }
   #tungadaman input{
     height: 30px;
@@ -174,8 +184,7 @@ html{
     display: flex;
     align-items: center;
   }
-  #tungadaman input{
-  }
+
   #tungadaman{
     display: flex;
     flex-direction: column;
@@ -286,4 +295,8 @@ html{
 .label .required::after {
     content: " *";
     color: red;
+}
+#cheese{
+  display: flex;
+  flex-direction: column;
 }
