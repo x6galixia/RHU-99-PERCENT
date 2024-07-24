@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
+    <script src="/js/websocket.js"></script>
     <title>Dispense</title>
 </head>
 <body>
@@ -52,6 +53,7 @@
             <% if (dispenseMed && dispenseMed.length > 0) { %>
                 <% dispenseMed.forEach(list => { %>
                     <tr
+                        data-unq_id="<%= list.unq_id %>"
                         data-full_name="<%= list.full_name %>"
                         data-gender="<%= list.gender %>"
                         data-full_address="<%= list.full_address %>"
@@ -86,7 +88,8 @@
     </table>
     <div id="dispenseForm" style="display: none;">
         <div id="closeDispenseBtn">&times;</div>
-        <form action="">
+        <form action="/dispense-medicine" method="post">
+            <input type="text" id="unq_id" name="unq_id" style="display: none;">
             <input type="text" id="beneficiary_name" name="beneficiary_name" readonly>
             <input type="text" id="beneficiary_gender" name="beneficiary_gender" readonly>
             <input type="text" id="beneficiary_address" name="beneficiary_address" readonly>
@@ -98,18 +101,15 @@
             <!------------------to be filled----------------->
             <input type="text" id="transaction_number" name="transaction_number" required placeholder="transaction number">
             <input type="text" id="batch_number" name="batch_number" placeholder="batch number">
-            <input type="text" id="expiration_date" name="expiration_date">
-            <input type="text" id="date_issued" name="date_issued" readonly>
+            <input type="date" id="expiration_date" name="expiration_date" readonly>
+            <input type="date" id="date_issued" name="date_issued" readonly>
             <!------------------medicine info---------------->
-            <input type="text" id="quantity" name="quantity" readonly>
+            <input type="number" id="quantity" name="quantity" readonly>
             <input type="text" id="dosage" name="dosage" readonly>
-            <input type="text" id="product_details" name="product_details" readonly>
+            <input type="text" id="product_details" name="product_details">
             <button type="submit">Dispense</button>
         </form>
     </div>
-    
-
-    <script src="/js/websocket.js"></script>
     <script src="/js/dispense-func.js"></script>
 </body>
 </html>

@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
     <link rel="stylesheet" href="/css/doctor-func.css" />
+    <script src="/js/websocket.js"></script>
     <title>Doctor</title>
   </head>
   <body>
@@ -157,7 +158,7 @@
                 <button class="openPrescribe"
                 data-unq-id="<%= pt.unq_id %>"
                 data-check-date="<%= pt.check_date %>"
-                data-full-name="<%= pt.first_name %> <%= pt.last_name %>"
+                data-full-name="<%= pt.first_name %> <%= pt.middle_name %> <%= pt.last_name %>"
                 data-date="<%= pt.date_now %>"
                 data-age="<%= pt.age %>"
                 data-gender="<%= pt.gender %>"
@@ -334,7 +335,6 @@
         <button type="submit">Submit</button>
       </form>
     </div>
-    <script src="/js/websocket.js"></script>
     <script src="/js/doctor-func.js"></script>
   </body>
 </html>
