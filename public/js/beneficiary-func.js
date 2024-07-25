@@ -1,5 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
 
+    function formatDate(dateString) {
+        const options = {
+            weekday: "short",
+            year: "numeric",
+            month: "short",
+            day: "numeric",
+        };
+        const date = new Date(dateString);
+        return date.toLocaleDateString("en-US", options);
+    }
+
     function fillInputs(
         beneficiary_name,
         beneficiary_gender,
@@ -28,7 +39,7 @@ document.addEventListener("DOMContentLoaded", function () {
         document.querySelector('input[name="pwd"]').value = pwd || '';
 
         const tableBody = document.querySelector('#beneficiaryIndexForm table tbody');
-        tableBody.innerHTML = ''; // Clear existing rows
+        tableBody.innerHTML = '';
 
         for (let i = 0; i < transaction_number.length; i++) {
             const row = document.createElement('tr');
@@ -37,8 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 <td><span>${product_details[i] || ''}</span><br></td>
                 <td><span>${quantity[i] || ''}</span><br></td>
                 <td><span>${batch_number[i] || ''}</span><br></td>
-                <td><span>${expiration_date[i] || ''}</span><br></td>
-                <td><span>${date_issued[i] || ''}</span><br></td>
+                <td><span>${formatDate(expiration_date[i]) || ''}</span><br></td>
+                <td><span>${formatDate(date_issued[i]) || ''}</span><br></td>
                 <td><span>${prescribing_doctor[i] || ''}</span><br></td>
                 <td><span>${requesting_person[i] || ''}</span><br></td>
                 <td><span>${relationship_beneficiary[i] || ''}</span><br></td>
