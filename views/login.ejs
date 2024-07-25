@@ -7,10 +7,10 @@
     <title>Login</title>
 </head>
 <body>
+    <% if (messages.error) { %>
+        <div><%= messages.error %></div>
+        <% } %>
     <main>
-        <% if (typeof message !== 'undefined') { %>
-            <p><%= message %></p>
-          <% } %>
         <form id="rectang" action="/login" method="post">
         <div id="Login-input">
             <div id="imahe">

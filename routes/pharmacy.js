@@ -13,9 +13,13 @@ router.use(setUserData);
 
 router.get("/pharmacy/inventory", ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   try {
+    const lowStockResult = await pharmacyPool.query('SELECT product_name, product_quantity FROM inventory WHERE product_quantity < 50');
+
+    const lowStockItems = lowStockResult.rows;
     const medList = await inventoryLists();
     res.render("pharmacy", { 
       medList,
+      lowStockItems,
       user: req.user });
   } catch (error) {
     console.error("Error:", error);
