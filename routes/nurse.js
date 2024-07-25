@@ -151,10 +151,10 @@ router.post(
       ];
 
       const result = await pool.query(query, values);
-      res.redirect('/nurse');
+      res.redirect('/nurse', {message: "Submitted succesfully!"});
     } catch (err) {
       console.error(err);
-      res.sendStatus(500);
+      res.sendStatus(500).json({message: "Failed to submit patient"});
     }
   }
 );

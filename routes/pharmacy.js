@@ -14,7 +14,9 @@ router.use(setUserData);
 router.get("/pharmacy/inventory", ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   try {
     const medList = await inventoryLists();
-    res.render("pharmacy", { medList });
+    res.render("pharmacy", { 
+      medList,
+      user: req.user });
   } catch (error) {
     console.error("Error:", error);
     res.sendStatus(500);
@@ -98,17 +100,22 @@ router.get('/get', ensureAuthenticated, checkUserType("pharmacist"), async (req,
 router.post('/search-medicine', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   try {
       const { search } = req.body;
+      console.log("Search term:", search);
 
-      const searchResult = await pool.query(
+      const searchResult = await pharmacyPool.query(
           "SELECT * FROM inventory WHERE product_id ILIKE $1 OR product_name ILIKE $2",
           [`%${search}%`, `%${search}%`]
       );
+
+      console.log("Search result:", searchResult.rows);
 
       const result = searchResult.rows.map(row => ({
           ...row
       }));
 
       const medList = await inventoryLists();
+      console.log("Inventory List:", medList);
+
       res.render('pharmacy', {
           medList: result,
           user: req.user
@@ -119,27 +126,6 @@ router.post('/search-medicine', ensureAuthenticated, checkUserType("pharmacist")
       res.redirect('/pharmacy/inventory');
   }
 });
-    
-function formatDatefr(date) {
-  const d = new Date(date);
-  const year = d.getFullYear();
-  const month = String(d.getMonth() + 1).padStart(2, '0'); // Months are zero-based
-  const day = String(d.getDate()).padStart(2, '0');
-  return `${year}-${month}-${day}`;
-}
-
-const formatArray = (data, type) => {
-  if (Array.isArray(data)) {
-    return data;
-  }
-  if (type === 'int') {
-    return [parseInt(data, 10)];
-  }
-  if (type === 'date') {
-    return [formatDatefr(data)];
-  }
-  return [data];
-};
 
 router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   const client = await pharmacyPool.connect();
@@ -326,8 +312,8 @@ async function beneficiaryIndexList() {
         product_details: productDetails,
         quantity: productQuantity,
         batch_number: batchNumber,
-        expiration_date: expirationDate,
-        date_issued: dateIssued,
+        expiration_date: formatDate(expirationDate),
+        date_issued: formatDate(dateIssued),
         prescribing_doctor: prescribingDoctor,
         requesting_person: requestingPerson,
         relationship_beneficiary: relationshipToBeneficiary
@@ -397,5 +383,26 @@ function formatDate(dateString) {
   const date = new Date(dateString);
   return date.toLocaleDateString("en-US", options);
 }
+
+function formatDatefr(date) {
+  const d = new Date(date);
+  const year = d.getFullYear();
+  const month = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+const formatArray = (data, type) => {
+  if (Array.isArray(data)) {
+    return data;
+  }
+  if (type === 'int') {
+    return [parseInt(data, 10)];
+  }
+  if (type === 'date') {
+    return [formatDatefr(data)];
+  }
+  return [data];
+};
 
 module.exports = router;

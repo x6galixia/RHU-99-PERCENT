@@ -153,6 +153,7 @@ router.post('/add-findings', ensureAuthenticated, checkUserType("doctor"), async
 router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
         const { search } = req.body;
+        console.log("Search term:", search);
 
         const searchResult = await pool.query(
             "SELECT * FROM patients WHERE unq_id ILIKE $1 OR last_name ILIKE $2",
