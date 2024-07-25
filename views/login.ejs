@@ -8,7 +8,9 @@
 </head>
 <body>
     <main>
-        
+        <% if (typeof message !== 'undefined') { %>
+            <p><%= message %></p>
+          <% } %>
         <form id="rectang" action="/login" method="post">
         <div id="Login-input">
             <div id="imahe">
@@ -49,8 +51,7 @@
                         </div>
                         <div>
                             <button id="Log-butt" type="submit">LOGIN</button>
-                        </div>
-                        
+                        </div>  
                     </div>
                 </div>
             </div>
