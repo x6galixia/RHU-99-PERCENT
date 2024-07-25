@@ -106,6 +106,10 @@ router.post('/search-medicine', ensureAuthenticated, checkUserType("pharmacist")
       const { search } = req.body;
       console.log("Search term:", search);
 
+      const lowStockResult = await pharmacyPool.query('SELECT product_name, product_quantity FROM inventory WHERE product_quantity < 50');
+
+      const lowStockItems = lowStockResult.rows;
+
       const searchResult = await pharmacyPool.query(
           "SELECT * FROM inventory WHERE product_id ILIKE $1 OR product_name ILIKE $2",
           [`%${search}%`, `%${search}%`]
@@ -122,6 +126,7 @@ router.post('/search-medicine', ensureAuthenticated, checkUserType("pharmacist")
 
       res.render('pharmacy', {
           medList: result,
+          lowStockItems,
           user: req.user
       });
   } catch (err) {
