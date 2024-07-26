@@ -3,36 +3,62 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel = "stylesheet" href = "/css/beneficiary.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
     <script src="/js/websocket.js"></script>
     <title>Beneficiary Records</title>
 </head>
 <body>
-    <!------------user-->
-    <%= surname %> <%= firstname %> <%= middle_initial %> <%= profession %>
 
-    <!---------logout-->
-    <form action="/logout?_method=DELETE" method="POST">
-        <div>
-            <button type="submit">Log out</button>
-        </div>
-    </form>
-    <!--------beneficiary records-->
-    <form action="/pharmacy/inventory" method="GET">
-        <button type="submit">Home</button>
-    </form>
-    <!--------beneficiary records-->
-    <form action="/pharmacy/beneficiary-records" method="GET">
-        <button type="submit">Beneficiary List</button>
-    </form>
-    <!------------dispense-->
-    <form action="/pharmacy/dispense" method="GET">
-        <button type="submit">Dispense</button>
-    </form>
-    <!------------add medicine-->
-    <form action="/pharmacy/add-medicine" method="GET">
-        <button type="submit">Add medicine</button>
-    </form>
+<!----------------------Header-------------------->
+
+    <header class = "py-1">
+        <nav id = "navbar">
+            <div id = "logo2">
+                <div class = "openbtn" onclick = "toggleNav()">&#9776</div>
+                <img id = "logoing" src = "/images/Group 206.png" alt = "">
+            </div>
+
+            <div id = "sidebar" class = "sidebar">
+                <div id = "profile-sec">
+                    <div id = "meow">
+                        <p class = "infos" id = "info"><%= surname %> <%= firstname %> <%= middle_initial %></p>
+                        <p class = "infor" id = "info"><%= profession %></p>
+                    </div>
+                </div>
+
+                <div id = "features">
+                    <hr>
+                    <!--------inventory records-->
+                        <form action="/pharmacy/inventory" method="GET">
+                            <button type="submit">Home</button>
+                        </form>
+                    <!--------beneficiary records-->
+                         <form action="/pharmacy/beneficiary-records" method="GET">
+                            <button type="submit">Beneficiary List</button>
+                        </form>
+                    <!------------dispense-->
+                         <form action="/pharmacy/dispense" method="GET">
+                             <button type="submit">Dispense</button>
+                        </form>
+                    <!------------add medicine-->
+                        <form action="/pharmacy/add-medicine" method="GET">
+                            <button type="submit">Add medicine</button>
+                        </form>
+                    <!---------logout-->
+                    <form action="/logout?_method=DELETE" method="POST">
+                        <div>
+                            <button type="submit">Log out</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!---------------------Beneficiary Table----------------->
+    <div>
+        <h1 class = "title">Beneficiary Records</h1>
     <table>
         <thead>
             <tr>
@@ -82,6 +108,7 @@
             <% } %>
         </tbody>
     </table>
+    </div>
 
     <!-----------beneficiary index form-->
     <div id="beneficiaryIndexForm" style="display: none;">

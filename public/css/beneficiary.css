@@ -1,0 +1,286 @@
+body {
+    font-family: Ariel, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+#navbar{
+    height: 40%;
+    width: 100%;
+    background-color:  #44A130;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0;
+}
+
+#logo2{
+    display: flex;
+    align-items: center;
+    padding: 20px 20px;
+    
+}
+#logoing{
+    height: 50px;
+    margin-left: 20px;
+}
+
+#menu{
+    margin-bottom: 10px;
+}
+
+.dropbtn{
+    height: 50px;
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+.dropbtn {
+    color: white;
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+  }
+  
+.dropbtn i {
+    margin-right: 8px;
+  }
+  
+.dropbtn:hover, .dropbtn:focus {
+    background-color: #3e8e41;
+    border-radius: 40px;
+  }
+  
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 250px;
+    height: 140px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+    left: -190px;
+  }
+
+#info{
+    margin: 0;
+  }
+
+.infos{
+    font-family: sans-serif;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+.infor{
+    font-family: sans-serif;
+    color: rgb(125, 125, 125);
+  }
+  
+#meow{
+    margin-right: 10px;
+  }
+  
+#profile2{
+    height: 40px;
+    cursor: pointer;
+  }
+  
+#profile-sec{
+    display: flex;
+    padding-top: 20px;
+    padding-left: 20px;
+  }
+  
+#names{
+    display: flex;
+    flex-direction: column;
+  }
+  
+#log-butt{
+    border-style: none;
+    width: 92%;
+    padding-top: 14px;
+    padding-bottom: 12px; 
+    margin-left: 10px; 
+    font-size: 20px;
+    background-color: #f9f9f9;
+    text-align: left;
+  }
+ 
+#log-butt:hover{
+    background-color: #FF007F;
+    color: white;
+
+  }
+  
+.fa{
+    font-size: 20px;
+    margin-right: 20px;
+  }
+
+.sidebar {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1111;
+    top: 0;
+    left: 0;
+    background-color: #f4f4f4;
+    overflow-x: hidden;
+    transition: 0.5s;
+    padding-top: 0px;
+    margin-top: 80px;
+    border: 1px solid #cacaca ;
+}
+
+.openbtn {
+    font-size: 25px;
+    cursor: pointer;
+    color: white;
+    padding: 0px 15px;
+    background-color: #5cb648;
+    border-radius: 10px;
+    font-weight: 1000;
+}
+  
+.openbtn:hover {
+    color: rgb(78, 61, 61);
+}
+
+#features {
+    width: 250px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-right: 1px solid #ddd;
+    font-family: Arial, sans-serif;
+}
+
+#features button {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 10px;
+    background-color: #ffffff;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background-color 0.36;
+    margin-bottom: 10px;
+    text-align: leftt;
+}
+
+#features button:hover {
+    background-color: #f0f0f0;
+}
+
+#features form {
+    margin: 0;
+    padding: 0;
+}
+
+#features form[action*="logout"] button {
+    background-color: #ff0066;
+    color: white;
+    border: none;
+}
+
+#features form[action8="logout"] button:hover {
+    background-color: #e6005c;
+}
+
+table {
+    width: 95%;
+    border-collapse: collapse;
+    margin: auto;
+}
+
+table, th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+th, td {
+    padding: 20px;
+    text-align: center;
+}
+
+th {
+    background-color: #44A130;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+tbody tr:hover {
+    background-color: #ddd;
+}
+
+
+.title {
+    font-family: 'Poppins', sans-serif;
+    font-style: italic;
+    color: #FF007F;
+    text-align: center;
+    font-weight: 600;
+    font-size: 40px;
+    margin-top: 20px;
+}
+
+#beneficiaryIndexForm {
+    display: none;
+    border: 1px solid #000;
+    padding: 20px;
+    width: 500px;
+    margin: 0 auto;
+    position: relative;
+}
+
+#beneficiaryIndexForm #closeIndexBtn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+#beneficiaryIndexForm form {
+    display: flex;
+    flex-direction: column;
+}
+
+#beneficiaryIndexForm form input {
+    margin-bottom: 10px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    width: 100%
+}
+
+#beneficiaryIndexForm form input [readonly] {
+    background-color: #f0f0f0;
+}
+
+#beneficiaryIndexForm form table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+#beneficiaryIndexForm form table th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+}
