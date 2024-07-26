@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <link rel="stylesheet" href="/css/nurse.css">
-    
+
     <title>Nurse</title>
 </head>
 <body>
@@ -42,7 +42,13 @@
 
     
     <!---------------------generate id and search id------------------>
- 
+
+    <% if (message && message.error) { %>
+        <p><%= message.error %></p> 
+    <% } %>
+    <% if (message && message.success) { %>
+        <p><%= message.success %></p> 
+    <% } %>
     <form action="/nurse/send-patient-info" method="post">
         <div id="allAround">
             <div id="tunga">
@@ -161,7 +167,6 @@
             <input type="text" id="weight" name="weight" required>
             </div>
             </div>
-
             <div id="separates">
                 <div class="label">
                     <label class="required" for="temperature">Temperature</label>
@@ -202,9 +207,19 @@
             </div>
         </div>
         </div>
+        <label for="pulse_rate">Pulse rate</label>
+        <input type="text" id="pulse_rate" name="pulse_rate">
+        <label for="respiratory_rate">Respiratory rate</label>
+        <input type="text" id="respiratory_rate" name="respiratory_rate">
+        <label for="bmi">BMI</label>
+        <input type="text" id="bmi" name="bmi">
+
+        <label for="comment">Comment</label>
+        <input type="text" id="comment" name="comment">
+        <br>
+        <button type="submit">Submit</button>
 
     </form>
-    <script src="/js/websocket.js"></script>
     <script src="/js/nurse-scanned.js"></script>
 </body>
 </html>

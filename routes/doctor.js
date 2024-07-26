@@ -10,9 +10,13 @@ router.use(setUserData);
 
 router.get("/doctor/dashboard", ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+
+        const medResults = medResultAvailable.rows;
         const patientListDrop = await getAllPatients();
         res.render("doctor", {
             patientListDrop,
+            medResults,
             user: req.user
         });
     } catch (err) {
@@ -43,21 +47,35 @@ router.get('/search', async (req, res) => {
 
 router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
-        const { unq_id, full_name, age, gender, check_date, full_address, guardian, medicine, instruction, quantity, reciever, relationship, doctor_name } = req.body;
-        
-        await pool.query(
-            "INSERT INTO prescription (full_name, age, gender, check_date, full_address, guardian, medicine, instruction, quantity, reciever, relationship, doctor_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", 
-            [full_name, age, gender, check_date, full_address, guardian, medicine, instruction, quantity, reciever, relationship, doctor_name]
-        );
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+
+        const medResults = medResultAvailable.rows;
+        let { unq_id, full_name, age, gender, check_date, full_address, phone, guardian, medicine, instruction, quantity, reciever, relationship, doctor_name } = req.body;
 
         await pool.query(
-            "UPDATE patients SET medicine = medicine || $1, instruction = instruction || $2 WHERE unq_id = $3",
-            [[medicine], [instruction], unq_id]
-        );        
-        
+            "UPDATE patients SET medicine = medicine || $1, instruction = instruction || $2, quantity = quantity || $3 WHERE unq_id = $4",
+            [[medicine], [instruction], [quantity], unq_id]
+        );
+
+        let dosage = null;
+
+        let regex = /(.*)\s(\d+(mg|ml))/;
+        let match = medicine.match(regex);
+
+        if (match) {
+            medicine = match[1];
+            dosage = match[2];
+        }
+
+        await pool.query(
+            "INSERT INTO prescription (unq_id, full_name, age, gender, check_date, full_address, phone, guardian, medicine, instruction, quantity, dosage, reciever, relationship, doctor_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)", 
+            [unq_id, full_name, age, gender, check_date, full_address, phone, guardian, medicine, instruction, quantity, dosage, reciever, relationship, doctor_name]
+        );
+
         const patientListDrop = await getAllPatients();
         res.render('doctor', {
             patientListDrop,
+            medResults,
             user: req.user
         });
     } catch (err) {
@@ -67,8 +85,12 @@ router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), 
     }
 });
 
+
 router.post('/labrequest', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+
+        const medResults = medResultAvailable.rows;
         const { unq_id, category, service } = req.body;
 
         await pool.query('BEGIN');
@@ -90,6 +112,7 @@ router.post('/labrequest', ensureAuthenticated, checkUserType("doctor"), async (
         console.log("Updated patient list:", patientListDrop);
         res.render('doctor', {
             patientListDrop,
+            medResults,
             user: req.user
         });
 
@@ -103,6 +126,9 @@ router.post('/labrequest', ensureAuthenticated, checkUserType("doctor"), async (
 
 router.post('/add-diagnoses', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+
+        const medResults = medResultAvailable.rows;
         const { unq_id, diagnoses } = req.body;
 
         const query = "UPDATE patients SET diagnoses = $1 WHERE unq_id = $2";
@@ -111,6 +137,7 @@ router.post('/add-diagnoses', ensureAuthenticated, checkUserType("doctor"), asyn
         const patientListDrop = await getAllPatients();
         res.render('doctor', {
             patientListDrop,
+            medResults,
             user: req.user
         });
     } catch (err) {
@@ -122,6 +149,9 @@ router.post('/add-diagnoses', ensureAuthenticated, checkUserType("doctor"), asyn
 
 router.post('/add-findings', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+
+        const medResults = medResultAvailable.rows;
         const { unq_id, findings } = req.body;
 
         const query = "UPDATE patients SET findings = $1 WHERE unq_id = $2";
@@ -130,6 +160,7 @@ router.post('/add-findings', ensureAuthenticated, checkUserType("doctor"), async
         const patientListDrop = await getAllPatients();
         res.render('doctor', {
             patientListDrop,
+            medResults,
             user: req.user
         });
     } catch (err) {
@@ -141,7 +172,11 @@ router.post('/add-findings', ensureAuthenticated, checkUserType("doctor"), async
 
 router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+
+        const medResults = medResultAvailable.rows;
         const { search } = req.body;
+        console.log("Search term:", search);
 
         const searchResult = await pool.query(
             "SELECT * FROM patients WHERE unq_id ILIKE $1 OR last_name ILIKE $2",
@@ -158,6 +193,7 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
         const patientListDrop = await getAllPatients();
         res.render('doctor', {
             patientListDrop: result,
+            medResults,
             user: req.user
         });
     } catch (err) {
@@ -253,14 +289,5 @@ router.delete("/logout", (req, res) => {
         res.redirect("/login");
     });
 });
-
-function getCurrentDate() {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = String(today.getMonth() + 1).padStart(2, '0');
-    const day = String(today.getDate()).padStart(2, '0');
-
-    return `${year}-${month}-${day}`;
-}
 
 module.exports = router;

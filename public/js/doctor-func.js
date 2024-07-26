@@ -1,3 +1,4 @@
+
 document.addEventListener("DOMContentLoaded", function () {
   const openVitalsButtons = document.querySelectorAll(".openVitals");
   const openPrescribeButtons = document.querySelectorAll(".openPrescribe");
@@ -6,10 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const openDiagnoseButtons = document.querySelectorAll(".openDiagnose");
   const openFindingsButtons = document.querySelectorAll(".openFindings");
 
-  const overlay = document.getElementById('overlay');
   const vitalForm = document.getElementById("vitalForm");
   const prescribeForm = document.getElementById("prescribeForm");
-  const overlaying = document.getElementById('overlaying');
   const labRequestForm = document.getElementById("labRequestForm");
   const labResultForm = document.getElementById("labResultForm");
   const diagnoseForm = document.getElementById("diagnoseForm");
@@ -21,6 +20,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const closeLabResultBtn = document.getElementById("closeLabResultBtn");
   const closeDiagnoseBtn = document.getElementById("closeDiagnoseBtn");
   const closeFindingsBtn = document.getElementById("closeFindingsBtn");
+  const overlay = document.getElementById('overlay');
+  const overlaying = document.getElementById('overlaying');
+
 
   // Vitals
   openVitalsButtons.forEach((button) => {
@@ -68,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
       )
         .toISOString()
         .split("T")[0];
+      document.getElementById("pres_phone").value = this.dataset.contactNumber;
       document.getElementById("pres_full_address").value = this.dataset.fullAddress;
       document.getElementById("pres_occupation").value =
         this.dataset.occupation;
@@ -107,8 +110,6 @@ document.addEventListener("DOMContentLoaded", function () {
   closeLabRequestBtn.addEventListener("click", function () {
     labRequestForm.style.display = "none";
   });
-
-  
 
   //l-----------------lab results--------------
   openLabResButtons.forEach(button => {
@@ -259,26 +260,23 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+const alertMessage = document.getElementById("alertMessage");
+const closeAlertBtn = document.getElementById("closeAlertBtn");
+
+// Check if the alert has been shown in this session
+if (!sessionStorage.getItem("alertShown1")) {
+  // Show the alert
+  alertMessage.style.display = "block";
+
+  // Add event listener to close button
+  closeAlertBtn.addEventListener("click", function () {
+    alertMessage.style.display = "none";
+    // Set the alert as shown in sessionStorage
+    sessionStorage.setItem("alertShown1", "true");
+  });
+} else {
+  // Hide the alert if it has been shown in this session
+  alertMessage.style.display = "none";
+}
 //----------------------->>end
 });
-
-function toggleDropdown() {
-  document.getElementById("dropdownContent").classList.toggle("show");
-}
-
-window.onclick = function(event) {
-  if (!event.target.matches('.dropbtn')) {
-    var dropdowns = document.getElementsByClassName("dropdown-content");
-    for (var i = 0; i < dropdowns.length; i++) {
-      var openDropdown = dropdowns[i];
-      if (openDropdown.classList.contains('show')) {
-        openDropdown.classList.remove('show');
-      }
-    }
-  }
-}
-
-function logout() {
-  alert("Logging out...");
-  // Perform logout actions here, such as redirecting to a logout endpoint
-}
