@@ -47,7 +47,7 @@
   
       
         <!-- Search Form -->
-      <form action="/" method="/">
+      <form action="/search-patient" method="post">
         <div id="searcher" style="margin-right: 40px;">
           <input id="searching" type="search" name="search" placeholder="Search name or unique ID" />
           <button id="search-butt" type="submit"><i class="fas fa-search"></i></button>
@@ -283,32 +283,56 @@
     
 
  <!-- Laboratory Request Form -->
+ <div id="overlay" style="display: none;"></div>
 <div id="labRequestForm" style="display: none">
   <form action="/labrequest" method="POST">
     <div class="popup-header">
       <div id="head-pop">
-          <img id="heart" src="/images/Vector.png" alt="">
+          <img id="heart" src="/images/Group 209.png" alt="">
           <h2>Laboratory Request</h2>
       </div>
       
       <div id="closeLabRequestBtn">&times;</div>
   </div>
+  <div id="tunga">
+    <div class="row">
+      <div>
+        <label for="full_name">Name: </label>
+      <input type="text" id="req_full_name" name="full_name" placeholder="Full Name" readonly />
+      </div>
+      <div>
+        <label for="unq_id">Unique ID: </label>
+      <input type="text" id="req_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+      </div>
+      <div>
+        <label for="check_date">Date: </label>
+      <input style="text-decoration: underline;" type="text" id="req_check_date" name="check_date" readonly />
+      </div>
+      <div>
+        <label for="occupation">Occupation: </label>
+        <input type="text" id="req_occupation" name="occupation" readonly />
+      </div>   
+  </div>
   <div class="row">
-    <label for="full_name">Name: </label>
-    <input type="text" id="req_full_name" name="full_name" placeholder="Full Name" readonly />
-    <label for="unq_id">Unique ID: </label>
-    <input type="text" id="req_unq_id" name="unq_id" placeholder="Unique ID" readonly />
-    <label for="check_date">Date: </label>
-    <input style="text-decoration: underline;" type="date" id="req_check_date" name="check_date" readonly />
-</div>
-    
-    <input type="date" id="req_check_date" name="check_date" readonly />
-    
-    <input type="number" id="req_age" name="age" placeholder="Age" readonly />
-    <input type="text" id="req_gender" name="gender" placeholder="Gender" readonly />
-    <input type="date" id="req_birthdate" name="birthdate" readonly />
-    <input type="text" id="req_occupation" name="occupation" readonly />
-    <input type="text" id="req_guardian" name="guardian" readonly />
+    <div>
+      <label for="age">Age: </label>
+      <input type="number" id="req_age" name="age" placeholder="Age" readonly />
+    </div>
+    <div>
+      <label for="gender">Gender: </label>
+      <input type="text" id="req_gender" name="gender" placeholder="Gender" readonly />
+    </div>
+    <div>
+      <label for="req_birthdate">Birthdate: </label>
+      <input type="text" id="req_birthdate" name="birthdate" readonly /> 
+    </div>
+    <div>
+      <label for="req_guardian">Guardian: </label>
+      <input type="text" id="req_guardian" name="guardian" readonly />
+    </div>   
+  </div>
+  </div>
+  <hr>
 
     <!-- Dynamic Category Fields Container -->
     <div id="category-fields-container">
@@ -336,47 +360,131 @@
     <button type="button" id="addMoreButton" onclick="addCategoryFields()">Add more</button>
 
     <!-- Submit Button -->
-    <button type="submit">Submit</button>
+    <button type="submit" id="addMoreButton">Submit</button>
   </form>
 </div>
 
       <!-- Laboratory Result Form -->
+       
       <div id="labResultForm" style="display: none">
-        <form>
-          <div id="closeLabResultBtn">&times;</div>
-          <h1>LABORATORY RESULT</h1>
-          <input type="text" id="res_unq_id" name="unq_id" placeholder="Unique ID" readonly />
-          <input type="date" id="res_check_date" name="check_date" readonly />
-          <input type="text" id="res_full_name" name="full_name" placeholder="Full Name" readonly />
-          <input type="number" id="res_age" name="age" placeholder="Age" readonly />
-          <input type="text" id="res_gender" name="gender" placeholder="Gender" readonly />
-          <input type="date" id="res_birthdate" name="birthdate" readonly />
-          <input type="text" id="res_occupation" name="occupation" readonly />
-          <input type="text" id="res_guardian" name="guardian" readonly />
-          
-          <!-- Container for displaying multiple images -->
-          <ul id="labResultList"></ul>
+            <form>
+              <div class="popup-header">
+                <div id="head-pop">
+                    <img id="heart" src="/images/Group 209.png" alt="">
+                    <h2>Laboratory Result</h2>
+                </div>
+                
+                <div id="closeLabResultBtn">&times;</div>
+            </div>
+            <div id="tunga">
+              <div class="row">
+                <div>
+                  <label for="full_name">Name: </label>
+                  <input type="text" id="res_full_name" name="full_name" placeholder="Full Name" readonly />
+                  
+                </div>
+                <div>
+                  <label for="unq_id">Unique ID: </label>
+                  <input type="text" id="res_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+                </div>
+                <div>
+                  <label for="check_date">Date: </label>
+                <input type="text" id="res_check_date" name="check_date" readonly />
+                </div>
+                <div>
+                  <label for="occupation">Occupation: </label>
+                  <input type="text" id="res_occupation" name="occupation" readonly />
+                </div>   
+            </div>
+            <div class="row">
+              <div>
+                <label for="age">Age: </label>
+                <input type="number" id="res_age" name="age" placeholder="Age" readonly />
+              </div>
+              <div>
+                <label for="gender">Gender: </label>
+                <input type="text" id="res_gender" name="gender" placeholder="Gender" readonly />
+              </div>
+              <div>
+                <label for="req_birthdate">Birthdate: </label>
+                <input type="text" id="res_birthdate" name="birthdate" readonly />
+              </div>
+              <div>
+                <label for="req_guardian">Guardian: </label>
+                <input type="text" id="res_guardian" name="guardian" readonly />
+              </div>   
+            </div>
+            </div>
+            <hr>
+
+          <div>
+              <!-- Container for displaying multiple images -->
+          <h3 style="font-family: 'Poppins', sans-serif; margin-left: 25px;">List of Lab Results</h3>
+          <div id="list">
+            <ul id="labResultList"></ul>
+          </div>
+          </div>
         </form>
       </div>
 
     <!-- Diagnoses Form -->
     <div id="diagnoseForm" style="display: none">
       <form action="/add-diagnoses" method="POST">
-        <div id="closeDiagnoseBtn">&times;</div>
-        <h1>Diagnoses</h1>
-        <input type="text" id="dia_unq_id" name="unq_id" placeholder="Unique ID" readonly />
-        <input type="date" id="dia_check_date" name="check_date" readonly />
-        <input type="text" id="dia_full_name" name="full_name" placeholder="Full Name" readonly />
-        <input type="number" id="dia_age" name="age" placeholder="Age" readonly />
-        <input type="text" id="dia_gender" name="gender" placeholder="Gender" readonly />
-        <input type="date" id="dia_birthdate" name="birthdate" readonly />
-        <input type="text" id="dia_occupation" name="occupation" readonly />
-        <input type="text" id="dia_guardian" name="guardian" readonly />
-    
-        <label for="diagnoses">Diagnoses</label>
-        <input type="text" name="diagnoses" required>
-    
-        <button type="submit">Submit</button>
+        <div class="popup-header">
+          <div id="head-pop">
+              <img id="heart" src="/images/diagnose.png" alt="">
+              <h2>Diagnose</h2>
+          </div>
+          
+          <div id="closeDiagnoseBtn">&times;</div>
+      </div>
+      <div id="tunga">
+        <div class="row">
+          <div>
+            <label for="full_name">Name: </label>
+            <input type="text" id="dia_full_name" name="full_name" placeholder="Full Name" readonly />
+            
+          </div>
+          <div>
+            <label for="unq_id">Unique ID: </label>
+            <input type="text" id="dia_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+          </div>
+          <div>
+            <label for="check_date">Date: </label>
+            <input type="text" id="dia_check_date" name="check_date" readonly />
+          </div>
+          <div>
+            <label for="occupation">Occupation: </label>
+            <input type="text" id="dia_occupation" name="occupation" readonly />
+          </div>   
+      </div>
+      <div class="row">
+        <div>
+          <label for="age">Age: </label>
+          <input type="number" id="dia_age" name="age" placeholder="Age" readonly />
+        </div>
+        <div>
+          <label for="gender">Gender: </label>
+          <input type="text" id="dia_gender" name="gender" placeholder="Gender" readonly />
+        </div>
+        <div>
+          <label for="req_birthdate">Birthdate: </label>
+          <input type="text" id="dia_birthdate" name="birthdate" readonly />
+        </div>
+        <div>
+          <label for="req_guardian">Guardian: </label>
+          <input type="text" id="dia_guardian" name="guardian" readonly />
+        </div>   
+      </div>
+      </div>
+      <hr>
+        <div id="diagnose-text">
+          <label id="dia-label" for="diagnoses">Diagnoses</label>
+        <input id="dia-input" type="text" name="diagnoses" required>
+        </div>
+        <div id="sub-but">
+          <button id="sub-out" type="submit">Submit</button>
+        </div>
       </form>
     </div>
     
@@ -384,22 +492,64 @@
     <!-- Findings Form -->
     <div id="findingsForm" style="display: none">
       <form action="/add-findings" method="post">
-        <div id="closeFindingsBtn">&times;</div>
-        <h1>Findings</h1>
-        <input type="text" id="fin_unq_id" name="unq_id" placeholder="Unique ID" readonly />
-        <input type="date" id="fin_check_date" name="check_date" readonly />
-        <input type="text" id="fin_full_name" name="full_name" placeholder="Full Name" readonly />
-        <input type="number" id="fin_age" name="age" placeholder="Age" readonly />
-        <input type="text" id="fin_gender" name="gender" placeholder="Gender" readonly />
-        <input type="date" id="fin_birthdate" name="birthdate" readonly />
-        <input type="text" id="fin_occupation" name="occupation" readonly />
-        <input type="text" id="fin_guardian" name="guardian" readonly />
-
-        <label for="findings">Findings</label>
-        <input type="text" name="findings">
-
-        <button type="submit">Submit</button>
+        <div class="popup-header">
+          <div id="head-pop">
+              <img id="heart" src="/images/diagnose.png" alt="">
+              <h2>Diagnose</h2>
+          </div>
+          
+          <div id="closeFindingsBtn">&times;</div>
+      </div>
+        
+      <div id="tunga">
+        <div class="row">
+          <div>
+            <label for="full_name">Name: </label>
+            <input type="text" id="fin_full_name" name="full_name" placeholder="Full Name" readonly />
+            
+          </div>
+          <div>
+            <label for="unq_id">Unique ID: </label>
+            <input type="text" id="fin_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+          </div>
+          <div>
+            <label for="check_date">Date: </label>
+            <input type="date" id="fin_check_date" name="check_date" readonly />
+          </div>
+          <div>
+            <label for="occupation">Occupation: </label>
+            <input type="text" id="fin_occupation" name="occupation" readonly />
+          </div>   
+      </div>
+      <div class="row">
+        <div>
+          <label for="age">Age: </label>
+          <input type="number" id="fin_age" name="age" placeholder="Age" readonly />
+        </div>
+        <div>
+          <label for="gender">Gender: </label>
+          <input type="text" id="fin_gender" name="gender" placeholder="Gender" readonly />
+        </div>
+        <div>
+          <label for="req_birthdate">Birthdate: </label>
+          <input type="date" id="fin_birthdate" name="birthdate" readonly />
+        </div>
+        <div>
+          <label for="req_guardian">Guardian: </label>
+          <input type="text" id="fin_guardian" name="guardian" readonly />
+        </div>   
+      </div>
+      </div>
+      <hr>
+      <div id="diagnose-text">
+        <label id="dia-label" for="findings">Findings</label>
+        <input id="dia-input" type="text" name="findings">
+      </div>
+      <div id="sub-but">
+        <button id="sub-out" type="submit">Submit</button>
+      </div>
       </form>
+      </div>
 
       <!-- Prescribe Form -->
     <div id="prescribeForm" style="display: none">

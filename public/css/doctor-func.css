@@ -235,7 +235,7 @@ button.openLabRes {
 }
 
 button.openDiagnose {
-    background-color: #E91E63; /* Pink */
+    background-color: #FF007F; /* Pink */
     color: white;
 }
 
@@ -252,14 +252,15 @@ button:hover {
 /* Styling the table header */
 table thead th {
     background-color: #44A130;
+    text-wrap: nowrap;
     color: white;
-    padding: 10px 50px; /* Add padding to header cells */
+    padding: 20px 50px; /* Add padding to header cells */
 }
 /* Styling the table body */
 
 tbody td{
     padding: 10px;
-    
+    text-wrap: nowrap;
 }
 
 /*Popup*/
@@ -333,6 +334,7 @@ body {
     background: rgba(73, 73, 73, 0.5);
     z-index: 1000;
 }
+
 #closeVitalsBtn{
   font-size: 30px;
   margin-right: 10px;
@@ -409,7 +411,7 @@ body {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
-#labRequestForm{
+#labRequestForm, #labResultForm, #diagnoseForm, #findingsForm{
   display: none;
     position: fixed;
     left: 50%;
@@ -421,6 +423,25 @@ body {
     background-color: #fff;
     z-index: 1000;
 }
+#tunga input{
+  border-style: none;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  text-decoration: underline;
+  margin-bottom: 10px;
+  outline: none;
+  cursor: default;
+ 
+}
+#labRequestForm label{
+  border-style: none;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+}
+
+#tunga{
+  display: flex;
+}
 .row input {
   border-style: none;
   font-size: 16px;
@@ -428,8 +449,98 @@ body {
   text-decoration: underline;
  
 }
-.row label {
-    border-style: none;
-    font-size: 16px;
-    font-family: 'Poppins', sans-serif;
-  }
+#category-fields-container {
+  margin: 20px;
+  padding: 10px;
+}
+
+.category-fields {
+  display: flex;
+  gap: 20px; /* Space between the dropdowns */
+}
+
+.category-dropdown,
+.service-dropdown {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+  width: 200px; /* Adjust width as needed */
+  transition: all 0.3s ease;
+}
+
+.category-dropdown:hover,
+.service-dropdown:hover {
+  border-color: #FF007F; /* Blue border on hover */
+  background-color: #ffd2e9; /* Light background color on hover */
+}
+
+.category-dropdown option[disabled],
+.service-dropdown option[disabled] {
+  color: #aaa; /* Gray color for disabled options */
+}
+
+.category-dropdown option[selected],
+.service-dropdown option[selected] {
+  color: #FF007F; /* Highlight color for selected option */
+}
+#addMoreButton{
+  background-color: #FF007F;
+  padding: 10px 30px;
+  margin-left: 30px;
+  margin-bottom: 20px;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+  color: white;
+}
+#list a{
+  border: 1px solid #000;
+  padding: 10px 30px;
+  border-radius: 10px;
+  color: black;
+  text-decoration: none;
+}
+#list a:hover{
+  border: 1px solid #FF007F;
+  color: #FF007F;
+}
+
+#list
+{
+  margin-bottom: 40px;
+}
+
+#diagnose-text{
+  display: flex;
+  flex-direction: column;
+  padding: 0px 30px;
+  margin-top: 15px;
+}
+#dia-input{
+  border: 1px solid #555555;
+  padding: 10px 0px 60px 10px;
+  border-top-right-radius: 10px;
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
+  font-family: 'Poppins', sans-serif;
+}
+#diagnose-text label{
+  background-color: green;
+  width: 8vw;
+  text-align: center;
+  padding: 5px 10px;
+  color: white;
+  border-top-right-radius: 10px;
+}
+#sub-but{
+  display: flex;
+  justify-content: end;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+#sub-out{
+    color: white;
+    background-color: #FF007F;
+    padding: 10px 30px;
+    margin-right: 30px;
+   
+}

@@ -9,6 +9,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const overlay = document.getElementById('overlay');
   const vitalForm = document.getElementById("vitalForm");
   const prescribeForm = document.getElementById("prescribeForm");
+  const overlaying = document.getElementById('overlaying');
   const labRequestForm = document.getElementById("labRequestForm");
   const labResultForm = document.getElementById("labResultForm");
   const diagnoseForm = document.getElementById("diagnoseForm");
@@ -106,10 +107,6 @@ document.addEventListener("DOMContentLoaded", function () {
   closeLabRequestBtn.addEventListener("click", function () {
     labRequestForm.style.display = "none";
   });
-  overlay.addEventListener('click', function () {
-    overlay.style.display = "none";
-    labRequestForm.style.display = "none";
-});
 
   
 
