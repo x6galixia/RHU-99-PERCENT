@@ -263,6 +263,45 @@ router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist
   }
 });
 
+router.get('/pharmacy/add-beneficiary', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
+  res.render('addbeneficiary', { message: {} });
+});
+
+
+router.post('/pharmacy/add-beneficiary', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
+  try {
+    const {
+      beneficiary_name, 
+      beneficiary_gender, 
+      beneficiary_address, 
+      beneficiary_contact, 
+      beneficiary_birthdate, 
+      beneficiary_age, 
+      senior_citizen, 
+      pwd
+    } = req.body;
+
+    await pharmacyPool.query(
+      "INSERT INTO beneficiary (beneficiary_name, beneficiary_gender, beneficiary_address, beneficiary_contact, beneficiary_birthdate, beneficiary_age, senior_citizen, pwd) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+      [
+        beneficiary_name, 
+        beneficiary_gender, 
+        beneficiary_address, 
+        beneficiary_contact, 
+        beneficiary_birthdate, 
+        beneficiary_age, 
+        senior_citizen, 
+        pwd
+      ]
+    );
+
+    res.render('addbeneficiary', { message: { success: 'Beneficiary added successfully!' } });
+  } catch (err) {
+    console.error(`Error: cannot add beneficiary ${err}`);
+    res.render('addbeneficiary', { message: { error: 'An error occurred while adding the beneficiary.' } });
+  }
+});
+
 
 //-------------------functions---------///
 

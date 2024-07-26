@@ -114,6 +114,7 @@ CREATE TABLE beneficiary (
 	beneficiary_gender VARCHAR(50) NOT NULL,
 	beneficiary_address VARCHAR(250),
 	beneficiary_contact VARCHAR(50),
+    beneficiary_birthdate DATE,
 	beneficiary_age INT CHECK (beneficiary_age >= 0),
 	senior_citizen BOOLEAN,
 	pwd BOOLEAN,
