@@ -4,7 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
+    <link rel="stylesheet" href="/css/alert-message.css" />
     <link rel="stylesheet" href="/css/doctor-func.css" />
+    
+    
     <script src="/js/websocket.js"></script>
     <title>Doctor</title>
   </head>
@@ -14,18 +17,19 @@
       <%= surname %> <%= firstname %> <%= middle_initial %> <%= profession %>
     </div>
 
-    <!-- Search Form -->
-    <form action="/search-patient" method="post">
-      <input type="text" name="search" placeholder="Search name or unique ID" />
-      <button type="submit">Search</button>
-    </form>
-
     <!-- Logout Form -->
     <form action="/logout?_method=DELETE" method="POST">
       <div>
         <button type="submit">Log out</button>
       </div>
     </form>
+
+    <!-- Search Form -->
+    <form action="/search-patient" method="post">
+      <input type="text" name="search" placeholder="Search name or unique ID" />
+      <button type="submit">Search</button>
+    </form>
+    
     <!-- Patients Table -->
     <table>
       <thead>
@@ -335,6 +339,25 @@
         <button type="submit">Submit</button>
       </form>
     </div>
+
+      <!---------------------------alert for lab results----------------->
+      <div id="alertMessage">
+        <% if (medResults && medResults.length > 0) { %>
+          <div class="header">
+            <p style="margin: 0;">NOTIFICATION</p>
+          </div>
+          <div class="content">
+            <p>AVAILABLE LAB RESULTS</p>
+            <ul>
+              <% medResults.forEach(list => { %>
+                <li><%= list.last_name %> <%= list.first_name %> <%= list.middle_name %></li>
+              <% }) %>
+            </ul>
+          </div>
+        <% } %>
+        <button id="closeAlertBtn" type="button">Close</button>
+      </div>
+
     <script src="/js/doctor-func.js"></script>
   </body>
 </html>
