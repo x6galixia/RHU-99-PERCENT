@@ -11,13 +11,10 @@ const router = express.Router();
 router.use(methodOverride("_method"));
 router.use(setUserData);
 
-router.get("/nurse",
-  ensureAuthenticated,
-  checkUserType("nurse"),
-  (req, res) => {
-    res.render("nurse", { user: req.user });
-  }
-);
+router.get("/nurse", ensureAuthenticated, checkUserType("nurse"), (req, res) => {
+  res.render("nurse", { user: req.user, message: {} });
+});
+
 
 router.get('/api/search/:searchValue', async (req, res) => {
   const unq_id = req.params.searchValue;
@@ -112,16 +109,16 @@ router.post(
       } = req.body;
 
       const query = `
-            INSERT INTO patients (unq_id, check_date, last_name, first_name, middle_name, address, barangay, town,
-            birthdate, gender, phone, email, philhealth_no, occupation,
-            guardian, height, weight, systolic, diastolic, temperature,
-            pulse_rate, respiratory_rate, bmi, comment)
-            VALUES ($1, $2, $3, $4, $5, $6, $7,
-            $8, $9, $10, $11, $12, $13,
-            $14, $15, $16, $17, $18, $19,
-            $20, $21, $22, $23, $24)
-            RETURNING *;
-        `;
+        INSERT INTO patients (unq_id, check_date, last_name, first_name, middle_name, address, barangay, town,
+        birthdate, gender, phone, email, philhealth_no, occupation,
+        guardian, height, weight, systolic, diastolic, temperature,
+        pulse_rate, respiratory_rate, bmi, comment)
+        VALUES ($1, $2, $3, $4, $5, $6, $7,
+        $8, $9, $10, $11, $12, $13,
+        $14, $15, $16, $17, $18, $19,
+        $20, $21, $22, $23, $24)
+        RETURNING *;
+      `;
 
       const values = [
         unq_id,
@@ -151,10 +148,10 @@ router.post(
       ];
 
       const result = await pool.query(query, values);
-      res.redirect('/nurse', {message: "Submitted succesfully!"});
+      res.render('nurse', { user: req.user, message: { success: 'Patient added successfully!' } });
     } catch (err) {
       console.error(err);
-      res.sendStatus(500).json({message: "Failed to submit patient"});
+      res.render('nurse', { user: req.user, message: { error: 'An error occurred while adding the patient.' } });
     }
   }
 );

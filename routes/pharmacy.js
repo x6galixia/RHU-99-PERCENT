@@ -106,6 +106,10 @@ router.post('/search-medicine', ensureAuthenticated, checkUserType("pharmacist")
       const { search } = req.body;
       console.log("Search term:", search);
 
+      const lowStockResult = await pharmacyPool.query('SELECT product_name, product_quantity FROM inventory WHERE product_quantity < 50');
+
+      const lowStockItems = lowStockResult.rows;
+
       const searchResult = await pharmacyPool.query(
           "SELECT * FROM inventory WHERE product_id ILIKE $1 OR product_name ILIKE $2",
           [`%${search}%`, `%${search}%`]
@@ -122,6 +126,7 @@ router.post('/search-medicine', ensureAuthenticated, checkUserType("pharmacist")
 
       res.render('pharmacy', {
           medList: result,
+          lowStockItems,
           user: req.user
       });
   } catch (err) {
@@ -255,6 +260,45 @@ router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist
     res.redirect('/pharmacy/dispense');
   } finally {
     client.release();
+  }
+});
+
+router.get('/pharmacy/add-beneficiary', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
+  res.render('addbeneficiary', { message: {} });
+});
+
+
+router.post('/pharmacy/add-beneficiary', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
+  try {
+    const {
+      beneficiary_name, 
+      beneficiary_gender, 
+      beneficiary_address, 
+      beneficiary_contact, 
+      beneficiary_birthdate, 
+      beneficiary_age, 
+      senior_citizen, 
+      pwd
+    } = req.body;
+
+    await pharmacyPool.query(
+      "INSERT INTO beneficiary (beneficiary_name, beneficiary_gender, beneficiary_address, beneficiary_contact, beneficiary_birthdate, beneficiary_age, senior_citizen, pwd) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+      [
+        beneficiary_name, 
+        beneficiary_gender, 
+        beneficiary_address, 
+        beneficiary_contact, 
+        beneficiary_birthdate, 
+        beneficiary_age, 
+        senior_citizen, 
+        pwd
+      ]
+    );
+
+    res.render('addbeneficiary', { message: { success: 'Beneficiary added successfully!' } });
+  } catch (err) {
+    console.error(`Error: cannot add beneficiary ${err}`);
+    res.render('addbeneficiary', { message: { error: 'An error occurred while adding the beneficiary.' } });
   }
 });
 

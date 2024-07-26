@@ -10,9 +10,13 @@ router.use(setUserData);
 
 router.get("/doctor/dashboard", ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+
+        const medResults = medResultAvailable.rows;
         const patientListDrop = await getAllPatients();
         res.render("doctor", {
             patientListDrop,
+            medResults,
             user: req.user
         });
     } catch (err) {
@@ -43,6 +47,9 @@ router.get('/search', async (req, res) => {
 
 router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+
+        const medResults = medResultAvailable.rows;
         let { unq_id, full_name, age, gender, check_date, full_address, phone, guardian, medicine, instruction, quantity, reciever, relationship, doctor_name } = req.body;
 
         await pool.query(
@@ -68,6 +75,7 @@ router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), 
         const patientListDrop = await getAllPatients();
         res.render('doctor', {
             patientListDrop,
+            medResults,
             user: req.user
         });
     } catch (err) {
@@ -80,6 +88,9 @@ router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), 
 
 router.post('/labrequest', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+
+        const medResults = medResultAvailable.rows;
         const { unq_id, category, service } = req.body;
 
         await pool.query('BEGIN');
@@ -101,6 +112,7 @@ router.post('/labrequest', ensureAuthenticated, checkUserType("doctor"), async (
         console.log("Updated patient list:", patientListDrop);
         res.render('doctor', {
             patientListDrop,
+            medResults,
             user: req.user
         });
 
@@ -114,6 +126,9 @@ router.post('/labrequest', ensureAuthenticated, checkUserType("doctor"), async (
 
 router.post('/add-diagnoses', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+
+        const medResults = medResultAvailable.rows;
         const { unq_id, diagnoses } = req.body;
 
         const query = "UPDATE patients SET diagnoses = $1 WHERE unq_id = $2";
@@ -122,6 +137,7 @@ router.post('/add-diagnoses', ensureAuthenticated, checkUserType("doctor"), asyn
         const patientListDrop = await getAllPatients();
         res.render('doctor', {
             patientListDrop,
+            medResults,
             user: req.user
         });
     } catch (err) {
@@ -133,6 +149,9 @@ router.post('/add-diagnoses', ensureAuthenticated, checkUserType("doctor"), asyn
 
 router.post('/add-findings', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+
+        const medResults = medResultAvailable.rows;
         const { unq_id, findings } = req.body;
 
         const query = "UPDATE patients SET findings = $1 WHERE unq_id = $2";
@@ -141,6 +160,7 @@ router.post('/add-findings', ensureAuthenticated, checkUserType("doctor"), async
         const patientListDrop = await getAllPatients();
         res.render('doctor', {
             patientListDrop,
+            medResults,
             user: req.user
         });
     } catch (err) {
@@ -152,6 +172,9 @@ router.post('/add-findings', ensureAuthenticated, checkUserType("doctor"), async
 
 router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+
+        const medResults = medResultAvailable.rows;
         const { search } = req.body;
         console.log("Search term:", search);
 
@@ -170,6 +193,7 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
         const patientListDrop = await getAllPatients();
         res.render('doctor', {
             patientListDrop: result,
+            medResults,
             user: req.user
         });
     } catch (err) {
