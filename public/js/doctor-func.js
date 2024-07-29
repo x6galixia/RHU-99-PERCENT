@@ -259,6 +259,24 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 
+const alertMessage = document.getElementById("alertMessage");
+const closeAlertBtn = document.getElementById("closeAlertBtn");
+
+// Check if the alert has been shown in this session
+if (!sessionStorage.getItem("alertShown1")) {
+  // Show the alert
+  alertMessage.style.display = "block";
+
+  // Add event listener to close button
+  closeAlertBtn.addEventListener("click", function () {
+    alertMessage.style.display = "none";
+    // Set the alert as shown in sessionStorage
+    sessionStorage.setItem("alertShown1", "true");
+  });
+} else {
+  // Hide the alert if it has been shown in this session
+  alertMessage.style.display = "none";
+}
 //----------------------->>end
 });
 
@@ -282,3 +300,10 @@ function logout() {
   alert("Logging out...");
   // Perform logout actions here, such as redirecting to a logout endpoint
 }
+
+const homeback = document.getElementById("logoing");
+
+homeback.addEventListener("click", function() {
+  // Replace 'your-url-here' with the URL you want to redirect to
+  window.location.href = "";
+});

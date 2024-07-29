@@ -79,7 +79,8 @@
               <th>Diagnoses</th>
               <th>Findings</th>
               <th>Medicine</th>
-              <th>instruction</th>
+              <th>Instruction</th>
+              <th>Quantity</th>
               <th>Vital Signs</th>
               <th>Laboratory request</th>
               <th>Laboratory result</th>
@@ -113,6 +114,7 @@
                   <td><%= pt.findings %></td>
                   <td><%= pt.medicine %></td>
                   <td><%= pt.instruction %></td>
+                  <td><%= pt.quantity %></td>
                   <td>
                     <!-- Vitals Button -->
                     <button class="openVitals"
@@ -292,7 +294,7 @@
           <h2>Laboratory Request</h2>
       </div>
       
-      <div id="closeLabRequestBtn">&times;</div>
+      <div id="closeLabRequestBtn" class="close">&times;</div>
   </div>
   <div id="tunga">
     <div class="row">
@@ -374,7 +376,7 @@
                     <h2>Laboratory Result</h2>
                 </div>
                 
-                <div id="closeLabResultBtn">&times;</div>
+                <div id="closeLabResultBtn" class="close">&times;</div>
             </div>
             <div id="tunga">
               <div class="row">
@@ -436,7 +438,7 @@
               <h2>Diagnose</h2>
           </div>
           
-          <div id="closeDiagnoseBtn">&times;</div>
+          <div id="closeDiagnoseBtn" class="close">&times;</div>
       </div>
       <div id="tunga">
         <div class="row">
@@ -494,11 +496,11 @@
       <form action="/add-findings" method="post">
         <div class="popup-header">
           <div id="head-pop">
-              <img id="heart" src="/images/diagnose.png" alt="">
-              <h2>Diagnose</h2>
+              <img id="heart" src="/images/group.png" alt="">
+              <h2>Findings</h2>
           </div>
           
-          <div id="closeFindingsBtn">&times;</div>
+          <div id="closeFindingsBtn" class="close">&times;</div>
       </div>
         
       <div id="tunga">
@@ -514,7 +516,7 @@
           </div>
           <div>
             <label for="check_date">Date: </label>
-            <input type="date" id="fin_check_date" name="check_date" readonly />
+            <input type="text" id="fin_check_date" name="check_date" readonly />
           </div>
           <div>
             <label for="occupation">Occupation: </label>
@@ -532,7 +534,7 @@
         </div>
         <div>
           <label for="req_birthdate">Birthdate: </label>
-          <input type="date" id="fin_birthdate" name="birthdate" readonly />
+          <input type="text" id="fin_birthdate" name="birthdate" readonly />
         </div>
         <div>
           <label for="req_guardian">Guardian: </label>
@@ -554,18 +556,59 @@
       <!-- Prescribe Form -->
     <div id="prescribeForm" style="display: none">
       <form action="/send-prescription" method="post">
-        <div id="closePrescribeBtn">&times;</div>
-        <h1>PRESCRIBE</h1>
-        <input type="text" id="pres_unq_id" name="unq_id" placeholder="Unique ID" readonly />
-        <input type="date" id="pres_check_date" name="check_date" readonly />
-        <input type="text" id="pres_full_name" name="full_name" placeholder="Full Name" readonly />
-        <input type="number" id="pres_age" name="age" placeholder="Age" readonly />
-        <input type="text" id="pres_gender" name="gender" placeholder="Gender" readonly />
-        <input type="date" id="pres_birthdate" name="birthdate" readonly />
-        <input type="text" id="pres_full_address" name="full_address" readonly />
-        <input type="text" id="pres_occupation" name="occupation" readonly />
-        <input type="text" id="pres_guardian" name="guardian" readonly />
- 
+        <div class="popup-header">
+          <div id="head-pop">
+              <img id="heart" style="margin-left: 10px;" src="/images/prescibe.png" alt="">
+              <h2>Prescribe</h2>
+          </div>
+          
+          <div id="closePrescribeBtn" class="close">&times;</div>
+      </div>
+      <div id="tunga">
+        <div class="row">
+          <div>
+            <label for="full_name">Name: </label>
+            <input type="text" id="pres_full_name" name="full_name" placeholder="Full Name" readonly />
+            
+          </div>
+          <div>
+            <label for="unq_id">Unique ID: </label>
+            <input type="text" id="pres_unq_id" name="unq_id" placeholder="Unique ID" readonly />
+          </div>
+          <div>
+            <label for="check_date">Date: </label>
+            <input type="text" id="pres_check_date" name="check_date" readonly />
+          </div>
+          <div>
+            <label for="occupation">Occupation: </label>
+            <input type="text" id="pres_occupation" name="occupation" readonly />
+          </div>  
+          <div>
+            <label for="age">Age: </label>
+            <input type="number" id="pres_age" name="age" placeholder="Age" readonly />
+          </div> 
+      </div>
+      <div class="row">
+        <div>
+          <label for="gender">Gender: </label>
+          <input type="text" id="pres_gender" name="gender" placeholder="Gender" readonly />
+        </div>
+        <div>
+          <label for="req_birthdate">Birthdate: </label>
+          <input type="text" id="pres_birthdate" name="birthdate" readonly />
+        </div>
+        <div>
+          <label for="req_guardian">Guardian: </label>
+          <input type="text" id="pres_guardian" name="guardian" readonly />
+        </div> 
+        <div>
+          <label for="full_address">Address: </label>
+          <input type="text" id="pres_full_address" name="full_address" readonly />
+        </div>   
+      </div>
+      </div>
+      <hr>
+        <h3 style="font-family: 'Poppins', sans-serif; margin-left: 25px;">Enter receiver information</h3>
         <input type="text" id="pres_reciever" name="reciever" placeholder="reciever">
         <input type="text" id="pres_relationship" name="relationship" placeholder="relationship">
         <input type="text" id="search-box" name="medicine" placeholder="Search...">
@@ -580,6 +623,22 @@
     </div>
     </div>
     </main>
+    <% if (medResults && medResults.length > 0) { %>
+      <div id="alertMessage">
+          <div class="header">
+            <p style="margin: 0;">NOTIFICATION</p>
+          </div>
+          <div class="content">
+            <p>AVAILABLE LAB RESULTS</p>
+            <ul>
+              <% medResults.forEach(list => { %>
+                <li><%= list.last_name %> <%= list.first_name %> <%= list.middle_name %></li>
+              <% }) %>
+            </ul>
+          </div>
+        <% } %>
+        <button id="closeAlertBtn" type="button">Close</button>
+      </div>
     <script src="/js/websocket.js"></script>
     <script src="/js/doctor-func.js"></script>
   </body>

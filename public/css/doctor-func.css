@@ -335,11 +335,11 @@ body {
     z-index: 1000;
 }
 
-#closeVitalsBtn{
+.close{
   font-size: 30px;
-  margin-right: 10px;
+  margin-right: 5px;
 }
-#closeVitalsBtn:hover{
+.close:hover{
   color: rgb(163, 163, 163);
   cursor: pointer;
 }
@@ -411,7 +411,7 @@ body {
     border-bottom-left-radius: 20px;
     border-bottom-right-radius: 20px;
 }
-#labRequestForm, #labResultForm, #diagnoseForm, #findingsForm{
+#labRequestForm, #labResultForm, #diagnoseForm, #findingsForm, #prescribeForm{
   display: none;
     position: fixed;
     left: 50%;
@@ -448,6 +448,9 @@ body {
   font-family: 'Poppins', sans-serif;
   text-decoration: underline;
  
+}
+#column-row{
+  display: flex;
 }
 #category-fields-container {
   margin: 20px;
@@ -543,4 +546,48 @@ body {
     padding: 10px 30px;
     margin-right: 30px;
    
+}
+
+
+#alertMessage {
+  display: none; /* Hide by default */
+  box-shadow: 8px 10px 4px 0px rgba(0, 0, 0, 0.25);
+  width: 400px;
+  border-radius: 10px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 11111111;
+  background-color: white;
+  overflow: auto;
+}
+#alertMessage.show {
+  display: block; /* Show when the 'show' class is added */
+}
+#alertMessage .header {
+  background-color: rgb(29, 148, 29);
+  color: white;
+  padding: 10px;
+  border-radius: 10px 10px 0 0;
+}
+#alertMessage .content {
+  padding: 10px;
+}
+#alertMessage ul {
+  margin: 0;
+  padding-left: 20px;
+}
+#closeAlertBtn {
+  display: block;
+  margin: 10px auto;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 5px;
+  background-color: rgb(29, 148, 29);
+  color: white;
+  cursor: pointer;
+}
+#closeAlertBtn:hover {
+  background-color: rgb(20, 120, 20);
 }
