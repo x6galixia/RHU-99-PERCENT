@@ -3,6 +3,7 @@
 -- user login configuration --
 CREATE TABLE users (
     user_id VARCHAR(50) PRIMARY KEY,
+    rhu_id VARCHAR(100),
     surname VARCHAR(50) NOT NULL,
     firstname VARCHAR(50) NOT NULL,
     middle_initial VARCHAR(5) NOT NULL,
