@@ -91,20 +91,7 @@ body {
   color: white;
 }
 
-.sidebar {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1111;
-  top: 0;
-  left: 0;
-  background-color: #f4f4f4;
-  overflow-x: hidden;
-  transition: 0.5s;
-  padding-top: 0px;
-  margin-top: 80px;
-  border: 1px solid #cacaca ;
-}
+
 
 .fa-home, .fa-plus-circle, .fa-pills, .fa-file-medical-alt, .fa-chart-line, .fa-sign-out-alt {
   margin-right: 20px;
@@ -136,7 +123,7 @@ body {
 }
 
 table {
-    width: 95%;
+    width: 97%;
     border-collapse: collapse;
     margin: auto;
 }
@@ -145,13 +132,17 @@ table, th, td {
     border: 1px solid #ddd;
     padding: 8px;
 }
+tr, td {
+  margin-left: 20px;
+}
 
 th, td {
-    padding: 20px;
+    padding: 10px;
     text-align: center;
 }
 
 th {
+    margin-left: 20px;
     background-color: #44A130;
     color: white;
 }
@@ -163,7 +154,9 @@ tbody tr:nth-child(even) {
 tbody tr:hover {
     background-color: #ddd;
 }
-
+th:first-child, td:first-child{
+  padding-left: 20px !important;
+}
 
 .title {
     font-family: 'Poppins', sans-serif;
