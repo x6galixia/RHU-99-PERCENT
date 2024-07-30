@@ -257,16 +257,19 @@ const closeAlertBtn = document.getElementById("closeAlertBtn");
 if (!sessionStorage.getItem("alertShown1")) {
   // Show the alert
   alertMessage.style.display = "block";
+  closeAlertBtn.style.display = "block";
 
   // Add event listener to close button
   closeAlertBtn.addEventListener("click", function () {
     alertMessage.style.display = "none";
+    closeAlertBtn.style.display = "none";
     // Set the alert as shown in sessionStorage
     sessionStorage.setItem("alertShown1", "true");
   });
 } else {
   // Hide the alert if it has been shown in this session
   alertMessage.style.display = "none";
+  closeAlertBtn.style.display = "none";
 }
 //----------------------->>end
 });
