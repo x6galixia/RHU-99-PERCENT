@@ -68,6 +68,7 @@ document.addEventListener("DOMContentLoaded", function () {
       )
         .toISOString()
         .split("T")[0];
+      document.getElementById("pres_phone").value = this.dataset.contactNumber;
       document.getElementById("pres_full_address").value = this.dataset.fullAddress;
       document.getElementById("pres_occupation").value =
         this.dataset.occupation;
@@ -301,9 +302,3 @@ function logout() {
   // Perform logout actions here, such as redirecting to a logout endpoint
 }
 
-const homeback = document.getElementById("logoing");
-
-homeback.addEventListener("click", function() {
-  // Replace 'your-url-here' with the URL you want to redirect to
-  window.location.href = "";
-});

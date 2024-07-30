@@ -591,3 +591,6 @@ body {
 #closeAlertBtn:hover {
   background-color: rgb(20, 120, 20);
 }
+#separate input{
+  padding: 10px;
+}
