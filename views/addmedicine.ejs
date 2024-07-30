@@ -1,53 +1,129 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
-    <script src="/js/websocket.js"></script>
-    <title>Add medicine</title>
+    <link rel="stylesheet" href="/css/addmedicine.css" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+
+    <title>Inventory</title>
 </head>
 <body>
-    <!------------user-->
-    <%= surname %> <%= firstname %> <%= middle_initial %> <%= profession %>
+  <header class="py-1">
+    <nav id="navbar">
+        <div id="logo2"> 
+          <div class="openbtn" onclick="toggleNav()">&#9776;</div>
+            <img id="logoing" src="/images/Group 206.png" alt="">            
+          </div>
+          
+          <div id="sidebar" class="sidebar">
+            <div id="profile-sec">
+                <div id="meow">
+                    <img id="profile2" src="/images/profile.png" alt="">
+                </div>
+                <div id="names">
+                    <p class="infos" id="info"><%= surname %> <%= firstname %> <%= middle_initial %> </p>
+                    <p class="infor" id="info"><%= profession %></p>
+                </div>
+            </div>
+            <div id="features">
+            <hr>     
+            <form action="/pharmacy/inventory" method="GET">
+              <button id="log-butt" type="submit"><i class="fas fa-home"></i> HOME </button>
+            </form>
+          
+            <form action="/pharmacy/add-medicine" method="GET">
+            <button id="log-butt" type="submit"><i class="fas fa-plus-circle"></i>  ADD MEDICINE </button>
+            </form>
 
-    <!---------logout-->
-    <form action="/logout?_method=DELETE" method="POST">
-      <div>
-        <button type="submit">Log out</button>
+            <form action="/pharmacy/dispense" method="GET">
+              <button id="log-butt" type="submit"><i class="fas fa-pills"></i> DISPENSE </button>
+            </form>
+
+            <form action="/pharmacy/beneficiary-records" method="GET">
+              <button id="log-butt" type="submit"><i class="fas fa-file-medical-alt"></i>  RECORD </button>
+            </form>
+
+            <form action="/logout?_method=DELETE" method="POST">
+              <button id="log-butt" type="submit"><i class="fas fa-chart-line"></i> TRENDS </button>
+            </form>
+
+            <form action="/logout?_method=DELETE" method="POST">
+              <button id="log-butt" type="submit"><i class="fa fa-sign-out-alt"></i> LOGOUT </button>
+            </form>
+        </div>
       </div>
-    </form>
-    <form action="/pharmacy/inventory" method="GET">
-        <button type="submit">Home</button>
+    </div>
+    </nav>
+  </header>
+  <div id="semi-header">
+    <div>
+    </div> 
+  </div>
+  <h2>PRODUCT DETAILS</h2>
+  <div class="form-container">
+    <div class="form-header">
+      </div>
+      <form action="/pharmacy/add-medicine" method="POST">
+        <div class="form-group">
+            <label for="product-id">PRODUCT ID</label>
+            <input type="text" name="product_id" placeholder="Enter product ID">
+        </div>
+        <div class="form-group">
+            <label for="dosage-form">DOSAGE FORM</label>
+            <input type="text" name="dosage_form" placeholder="Enter dosage form">
+        </div>
+        <div class="form-group">
+            <label for="product-code">PRODUCT CODE</label>
+            <input type="text" name="product_code" placeholder="Enter product code">
+        </div>
+        <div class="form-group">
+            <label for="dosage">DOSAGE</label>
+            <input type="text" name="dosage" placeholder="Enter dosage">
+        </div>
+        <div class="form-group">
+            <label for="product-name">PRODUCT NAME</label>
+            <input type="text" name="product_name" placeholder="Enter product name">
+        </div>
+        <div class="form-group">
+            <label for="reorder-level">REORDER LEVEL</label>
+            <input type="number" name="reorder_level" placeholder="Enter reorder level">
+        </div>
+        <div class="form-group">
+            <label for="brand-name">BRAND NAME</label>
+            <input type="text" name="brand_name" placeholder="Enter brand name">
+        </div>
+        <div class="form-group">
+            <label for="batch-number">BATCH NUMBER</label>
+            <input type="text" name="batch_number" placeholder="Enter batch number">
+        </div>
+        <div class="form-group">
+            <label for="supplier">SUPPLIER</label>
+            <input type="text" name="supplier" placeholder="Enter supplier">
+        </div>
+        <div class="form-group">
+            <label for="expiration-date">EXPIRATION DATE</label>
+            <input type="date" name="expiration" placeholder="Enter expiration date">
+        </div>
+        <div class="form-group">
+            <label for="added-quantity">ADDED QUANTITY</label>
+            <input type="number" name="product_quantity" placeholder="Enter quantity">
+        </div>
+        <div class="form-group">
+            <label for="date-added">DATE ADDED</label>
+            <input id="date_issued" type="date" name="date_added" placeholder="date added" readonly>
+        </div>
+        <div id="but">
+            <button type="submit" class="submit-button">SUBMIT</button>
+        </div>
       </form>
-      <!--------beneficiary records-->
-      <form action="/pharmacy/beneficiary-records" method="GET">
-        <button type="submit">Beneficiary List</button>
-      </form>
-      <!------------dispense-->
-      <form action="/pharmacy/dispense" method="GET">
-        <button type="submit">Dispense</button>
-      </form>
-      <!------------add medicine-->
-      <form action="/pharmacy/add-medicine" method="GET">
-        <button type="submit">Add medicine</button>
-      </form>
-<h1>ADD MEDICINE</h1>
-    <form action="/pharmacy/add-medicine" method="POST">
-      <input type="text" name="product_id" placeholder="product id">
-      <input type="text" name="product_code" placeholder="product code">
-      <input type="text" name="product_name" placeholder="product name">
-      <input type="text" name="brand_name" placeholder="brand name">
-      <input type="text" name="supplier" placeholder="supplier">
-      <input type="text" name="dosage_form" placeholder="dosage form">
-      <input type="text" name="dosage" placeholder="dosage">
-      <input type="number" name="reorder_level" placeholder="reorder level">
-      <input type="text" name="batch_number" placeholder="batch number">
-      <input id="date_issued" type="date" name="date_added" placeholder="date added">
-      <input type="date" name="expiration" placeholder="expiration">
-      <input type="number" name="product_quantity" placeholder="quantity">
-      <button type="submit">Add medicine</button>
-    </form>
-    <script src="/js/addmedicine-func.js"></script>
+    </div>
+  </div>
+  <script src="/js/websocket.js"></script>
+  <script src="/js/aside.js"></script>
+  <script src="/js/addmedicine-func.js"></script>
+
 </body>
 </html>

@@ -1,0 +1,75 @@
+#dform {
+  grid-column: span 2;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  position: fixed;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  z-index: 11111;
+  gap: 1rem; /* Adding unit for gap */
+}
+
+label {
+  margin-bottom: 5px;
+  margin-top: 5px;
+  font-family: Arial, serif;
+  font-size: 12px;
+  border-radius: 10px;
+}
+
+#closeDispenseBtn {
+  background-color: transparent;
+  border: none;
+  font-size: 30px;
+  cursor: pointer;
+  color: #ff007f;
+}
+
+.form-section {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 260px;
+}
+
+.table-section {
+  width: 800px;
+  height: 275px;
+  font-size: 12px;
+}
+
+h2 {
+  font-size: 12px;
+  margin-bottom: 7px;
+}
+
+#but {
+  border-radius: 20px;
+  background-color: #FF007F;
+  border: 1px solid #FF007F;
+  margin-bottom: 0;
+  color: white;
+  font-size: 10px;
+  font-weight: 1000;
+  box-shadow: 0 3px 3px 3px rgba(0, 0, 0, 0.25);
+  cursor: pointer;
+}
+
+#buts {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+
+.table-section input {
+  border: none;
+  margin-bottom: 0;
+}
