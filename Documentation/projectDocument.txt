@@ -57,7 +57,7 @@ CREATE TABLE patients (
 );
 
 CREATE TABLE prescription (
-    unq_id SERIAL PRIMARY KEY,
+    unq_id VARCHAR(250) PRIMARY KEY,
     full_name VARCHAR(250),
     age INT,
     gender VARCHAR(10),
@@ -76,22 +76,22 @@ CREATE TABLE prescription (
 
 
 --  cetizens info
-CREATE TABLE citizen (
-    unq_id VARCHAR(100) PRIMARY KEY,
-    last_name VARCHAR(50) NOT NULL,
-    first_name VARCHAR(50) NOT NULL,
-    middle_name VARCHAR(50),
-    address VARCHAR(100) NOT NULL,
-    barangay VARCHAR(100) NOT NULL,
-    town VARCHAR(100) NOT NULL,
-    birthdate DATE NOT NULL,
-    gender VARCHAR(10) NOT NULL,
-    phone VARCHAR(15) NOT NULL,
-    email VARCHAR(50) NOT NULL,
-    philhealth_no VARCHAR(100) NOT NULL,
-    occupation VARCHAR(250),
-    guardian VARCHAR(250)
-);
+    CREATE TABLE citizen (
+        unq_id VARCHAR(100) PRIMARY KEY,
+        last_name VARCHAR(50) NOT NULL,
+        first_name VARCHAR(50) NOT NULL,
+        middle_name VARCHAR(50),
+        address VARCHAR(100) NOT NULL,
+        barangay VARCHAR(100) NOT NULL,
+        town VARCHAR(100) NOT NULL,
+        birthdate DATE NOT NULL,
+        gender VARCHAR(10) NOT NULL,
+        phone VARCHAR(15) NOT NULL,
+        email VARCHAR(50) NOT NULL,
+        philhealth_no VARCHAR(100) NOT NULL,
+        occupation VARCHAR(250),
+        guardian VARCHAR(250)
+    );
 
 -- pharmacy
 CREATE TABLE inventory (
