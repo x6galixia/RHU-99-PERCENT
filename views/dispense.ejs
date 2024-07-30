@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
+    <script src="/js/websocket.js"></script>
+    <title>Dispense</title>
+</head>
+<body>
+    <!------------user-->
+    <%= surname %> <%= firstname %> <%= middle_initial %> <%= profession %>
+
+    <!---------logout-->
+    <form action="/logout?_method=DELETE" method="POST">
+        <div>
+            <button type="submit">Log out</button>
+        </div>
+    </form>
+    <!--------beneficiary records-->
+    <form action="/pharmacy/inventory" method="GET">
+        <button type="submit">Home</button>
+    </form>
+    <!--------beneficiary records-->
+    <form action="/pharmacy/beneficiary-records" method="GET">
+        <button type="submit">Beneficiary List</button>
+    </form>
+    <!------------dispense-->
+    <form action="/pharmacy/dispense" method="GET">
+        <button type="submit">Dispense</button>
+    </form>
+    <!------------add medicine-->
+    <form action="/pharmacy/add-medicine" method="GET">
+        <button type="submit">Add medicine</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Full name</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Age</th>
+                <th>Phone no</th>
+                <th>Medicine</th>
+                <th>Dosage</th>
+                <th>Quantity</th>
+                <th>Physician</th>
+                <th>Requesting party</th>
+                <th>Relationship to patient</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (dispenseMed && dispenseMed.length > 0) { %>
+                <% dispenseMed.forEach(list => { %>
+                    <tr
+                        data-unq_id="<%= list.unq_id %>"
+                        data-full_name="<%= list.full_name %>"
+                        data-gender="<%= list.gender %>"
+                        data-full_address="<%= list.full_address %>"
+                        data-age="<%= list.age %>"
+                        data-phone="<%= list.phone %>"
+                        data-medicine="<%= list.medicine %>"
+                        data-dosage="<%= list.dosage %>"
+                        data-quantity="<%= list.quantity %>"
+                        data-doctor_name="<%= list.doctor_name %>"
+                        data-reciever="<%= list.reciever %>"
+                        data-relationship="<%= list.relationship %>"
+                    >
+                        <td><%= list.full_name %></td>
+                        <td><%= list.gender %></td>
+                        <td><%= list.full_address %></td>
+                        <td><%= list.age %></td>
+                        <td><%= list.phone %></td>
+                        <td><%= list.medicine %></td>
+                        <td><%= list.dosage %></td>
+                        <td><%= list.quantity %></td>
+                        <td><%= list.doctor_name %></td>
+                        <td><%= list.reciever %></td>
+                        <td><%= list.relationship %></td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <tr>
+                    <td colspan="9">No list for dispense</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+    <div id="dispenseForm" style="display: none;">
+        <div id="closeDispenseBtn">&times;</div>
+        <form action="/dispense-medicine" method="post">
+            <input type="text" id="unq_id" name="unq_id" style="display: none;">
+            <input type="text" id="beneficiary_name" name="beneficiary_name" readonly>
+            <input type="text" id="beneficiary_gender" name="beneficiary_gender" readonly>
+            <input type="text" id="beneficiary_address" name="beneficiary_address" readonly>
+            <input type="text" id="beneficiary_contact" name="beneficiary_contact">
+            <input type="text" id="beneficiary_age" name="beneficiary_age" readonly>
+            <input type="text" id="prescribing_doctor" name="prescribing_doctor" readonly>
+            <input type="text" id="requesting_person" name="requesting_person" readonly>
+            <input type="text" id="relationship_beneficiary" name="relationship_beneficiary" readonly>
+            <!------------------to be filled----------------->
+            <input type="text" id="transaction_number" name="transaction_number" required placeholder="transaction number">
+            <input type="text" id="batch_number" name="batch_number" placeholder="batch number">
+            <input type="date" id="expiration_date" name="expiration_date" readonly>
+            <input type="date" id="date_issued" name="date_issued" readonly>
+            <!------------------medicine info---------------->
+            <input type="number" id="quantity" name="quantity" readonly>
+            <input type="text" id="dosage" name="dosage" readonly>
+            <input type="text" id="product_details" name="product_details">
+            <button type="submit">Dispense</button>
+        </form>
+    </div>
+    <script src="/js/dispense-func.js"></script>
+</body>
+</html>

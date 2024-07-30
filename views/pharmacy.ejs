@@ -4,7 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
-
+    <link rel="stylesheet" href="/css/alert-message.css" />
+    <script src="/js/websocket.js"></script>
     <title>Pharmacy</title>
   </head>
   <body>
@@ -18,8 +19,33 @@
       </div>
     </form>
 
+    <form action="/pharmacy/inventory" method="GET">
+      <button type="submit">Home</button>
+    </form>
+    <!--------beneficiary records-->
+    <form action="/pharmacy/beneficiary-records" method="GET">
+      <button type="submit">Beneficiary List</button>
+    </form>
+    <!------------dispense-->
+    <form action="/pharmacy/dispense" method="GET">
+      <button type="submit">Dispense</button>
+    </form>
+    <!------------add medicine-->
+    <form action="/pharmacy/add-medicine" method="GET">
+      <button type="submit">Add medicine</button>
+    </form>
+
+    <!------------add beneficiary-->
+    <form action="/pharmacy/add-beneficiary" method="GET">
+      <button type="submit">Add Beneciary</button>
+    </form>
+
     <h1>PHARMACY</h1>
 
+    <form action="/search-medicine" method="POST">
+      <input type="text" name="search" placeholder="search medicine">
+      <button type="submit">Search</button>
+    </form>
     <table>
       <thead>
         <tr>
@@ -55,11 +81,28 @@
 
         <% }) %> <% } else { %>
         <tr>
-          <td colspan="7">No stock of medicine.</td>
+          <td colspan="11">No stock of medicine.</td>
         </tr>
         <% } %>
       </tbody>
     </table>
-    <script src="/js/websocket.js"></script>
+    <!---------------------------alert message---------------------->
+    <% if (lowStockItems && lowStockItems.length > 0) { %>
+    <div id="alertMessage">
+        <div class="header">
+          <p style="margin: 0;">WARNING!!!</p>
+        </div>
+        <div class="content">
+          <ul>
+            <% lowStockItems.forEach(item => { %>
+              <li><%= item.product_name %> is low on stock. Quantity: <%= item.product_quantity %></li>
+            <% }) %>
+          </ul>
+        </div>
+      <% } %>
+      <button id="closeAlertBtn" type="button">Close</button>
+    </div>
+
+    <script src="/js/pharmacy-func.js"></script>
   </body>
 </html>

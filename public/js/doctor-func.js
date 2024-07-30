@@ -301,4 +301,3 @@ function logout() {
   alert("Logging out...");
   // Perform logout actions here, such as redirecting to a logout endpoint
 }
-

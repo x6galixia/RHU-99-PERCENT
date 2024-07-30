@@ -42,6 +42,13 @@
 
     
     <!---------------------generate id and search id------------------>
+
+    <% if (message && message.error) { %>
+        <p><%= message.error %></p> 
+    <% } %>
+    <% if (message && message.success) { %>
+        <p><%= message.success %></p> 
+    <% } %>
  
     <form action="/nurse/send-patient-info" method="post">
         <div id="allAround">
@@ -204,7 +211,6 @@
         </div>
 
     </form>
-    <script src="/js/websocket.js"></script>
     <script src="/js/nurse-scanned.js"></script>
 </body>
-</html>
+</html
