@@ -23,7 +23,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("date_issued").value = getCurrentDate();
 
-  function fillInputs(unq_id, full_name, gender, full_address, phone, age, medicine, quantity, dosage, doctor_name, reciever, relationship) {
+  function fillInputs(unq_id, full_name, gender, full_address, phone, age, medicine, quantity, dosage, doctor_name, receiver, relationship) {
       document.getElementById('unq_id').value = unq_id;
       document.getElementById('beneficiary_name').value = full_name;
       document.getElementById('beneficiary_gender').value = gender;
@@ -35,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
       document.getElementById('quantity').value = quantity;
       document.getElementById('dosage').value = dosage;
       document.getElementById('prescribing_doctor').value = doctor_name;
-      document.getElementById('requesting_person').value = reciever;
+      document.getElementById('requesting_person').value = receiver;
       document.getElementById('relationship_beneficiary').value = relationship;
 
       // Trigger the 'input' event on the productDetailsElement
@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function () {
               const quantity = row.getAttribute("data-quantity");
               const dosage = row.getAttribute("data-dosage");
               const prescribing_doctor = row.getAttribute("data-doctor_name");
-              const requesting_person = row.getAttribute("data-reciever");
+              const requesting_person = row.getAttribute("data-receiver");
               const relationship_beneficiary = row.getAttribute("data-relationship");
 
               fillInputs(
