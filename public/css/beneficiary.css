@@ -1,0 +1,143 @@
+/* Reset some basic elements */
+body, h1, h2, h3, h4, h5, h6, p, ul, ol, table, form {
+    margin: 0;
+    padding: 0;
+    border: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    font: 10px;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    padding: 20px;
+}
+
+header {
+    background: #4CAF50;
+    color: #fff;
+    padding: 10px 0;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+header img {
+    max-width: 150px;
+}
+
+h1 {
+    color: #FF007F;
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 30px;
+    font-weight: 1000;
+    font-style: italic;
+    
+}
+
+form {
+    margin-bottom: 20px;
+}
+
+button {
+    background-color: #FF007F;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+button:hover {
+    background-color: #ff1493;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+table, th, td {
+    border: 1px solid #ccc;
+    text-align: left;
+    padding: 8px;
+}
+
+th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+#beneficiaryIndexForm {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80%;
+    background-color: #fff;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px 0px rgba(0, 0, 0, 0.1);
+    z-index: 1111;
+}
+
+#beneficiaryIndexForm #closeIndexBtn {
+    color: #FF007F;
+    float: right;
+    cursor: pointer;
+    font-size: 40px;
+    font-weight: 500;
+    
+}
+
+#beneficiaryIndexForm input[type="text"] {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    justify-content: space-between;
+}
+
+#beneficiaryIndexForm table {
+    width: 100%;
+    margin-top: 20px;
+}
+
+#beneficiaryIndexForm th, #beneficiaryIndexForm td {
+    padding: 10px;
+    text-align: center;
+    
+}
+
+#beneficiaryIndexForm th {
+    background-color: #4CAF50;
+    color: white;
+    font-size: 10px;
+    
+}
+ 
+label{
+    font-family: Arial, serif;
+    font-size: 11px;
+    font-weight: 50;
+}
+
+.sect{
+    display: flex;
+    justify-content: space-between;
+    padding: 0px 30px;
+}
+

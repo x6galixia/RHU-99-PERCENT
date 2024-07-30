@@ -92,6 +92,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("occupation").value = data.occupation;
     document.getElementById("guardian").value = data.guardian;
   }
+  
 });
 
 function toggleDropdown() {
@@ -114,4 +115,3 @@ function logout() {
   alert("Logging out...");
   // Perform logout actions here, such as redirecting to a logout endpoint
 }
-

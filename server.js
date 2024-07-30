@@ -40,6 +40,7 @@ const nurseRouter = require("./routes/nurse");
 const doctorRouter = require("./routes/doctor");
 const medtechRouter = require("./routes/medtech");
 const pharmacyRouter = require("./routes/pharmacy");
+const adminRouter = require("./routes/admin");
 
 pool
   .connect()
@@ -76,7 +77,7 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(express.urlencoded({ extended: false }));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(flash());
 
@@ -96,6 +97,7 @@ app.use("/", nurseRouter);
 app.use("/", doctorRouter);
 app.use("/", medtechRouter);
 app.use("/", pharmacyRouter);
+app.use("/", adminRouter);
 
 app.get("/", (req, res) => {
   res.redirect("/login");

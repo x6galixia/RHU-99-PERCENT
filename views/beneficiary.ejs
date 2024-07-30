@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
+    <link rel="stylesheet" href="/css/beneficiary.css" />
+    <script src="/js/websocket.js"></script>
+    <title>Beneficiary Records</title>
+</head>
+<body>
+    <!------------user-->
+    <%= surname %> <%= firstname %> <%= middle_initial %> <%= profession %>
+
+    <!---------logout-->
+    <form action="/logout?_method=DELETE" method="POST">
+        <div>
+            <button type="submit">Log out</button>
+        </div>
+    </form>
+    <!--------beneficiary records-->
+    <form action="/pharmacy/inventory" method="GET">
+        <button type="submit">Home</button>
+    </form>
+    <!--------beneficiary records-->
+    <form action="/pharmacy/beneficiary-records" method="GET">
+        <button type="submit">Beneficiary List</button>
+    </form>
+    <!------------dispense-->
+    <form action="/pharmacy/dispense" method="GET">
+        <button type="submit">Dispense</button>
+    </form>
+    <!------------add medicine-->
+    <form action="/pharmacy/add-medicine" method="GET">
+        <button type="submit">Add medicine</button>
+    </form>
+    <table>
+        <thead>
+            <tr>
+                <th>Full name</th>
+                <th>Gender</th>
+                <th>Address</th>
+                <th>Contact number</th>
+                <th>Age</th>
+                <th>Senior citizen</th>
+                <th>PWD</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% if (getListBeneficiary && getListBeneficiary.length > 0) { %>
+                <% getListBeneficiary.forEach(list => { %>
+                    <tr 
+                        data-beneficiary_name="<%= list.beneficiary_name %>"
+                        data-beneficiary_gender="<%= list.beneficiary_gender %>"
+                        data-beneficiary_address="<%= list.beneficiary_address %>"
+                        data-beneficiary_contact="<%= list.beneficiary_contact %>"
+                        data-beneficiary_age="<%= list.beneficiary_age %>"
+                        data-senior_citizen="<%= list.senior_citizen %>"
+                        data-pwd="<%= list.pwd %>"
+                        data-transaction_number="<%= list.transaction_number %>"
+                        data-product_details="<%= list.product_details %>"
+                        data-quantity="<%= list.quantity %>"
+                        data-batch_number="<%= list.batch_number %>"
+                        data-expiration_date="<%= list.expiration_date %>"
+                        data-date_issued="<%= list.date_issued %>"
+                        data-prescribing_doctor="<%= list.prescribing_doctor %>"
+                        data-requesting_person="<%= list.requesting_person %>"
+                        data-relationship_beneficiary="<%= list.relationship_beneficiary %>"
+                    >
+                        <td><%= list.beneficiary_name %></td>
+                        <td><%= list.beneficiary_gender %></td>
+                        <td><%= list.beneficiary_address %></td>
+                        <td><%= list.beneficiary_contact %></td>
+                        <td><%= list.beneficiary_age %></td>
+                        <td><%= list.senior_citizen %></td>
+                        <td><%= list.pwd %></td>
+                    </tr>
+                <% }) %>
+            <% } else { %>
+                <tr>
+                    <td colspan="7">No list of beneficiaries</td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+
+    <!-----------beneficiary index form-->
+    <div id="beneficiaryIndexForm" style="display: none;">
+        <div id="closeIndexBtn">&times;</div>
+        <form>
+            <h1> BENEFICIARY INDEX FORM</h1>
+        <div class="sect">
+            <div id="tunga">
+                    <div id="tungaers">
+                        <label for="beneficiary_name">Name:</label>
+                        <input type="text" id="beneficiary_name" name="beneficiary_name" readonly>
+                    </div>
+                    <div>
+                        <label for="beneficiary_gender">Gender:</label>
+                        <input type="text" id="beneficiary_gender" name="beneficiary_gender" readonly>
+                    </div>
+                    <div>
+                        <label for="beneficiary_address">Address:</label>
+                        <input type="text" id="beneficiary_address" name="beneficiary_address" readonly>
+                    </div>
+            </div>
+            <div id="tunga">
+                <div>
+                    <label for="beneficiary_contact">Contact:</label>
+                    <input type="text" id="beneficiary_contact" name="beneficiary_contact" readonly>
+                </div>
+                <div>
+                    <label for="beneficiary_age">Age:</label>
+                    <input type="text" id="beneficiary_age" name="beneficiary_age" readonly>
+                </div>
+                
+            </div>
+            <div id="tunga">
+                <div>
+                    <label for="pwd">Contact:</label>
+                    <input type="text" id="pwd" name="pwd" readonly>
+                </div>
+                <div>
+                    <label for="senior_citizen">Senior Citizen:</label>
+                    <input type="text" id="senior_citizen" name="senior_citizen" readonly>
+                </div>
+            </div>
+        </div>      
+            <table>
+                <thead>
+                    <tr>
+                        <th>Transaction number</th>
+                        <th>Product details</th>
+                        <th>Quantity</th>
+                        <th>Batch number</th>
+                        <th>Expiration date</th>
+                        <th>Date issued</th>
+                        <th>Prescribing doctor</th>
+                        <th>Requesting person</th>
+                        <th>Relationship beneficiary</th>
+                        <th>Signature</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>  
+        </form>
+    </div>
+    <script src="/js/beneficiary-func.js"></script>
+</body>
+</html>
