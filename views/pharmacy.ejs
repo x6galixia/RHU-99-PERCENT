@@ -4,65 +4,90 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
-    <link rel="stylesheet" href="/css/alert-message.css" />
-    <script src="/js/websocket.js"></script>
-    <title>Pharmacy</title>
-  </head>
-  <body>
-    <!------------user-->
-    <%= surname %> <%= firstname %> <%= middle_initial %> <%= profession %>
+    <link rel="stylesheet" href="/css/pharmacy.css" />
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
 
-    <!---------logout-->
-    <form action="/logout?_method=DELETE" method="POST">
-      <div>
-        <button type="submit">Log out</button>
+    <title>Inventory</title>
+</head>
+<body>
+  <header class="py-1">
+    <nav id="navbar">
+        <div id="logo2"> 
+          <div class="openbtn" onclick="toggleNav()">&#9776;</div>
+            <img id="logoing" src="/images/Group 206.png" alt="">            
+          </div>
+          
+          <div id="sidebar" class="sidebar">
+            <div id="profile-sec">
+                <div id="meow">
+                    <img id="profile2" src="/images/profile.png" alt="">
+                </div>
+                <div id="names">
+                    <p class="infos" id="info"><%= surname %> <%= firstname %> <%= middle_initial %> </p>
+                    <p class="infor" id="info"><%= profession %></p>
+                </div>
+            </div>
+            <div id="features">
+            <hr>     
+            <form action="/pharmacy/inventory" method="GET">
+              <button id="log-butt" type="submit"><i class="fas fa-home"></i> HOME </button>
+            </form>
+
+            <form action="/pharmacy/add-medicine" method="GET">
+              <button id="log-butt" type="submit"><i class="fas fa-plus-circle"></i>  ADD MEDICINE </button>
+            </form>
+
+            <form action="/pharmacy/dispense" method="GET">
+              <button id="log-butt" type="submit"><i class="fas fa-pills"></i> DISPENSE </button>
+            </form>
+
+            <form action="/pharmacy/beneficiary-records" method="GET">
+              <button id="log-butt" type="submit"><i class="fas fa-file-medical-alt"></i>  RECORD </button>
+            </form>
+
+            <form action="/logout?_method=DELETE" method="POST">
+              <button id="log-butt" type="submit"><i class="fas fa-chart-line"></i> TRENDS </button>
+            </form>
+
+            <form action="/logout?_method=DELETE" method="POST">
+              <button id="log-butt" type="submit"><i class="fa fa-sign-out-alt"></i> LOGOUT </button>
+            </form>
+        </div>
+      </div>
+    </div>
+    </nav>
+  </header>
+  <div id="semi-header">
+    <div>
+      <H1>INVENTORY FOR MEDICINE</H1>
+    </div>  
+      <!-- Search Form -->
+    <form action="/search-medicine" method="post">
+      <div id="searcher" style="margin-right: 40px;">
+        <input id="searching" type="search" name="search" placeholder="Search" />
+        <button id="search-butt" type="submit"><i class="fas fa-search"></i></button>
       </div>
     </form>
-
-    <form action="/pharmacy/inventory" method="GET">
-      <button type="submit">Home</button>
-    </form>
-    <!--------beneficiary records-->
-    <form action="/pharmacy/beneficiary-records" method="GET">
-      <button type="submit">Beneficiary List</button>
-    </form>
-    <!------------dispense-->
-    <form action="/pharmacy/dispense" method="GET">
-      <button type="submit">Dispense</button>
-    </form>
-    <!------------add medicine-->
-    <form action="/pharmacy/add-medicine" method="GET">
-      <button type="submit">Add medicine</button>
-    </form>
-
-    <!------------add beneficiary-->
-    <form action="/pharmacy/add-beneficiary" method="GET">
-      <button type="submit">Add Beneciary</button>
-    </form>
-
-    <h1>PHARMACY</h1>
-
-    <form action="/search-medicine" method="POST">
-      <input type="text" name="search" placeholder="search medicine">
-      <button type="submit">Search</button>
-    </form>
+  </div>
+  <div id="font">
+    <div id="section1">
     <table>
-      <thead>
-        <tr>
-          <th>Product ID</th>
-          <th>Product code</th>
-          <th>Product name</th>
-          <th>Brand name</th>
-          <th>Supplier</th>
-          <th>Dosage form</th>
-          <th>Dosage</th>
-          <th>Reorder level</th>
-          <th>Batch number</th>
-          <th>Exiration</th>
-          <th>Quantity</th>
-        </tr>
-      </thead>
-      <tbody>
+        <thead>         
+          <tr>
+            <th>PRODUCT ID</th>
+            <th>PRODUCT CODE</th>
+            <th>PRODUCT NAME </th>
+            <th>BRAND NAME</th>
+            <th>SUPPLIER</th>
+            <th>DOSAGE FORM</th>
+            <th>DOSAGE</th>
+            <th>REORDER LEVEL</th>
+            <th>BATCH NUMBER</th>
+            <th>EXPIRATION DATE</th>
+            <th>QUANTITY</th>
+          </tr>
+        </thead>
         <% if (medList && medList.length > 0) { %> <%
           medList.forEach(med => { %>
         <tr>
@@ -86,23 +111,14 @@
         <% } %>
       </tbody>
     </table>
-    <!---------------------------alert message---------------------->
-    <% if (lowStockItems && lowStockItems.length > 0) { %>
-    <div id="alertMessage">
-        <div class="header">
-          <p style="margin: 0;">WARNING!!!</p>
-        </div>
-        <div class="content">
-          <ul>
-            <% lowStockItems.forEach(item => { %>
-              <li><%= item.product_name %> is low on stock. Quantity: <%= item.product_quantity %></li>
-            <% }) %>
-          </ul>
-        </div>
-      <% } %>
-      <button id="closeAlertBtn" type="button">Close</button>
-    </div>
-
-    <script src="/js/pharmacy-func.js"></script>
+  </div>
+  </div>
+  <div id="buttons">
+    <button id="BUTT" type="submit">DOWNLOAD CSV</button>
+    <button id="BUTT" type="submit">PRINT CSV</button>
+  </div>
+  <script src="/js/websocket.js"></script>
+  <script src="/js/aside.js"></script>
+  <script src="/js/pharmacy-func.js"></script>
   </body>
 </html>

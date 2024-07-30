@@ -136,3 +136,4 @@ function toggleNav() {
         sidebar.style.width = '300px';
     }
 }
+
