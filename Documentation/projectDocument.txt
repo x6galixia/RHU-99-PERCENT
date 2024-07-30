@@ -57,7 +57,7 @@ CREATE TABLE patients (
 );
 
 CREATE TABLE prescription (
-    unq_id SERIAL PRIMARY KEY,
+    unq_id VARCHAR(250) PRIMARY KEY,
     full_name VARCHAR(250),
     age INT,
     gender VARCHAR(10),
