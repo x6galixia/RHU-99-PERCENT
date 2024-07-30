@@ -1,9 +1,11 @@
 body{
     margin: 0;
     overflow: hidden;
+    padding: 0 ;
+    height: 100%;
 }
 html{
-    font-family: 'Poppins', sans-serif;
+    font-family: sans-serif;
     height: 100%;
 }
 #navbar{
@@ -127,17 +129,26 @@ html{
     font-size: 20px;
     margin-right: 20px;
   }
-  #maining{
+  #maining {
     display: flex;
     justify-content: center;
-    flex-direction: column;
-    align-items: center ;
+    align-items: center; 
+    flex-direction: column;/* Adjust this based on the height of your header */
+  }
+  .openLabRequests{
+    background-color: #44A130;
+    color: white;
+    border-style: none;
+    text-wrap: nowrap;
+    padding: 5px 10px;
+    cursor: pointer;
   }
   .table-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 100%;
-    max-width: 70.5%; /* Set the max width of the table */
-    height: 70%;
-    margin-left: 12px; /* Set the height of the container */ /* Optional: Add a border for better visualization */
+    height: 100%;
   }
   
   /* Styling the table header */
@@ -147,12 +158,11 @@ html{
 }
 table{
     border-collapse: collapse;
+    margin: 0 20px;
 }
 
 /* Hover effects for table rows */
-table tbody tr:hover {
-    background-color: #ddd; /* Light gray background on hover */
-}
+
 table thead th {
     background-color: #44A130;
     color: white;
@@ -169,4 +179,193 @@ h1{
     color: #FF007F;
     margin-left: 40px;
     font-weight: 1000;
+}
+
+#row{
+  padding: 20px;
+    border-bottom-left-radius: 20px;
+    border-bottom-right-radius: 20px;
+}
+#addLabResultForm{
+  display: none;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    background-color: #fff;
+    z-index: 1000;
+}
+#tunga input{
+  border-style: none;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  text-decoration: underline;
+  margin-bottom: 10px;
+  outline: none;
+  cursor: default;
+ 
+}
+#labRequestForm label{
+  border-style: none;
+    font-size: 16px;
+    font-family: 'Poppins', sans-serif;
+}
+
+#tunga{
+  display: flex;
+}
+#row input {
+  border-style: none;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+  text-decoration: underline;
+ 
+}
+.popup-header {
+  background-color: green;
+  color: white;
+  padding: 10px;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.popup-header h2 {
+  margin: 0;
+}
+
+.closeVitalsBtn {
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.popup-content input {
+border-style: none;
+font-size: 16px;
+font-family: 'Poppins', sans-serif;
+text-decoration: underline;
+
+}
+.popup-content label {
+  border-style: none;
+  font-size: 16px;
+  font-family: 'Poppins', sans-serif;
+}
+.popup-content {
+  padding: 20px; /* Add background color to the popup content */
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+#flex{
+  margin-bottom: 20px;
+}
+#heart{
+  height: 30px;
+}
+.close{
+  font-size: 30px;
+  margin-right: 5px;
+}
+.close:hover{
+  color: rgb(163, 163, 163);
+  cursor: pointer;
+}
+#head-pop{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+#options input{
+  height: 30px;
+  border-style: none;
+}
+#sub-flex{
+  display: flex;
+  justify-content: end;
+  margin-top: 20px;
+}
+#tungain{
+  display: flex;
+  justify-content: space-evenly;
+}
+.imageFieldContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.imageField {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #f9f9f9;
+  width: 90% ;
+  margin-left: 25px;
+  
+}
+
+.imageField input[type="file"] {
+  flex: 1;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  background: none;
+  outline: none;
+}
+
+.imageFieldContainer .imageField:hover {
+  border-color: #44A130;
+  background-color: #e6ffe6;
+}
+
+.imageFieldContainer .imageField input[type="file"]:focus {
+  border-color: #44A130;
+}
+
+button#addMoreButton {
+  align-self: flex-start;
+  padding: 5px 10px;
+  font-size: 16px;
+  background-color: #FF007F;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-left: 25px;
+}
+
+button#addMoreButton:hover {
+  background-color: #ec318f;
+}
+button#submit-butt {
+  align-self: flex-start;
+  padding: 10px 20px;
+  font-size: 16px;
+  background-color: #07ca48;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-right: 25px;
+  margin-bottom: 20px;
+}
+button#submit-butt:hover {
+  background-color: #058b32;
+}
+#buttons{
+  display: flex;
+  justify-content: end;
+}
+#tungain{
+  display: flex;
 }
