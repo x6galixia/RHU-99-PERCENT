@@ -3,79 +3,104 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
-    <script src="/js/websocket.js"></script>
+    <link rel="stylesheet" href="/css/medtech.css">
     <title>Medtech</title>
   </head>
+  <header class="py-1">
+    <nav id="navbar">
+        <div id="logo2">
+            <img id="logoing" src="/images/group 206.png" alt="">
+          </div>
+         <!-- Logout icon -->
+         <div class="dropdown">
+          <img class="dropbtn" onclick="toggleDropdown()" src="/images/profile.png" alt="">
+          <div id="dropdownContent" class="dropdown-content">
+              <div id="profile-sec">
+                <div id="meow">
+                  <img id="profile2" src="/images/profile.png" alt="">
+                </div>
+                <div id="names">
+                  <p class=" infos" id="info"><%= surname %> <%= firstname %> <%= middle_initial %> </p>
+                  <p class="infor" id="info"><%= profession %></p>
+                </div>              
+              </div>
+              <hr>
+              <!---------------------------LOGOUT BUTTON---------------------------------------------->
+              <form action="/logout?_method=DELETE" method="POST">
+                <button id="log-butt" type="submit"><i class="fa fa-sign-out-alt"></i> Log out</button>
+              </form>
+          </div>
+        </div>
+    </nav>
+  </header>
   <body>
-    <!------------user-->
-    <%= surname %> <%= firstname %> <%= middle_initial %> <%= profession %>
-
-    <!---------logout-->
-    <form action="/logout?_method=DELETE" method="POST">
-      <div>
-        <button type="submit">Log out</button>
+    <div id="maining">
+      <h1>DOCTOR'S LABORATORY REQUEST</h1>
+      <div id="body">
+        <div class="table-container">
+          <table>
+            <thead>
+              <tr>
+                <th>Status</th>
+                <th>Unique ID</th>
+                <th>Patient name</th>
+                <th>Age</th>
+                <th>Sex</th>
+                <th>Birth date</th>
+                <th>Parent/Guardian</th>
+                <th>Occupation</th>
+                <th>Date</th>
+                <th>Categories</th>
+                <th>Services</th>
+                <th>Laboratory request</th>
+              </tr>
+            </thead>
+            <tbody>
+              <% if (getPatientsLab && getPatientsLab.length > 0) { %> <%
+              getPatientsLab.forEach(pr => { %>
+              <tr>
+                <td>blank</td>
+                <td><%= pr.unq_id %></td>
+                <td><%= pr.fullname %></td>
+                <td><%= pr.age %></td>
+                <td><%= pr.gender %></td>
+                <td><%= pr.birthdate %></td>
+                <td><%= pr.guardian %></td>
+                <td><%= pr.occupation %></td>
+                <td><%= pr.check_date %></td>
+                <td><%= pr.category %></td>
+                <td><%= pr.service %></td>
+                <td>
+                  <button
+                    class="openLabRequests"
+                    data-unq-id="<%= pr.unq_id %>"
+                    data-check-date="<%= pr.check_date %>"
+                    data-full-name="<%= pr.fullname %>"
+                    data-age="<%= pr.age %>"
+                    data-gender="<%= pr.gender %>"
+                    data-birthdate="<%= pr.birthdate %>"
+                    data-occupation="<%= pr.occupation %>"
+                    data-guardian="<%= pr.guardian %>"
+                    data-category="<%= pr.category %>"
+                    data-service="<%= pr.service %>"
+                  >
+                    Laboratory Request
+                  </button>
+                </td>
+              </tr>
+              <% }) %> <% } else { %>
+              <tr> 
+                <td  colspan="12"> <div style="display: block;">
+                  <img style="height: 150px;" src="/images/fxemoji_folder.png" alt=""> 
+                  <p>No laboratory request.</p>
+                </div></td>
+              </tr>
+              <% } %>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </form>
-    <h1>DOCTOR'S LABORATORY REQUEST</h1>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Status</th>
-          <th>Unique ID</th>
-          <th>Patient name</th>
-          <th>Age</th>
-          <th>Sex</th>
-          <th>Birth date</th>
-          <th>Parent/Guardian</th>
-          <th>Occupation</th>
-          <th>Date</th>
-          <th>Categories</th>
-          <th>Services</th>
-          <th>Laboratory request</th>
-        </tr>
-      </thead>
-      <tbody>
-        <% if (getPatientsLab && getPatientsLab.length > 0) { %> <%
-        getPatientsLab.forEach(pr => { %>
-        <tr>
-          <td>blank</td>
-          <td><%= pr.unq_id %></td>
-          <td><%= pr.fullname %></td>
-          <td><%= pr.age %></td>
-          <td><%= pr.gender %></td>
-          <td><%= pr.birthdate %></td>
-          <td><%= pr.guardian %></td>
-          <td><%= pr.occupation %></td>
-          <td><%= pr.check_date %></td>
-          <td><%= pr.category %></td>
-          <td><%= pr.service %></td>
-          <td>
-            <button
-              class="openLabRequests"
-              data-unq-id="<%= pr.unq_id %>"
-              data-check-date="<%= pr.check_date %>"
-              data-full-name="<%= pr.fullname %>"
-              data-age="<%= pr.age %>"
-              data-gender="<%= pr.gender %>"
-              data-birthdate="<%= pr.birthdate %>"
-              data-occupation="<%= pr.occupation %>"
-              data-guardian="<%= pr.guardian %>"
-              data-category="<%= pr.category %>"
-              data-service="<%= pr.service %>"
-            >
-              Laboratory Request
-            </button>
-          </td>
-        </tr>
-        <% }) %> <% } else { %>
-        <tr>
-          <td colspan="12">No laboratory request.</td>
-        </tr>
-        <% } %>
-      </tbody>
-    </table>
+    </div>
 
     <!-- request Form -->
     <div id="addLabResultForm" style="display: none">
