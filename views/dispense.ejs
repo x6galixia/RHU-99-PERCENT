@@ -16,13 +16,13 @@
         <nav id="navbar">
             <div id="logo2"> 
               <div class="openbtn" onclick="toggleNav()">&#9776;</div>
-                <img id="logoing" src="/images/Group 206.png" alt="">            
+                <img id="logoing" src="/images/Group 206.png" alt="Logo">            
               </div>
               
               <div id="sidebar" class="sidebar">
                 <div id="profile-sec">
                     <div id="meow">
-                        <img id="profile2" src="/images/profile.png" alt="">
+                        <img id="profile2" src="/images/profile.png" alt="Profile">
                     </div>
                     <div id="names">
                         <p class="infos" id="info"><%= surname %> <%= firstname %> <%= middle_initial %> </p>
@@ -61,7 +61,7 @@
       </header>
       <div id="semi-header">
         <div>
-          <H1>DISPENSE</H1>
+          <h1>DISPENSE</h1>
         </div>
         </div>
       <div id="font">
@@ -131,7 +131,7 @@
                     <input type="text" id="beneficiary_name" name="beneficiary_name" readonly>
                     <input type="text" id="beneficiary_gender" name="beneficiary_gender" style="display: none;" readonly>
                     <input type="text" id="beneficiary_address" name="beneficiary_address" style="display: none;" readonly>
-                    <input type="text" id="beneficiary_contact" name="beneficiary_contact" style="display: none;" >
+                    <input type="text" id="beneficiary_contact" name="beneficiary_contact" style="display: none;">
                     <input type="text" id="beneficiary_age" name="beneficiary_age" style="display: none;" readonly>
                     <label>PHYSICIAN</label>
                     <input type="text" id="prescribing_doctor" name="prescribing_doctor" readonly>
@@ -145,10 +145,7 @@
                     <input type="text" id="batch_number" name="batch_number" placeholder="batch number" style="display: none;" readonly>
                     <input type="text" id="dosage" name="dosage" style="display: none;" readonly>
                 </div>
-            </form>
-            
                 <div class="table-section">
-                    
                     <h2>PRODUCT ISSUED SUBFORM</h2>
                     <table>
                         <thead>
@@ -161,12 +158,10 @@
                         </thead>
                         <tbody>
                             <tr>
-                               
                                 <td><input type="text" id="transaction_number" name="transaction_number" required placeholder="transaction number"></td>
                                 <td><input type="text" id="product_details" name="product_details" readonly></td>
                                 <td><input type="number" id="quantity" name="quantity" readonly></td>
                                 <td><input type="date" id="date_issued" name="date_issued" readonly></td>
-                           
                             </tr>
                         </tbody>
                     </table>
@@ -174,6 +169,7 @@
                         <button id="but" type="submit">Dispense</button>
                     </div>
                 </div>
+            </form>
             </div>
         </div>
     <script src="/js/dispense-func.js"></script>
