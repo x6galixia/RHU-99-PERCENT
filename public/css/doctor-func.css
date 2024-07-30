@@ -593,4 +593,25 @@ body {
 }
 #separate input{
   padding: 10px;
+  border-radius: 5px;
+  border-style: none;
+  border: 1px solid #000;
+}
+.suggestions{
+  margin-right: 5px;
+}
+#submit-div{
+  display: flex;
+  justify-content: start;
+  margin-left: 18px;
+  margin-bottom: 20px;
+  margin-top: 20px;
+}
+#submit-div button{
+  padding: 10px 30px;
+  background-color: #FF007F;
+  border-style: none;
+  border-radius: 5px;
+  color: white;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
