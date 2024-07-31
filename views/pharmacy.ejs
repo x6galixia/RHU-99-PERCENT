@@ -6,6 +6,7 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
     <link rel="stylesheet" href="/css/pharmacy.css" />
     <link rel="stylesheet" href="/css/sidebar.css"/>
+    <link rel="stylesheet" href="/css/alert-message.css"/>
 
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -123,6 +124,24 @@
     <button id="downloadbtn" type="button">DOWNLOAD CSV</button>
     <button id="printbtn" type="button">PRINT CSV</button>
   </div>
+
+  <% if (lowStockItems && lowStockItems.length > 0) { %>
+    <div id="alertMessage">
+        <div class="header">
+          <p style="margin: 0;">ALERT!!!</p>
+        </div>
+        <div class="content">
+          <p>LOW STOCKS MEDICINE</p>
+          <ul>
+            <% lowStockItems.forEach(list => { %>
+              <li><%= list.product_name %> QTY: <%= list.product_quantity %></li>
+            <% }) %>
+          </ul>
+        </div>
+      <% } %>
+      <button id="closeAlertBtn" type="button">Close</button>
+    </div>
+
   <script src="/js/websocket.js"></script>
   <script src="/js/aside.js"></script>
   <script src="/js/sidebar.js"></script>
