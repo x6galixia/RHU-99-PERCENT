@@ -19,13 +19,13 @@
     <nav id="navbar">
         <div id="logo2"> 
           <div class="openbtn" onclick="toggleNav()">&#9776;</div>
-            <img id="logoing" src="/images/Group 206.png" alt="">            
+            <img id="logoing" src="/images/Group 206.png" alt="Logo">            
           </div>
           
           <div id="sidebar" class="sidebar">
             <div id="profile-sec">
                 <div id="meow">
-                    <img id="profile2" src="/images/profile.png" alt="">
+                    <img id="profile2" src="/images/profile.png" alt="Profile">
                 </div>
                 <div id="names">
                     <p class="infos" id="info"><%= surname %> <%= firstname %> <%= middle_initial %> </p>
@@ -37,9 +37,9 @@
             <form action="/pharmacy/inventory" method="GET">
               <button id="log-butt" type="submit"><i class="fas fa-home"></i> HOME </button>
             </form>
-
+          
             <form action="/pharmacy/add-medicine" method="GET">
-              <button id="log-butt" type="submit"><i class="fas fa-plus-circle"></i>  ADD MEDICINE </button>
+            <button id="log-butt" type="submit"><i class="fas fa-plus-circle"></i>  ADD MEDICINE </button>
             </form>
 
             <form action="/pharmacy/dispense" method="GET">
@@ -55,7 +55,7 @@
             </form>
 
             <form action="/pharmacy/add-beneficiary" method="GET">
-                <button id="log-butt" type="submit"><i class="fas fa-chart-line"></i> ADD BENEFICIARY </button>
+                <button id="log-butt" type="submit"><i class="fas fa-user-plus"></i> ADD BENEFICIARY </button>
             </form>
 
             <form action="/logout?_method=DELETE" method="POST">
@@ -122,6 +122,7 @@
     </div>
 
     <!-----------beneficiary index form-->
+    <div id="overlay" style="display: none;"></div>
     <div id="beneficiaryIndexForm" style="display: none;">
         <div id="closeIndexBtn">&times;</div>
         <form>
@@ -182,5 +183,6 @@
         </form>
     </div>
     <script src="/js/beneficiary-func.js"></script>
+    <script src="/js/sidebar.js"></script>
 </body>
 </html>
