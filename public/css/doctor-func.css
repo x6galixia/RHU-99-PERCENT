@@ -59,9 +59,9 @@ html{
     position: absolute;
     background-color: #f9f9f9;
     min-width: 250px;
-    height: 140px;
+    height: 145px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+    z-index: 2;
     left: -190px;
   }
   #info{
@@ -178,11 +178,10 @@ h1{
 
 .table-container {
     width: 100%;
-    max-width: 94.5%; /* Set the max width of the table */
-    height: 70%; /* Set the height of the container */
+    max-width: 94.5%;
+    max-height: 75vh; /* Set the max width of the table */ /* Set the height of the container */
     overflow-x: auto;
     overflow-y: auto;
-
     border: 1px solid #ddd; /* Optional: Add a border for better visualization */
   }
   #body{
@@ -194,6 +193,12 @@ h1{
   table thead th, table tbody td {
     text-align: center;
     border: 1px solid #e1dfdf;
+}
+thead{
+  position: sticky;
+    top: 0;
+    background-color: white; /* Ensures the header has a background */
+    z-index: 1;
 }
 table{
     border-collapse: collapse;
@@ -315,7 +320,9 @@ body {
   border-style: none;
   font-size: 16px;
   font-family: 'Poppins', sans-serif;
-  text-decoration: underline;
+  text-decoration: none;
+  padding-bottom: 0.5px; /* Adjust this value to control the spacing between the text and the underline */
+  border-bottom: 1px solid rgb(78, 78, 78);
  
 }
 .popup-content label {
@@ -427,12 +434,14 @@ body {
   border-style: none;
   font-size: 16px;
   font-family: 'Poppins', sans-serif;
-  text-decoration: underline;
+  text-decoration: none;
   margin-bottom: 10px;
   outline: none;
+  padding-bottom: 0.5px;
   cursor: default;
- 
+  border-bottom: 1px solid rgb(78, 78, 78); /* Adjust the thickness and color of the underline here */
 }
+
 #labRequestForm label{
   border-style: none;
     font-size: 16px;
@@ -446,7 +455,7 @@ body {
   border-style: none;
   font-size: 16px;
   font-family: 'Poppins', sans-serif;
-  text-decoration: underline;
+  text-decoration: none;
  
 }
 #column-row{
@@ -614,4 +623,24 @@ body {
   border-radius: 5px;
   color: white;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+@media (max-height: 700px) {
+  .table-container {
+      max-height: 65vh; /* Reduce height for smaller screens */
+  }
+
+  button {
+      padding: 3px 5px; /* Reduce button padding */
+      margin: 3px; /* Reduce button margin */
+  }
+}
+
+@media (max-width: 768px) {
+  .table-container {
+      max-width: 100%; /* Ensure it takes the full width */
+  }
+
+  table thead th, table tbody td {
+      padding: 5px 10px; /* Further reduce padding for very small screens */
+  }
 }

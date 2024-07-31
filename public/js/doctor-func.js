@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const openDiagnoseButtons = document.querySelectorAll(".openDiagnose");
   const openFindingsButtons = document.querySelectorAll(".openFindings");
 
+  const overlay = document.getElementById('overlay');
   const vitalForm = document.getElementById("vitalForm");
   const prescribeForm = document.getElementById("prescribeForm");
   const labRequestForm = document.getElementById("labRequestForm");
@@ -35,13 +36,19 @@ document.addEventListener("DOMContentLoaded", function () {
         this.dataset.respiratoryRate;
       document.getElementById("bmi").value = this.dataset.bmi;
       document.getElementById("comment").value = this.dataset.comment;
+      overlay.style.display = "block";
       vitalForm.style.display = "block";
     });
   });
 
   closeVitalsBtn.addEventListener("click", function () {
+    overlay.style.display = "none";
     vitalForm.style.display = "none";
-  });
+});
+overlay.addEventListener("click", function () {
+  overlay.style.display = "none";
+  vitalForm.style.display = "none";
+});
 
   // Prescribe
   openPrescribeButtons.forEach((button) => {
@@ -66,11 +73,17 @@ document.addEventListener("DOMContentLoaded", function () {
         this.dataset.occupation;
       document.getElementById("pres_guardian").value = this.dataset.guardian;
       document.getElementById("pres_doctor").value = this.dataset.doctor;
+      overlay.style.display = "block";
       prescribeForm.style.display = "block";
     });
   });
 
   closePrescribeBtn.addEventListener("click", function () {
+    overlay.style.display = "none";
+    prescribeForm.style.display = "none";
+  });
+  overlay.addEventListener("click", function () {
+    overlay.style.display = "none";
     prescribeForm.style.display = "none";
   });
 
@@ -93,13 +106,21 @@ document.addEventListener("DOMContentLoaded", function () {
         .split("T")[0];
       document.getElementById("req_occupation").value = this.dataset.occupation;
       document.getElementById("req_guardian").value = this.dataset.guardian;
+      overlay.style.display = "block";
       labRequestForm.style.display = "block";
     });
   });
 
   closeLabRequestBtn.addEventListener("click", function () {
+    overlay.style.display = "none";
     labRequestForm.style.display = "none";
   });
+  overlay.addEventListener("click", function () {
+    overlay.style.display = "none";
+    labRequestForm.style.display = "none";
+  });
+
+  
 
   //l-----------------lab results--------------
   openLabResButtons.forEach(button => {
@@ -131,12 +152,17 @@ document.addEventListener("DOMContentLoaded", function () {
       } else {
         labResultsContainer.innerHTML = "<p>No lab results available.</p>";
       }
-  
+      overlay.style.display = "block";
       labResultForm.style.display = "block";
     });
   });
   
   closeLabResultBtn.addEventListener("click", function() {
+    overlay.style.display = "none";
+    labResultForm.style.display = "none";
+  });
+  overlay.addEventListener("click", function () {
+    overlay.style.display = "none";
     labResultForm.style.display = "none";
   });
 
@@ -159,11 +185,17 @@ document.addEventListener("DOMContentLoaded", function () {
         .split("T")[0];
       document.getElementById("dia_occupation").value = this.dataset.occupation;
       document.getElementById("dia_guardian").value = this.dataset.guardian;
+      overlay.style.display = "block";
       diagnoseForm.style.display = "block";
     });
   });
 
   closeDiagnoseBtn.addEventListener("click", function () {
+    overlay.style.display = "none";
+    diagnoseForm.style.display = "none";
+  });
+  overlay.addEventListener("click", function () {
+    overlay.style.display = "none";
     diagnoseForm.style.display = "none";
   });
 
@@ -186,11 +218,17 @@ document.addEventListener("DOMContentLoaded", function () {
         .split("T")[0];
       document.getElementById("fin_occupation").value = this.dataset.occupation;
       document.getElementById("fin_guardian").value = this.dataset.guardian;
+      overlay.style.display = "block";
       findingsForm.style.display = "block";
     });
   });
 
   closeFindingsBtn.addEventListener("click", function () {
+    overlay.style.display = "none";
+    findingsForm.style.display = "none";
+  });
+  overlay.addEventListener("click", function () {
+    overlay.style.display = "none";
     findingsForm.style.display = "none";
   });
 
@@ -257,19 +295,16 @@ const closeAlertBtn = document.getElementById("closeAlertBtn");
 if (!sessionStorage.getItem("alertShown1")) {
   // Show the alert
   alertMessage.style.display = "block";
-  closeAlertBtn.style.display = "block";
 
   // Add event listener to close button
   closeAlertBtn.addEventListener("click", function () {
     alertMessage.style.display = "none";
-    closeAlertBtn.style.display = "none";
     // Set the alert as shown in sessionStorage
     sessionStorage.setItem("alertShown1", "true");
   });
 } else {
   // Hide the alert if it has been shown in this session
   alertMessage.style.display = "none";
-  closeAlertBtn.style.display = "none";
 }
 //----------------------->>end
 });
@@ -294,3 +329,4 @@ function logout() {
   alert("Logging out...");
   // Perform logout actions here, such as redirecting to a logout endpoint
 }
+
