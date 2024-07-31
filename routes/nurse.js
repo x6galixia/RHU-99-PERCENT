@@ -2,10 +2,7 @@ const express = require("express");
 const citizenPool = require("../models/citizendb");
 const pool = require("../models/localdb");
 const methodOverride = require("method-override");
-const {
-  ensureAuthenticated,
-  checkUserType,
-} = require("../middleware/middleware");
+const { ensureAuthenticated, checkUserType, checkNotAuthenticated, checkRhuAccess, setUserData } = require('../middleware/middleware');
 const router = express.Router();
 
 router.use(methodOverride("_method"));
@@ -14,7 +11,6 @@ router.use(setUserData);
 router.get("/nurse", ensureAuthenticated, checkUserType("nurse"), (req, res) => {
   res.render("nurse", { user: req.user, message: {} });
 });
-
 
 router.get('/api/search/:searchValue', async (req, res) => {
   const unq_id = req.params.searchValue;
@@ -31,7 +27,6 @@ router.get('/api/search/:searchValue', async (req, res) => {
     res.status(500).send("Server error");
   }
 });
-
 
 router.get("/api/citizen/:last_name/:first_name/:middle_name", async (req, res) => {
   const { last_name, first_name, middle_name } = req.params;
@@ -74,87 +69,84 @@ router.get("/api/citizen/:id", async (req, res) => {
   }
 });
 
+router.post("/nurse/send-patient-info", ensureAuthenticated, checkUserType("nurse"), async (req, res) => {
+  try {
+    const {
+      unq_id,
+      check_date,
+      last_name,
+      first_name,
+      middle_name,
+      address,
+      barangay,
+      town,
+      birthdate,
+      gender,
+      phone,
+      email,
+      philhealth_no,
+      occupation,
+      guardian,
+      height,
+      weight,
+      systolic,
+      diastolic,
+      temperature,
+      pulse_rate,
+      respiratory_rate,
+      bmi,
+      comment,
+    } = req.body;
 
-router.post(
-  "/nurse/send-patient-info",
-  ensureAuthenticated,
-  checkUserType("nurse"),
-  async (req, res) => {
-    try {
-      const {
-        unq_id,
-        check_date,
-        last_name,
-        first_name,
-        middle_name,
-        address,
-        barangay,
-        town,
-        birthdate,
-        gender,
-        phone,
-        email,
-        philhealth_no,
-        occupation,
-        guardian,
-        height,
-        weight,
-        systolic,
-        diastolic,
-        temperature,
-        pulse_rate,
-        respiratory_rate,
-        bmi,
-        comment,
-      } = req.body;
+    const rhu_id = req.user.rhu_id;
 
-      const query = `
-        INSERT INTO patients (unq_id, check_date, last_name, first_name, middle_name, address, barangay, town,
-        birthdate, gender, phone, email, philhealth_no, occupation,
-        guardian, height, weight, systolic, diastolic, temperature,
-        pulse_rate, respiratory_rate, bmi, comment)
-        VALUES ($1, $2, $3, $4, $5, $6, $7,
-        $8, $9, $10, $11, $12, $13,
-        $14, $15, $16, $17, $18, $19,
-        $20, $21, $22, $23, $24)
-        RETURNING *;
-      `;
+    const query = `
+      INSERT INTO patients (unq_id, rhu_id, check_date, last_name, first_name, middle_name, address, barangay, town,
+      birthdate, gender, phone, email, philhealth_no, occupation,
+      guardian, height, weight, systolic, diastolic, temperature,
+      pulse_rate, respiratory_rate, bmi, comment)
+      VALUES ($1, $2, $3, $4, $5, $6, $7,
+      $8, $9, $10, $11, $12, $13,
+      $14, $15, $16, $17, $18, $19,
+      $20, $21, $22, $23, $24, $25)
+      RETURNING *;
+    `;
 
-      const values = [
-        unq_id,
-        check_date,
-        last_name,
-        first_name,
-        middle_name,
-        address,
-        barangay,
-        town,
-        birthdate,
-        gender,
-        phone,
-        email,
-        philhealth_no,
-        occupation,
-        guardian,
-        height,
-        weight,
-        systolic,
-        diastolic,
-        temperature,
-        pulse_rate,
-        respiratory_rate,
-        bmi,
-        comment,
-      ];
+    const values = [
+      unq_id,
+      rhu_id,
+      check_date,
+      last_name,
+      first_name,
+      middle_name,
+      address,
+      barangay,
+      town,
+      birthdate,
+      gender,
+      phone,
+      email,
+      philhealth_no,
+      occupation,
+      guardian,
+      height,
+      weight,
+      systolic,
+      diastolic,
+      temperature,
+      pulse_rate,
+      respiratory_rate,
+      bmi,
+      comment,
+    ];
 
-      const result = await pool.query(query, values);
-      res.render('nurse', { user: req.user, message: { success: 'Patient added successfully!' } });
-    } catch (err) {
-      console.error(err);
-      res.render('nurse', { user: req.user, message: { error: 'An error occurred while adding the patient.' } });
-    }
+    const result = await pool.query(query, values);
+    res.render('nurse', { user: req.user, message: { success: 'Patient added successfully!' } });
+  } catch (err) {
+    console.error(err);
+    res.render('nurse', { user: req.user, message: { error: 'An error occurred while adding the patient.' } });
   }
-);
+});
 
 //-------------------functions------//
 router.delete("/logout", (req, res) => {
@@ -165,20 +157,5 @@ router.delete("/logout", (req, res) => {
     res.redirect("/login");
   });
 });
-
-function setUserData(req, res, next) {
-  if (req.isAuthenticated()) {
-    res.locals.firstname = req.user.firstname
-    res.locals.surname = req.user.surname
-    res.locals.middle_initial = req.user.middle_initial
-    res.locals.profession = req.user.profession
-  } else {
-    res.locals.firstname = null
-    res.locals.surname = null
-    res.locals.middle_initial = null
-    res.locals.profession = null
-  }
-  next();
-}
 
 module.exports = router;

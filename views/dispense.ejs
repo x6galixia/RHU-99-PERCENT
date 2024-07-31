@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
     <link rel="stylesheet" href="/css/pharmacy.css" />
-    <link rel = "stylesheet" href = "/css/sidebar.css"/>
+    <link rel="stylesheet" href="/css/sidebar.css"/>
     <link rel="stylesheet" href="/css/dispense.css" />
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -48,8 +48,12 @@
                   <button id="log-butt" type="submit"><i class="fas fa-file-medical-alt"></i>  RECORD </button>
                 </form>
     
-                <form action="/logout?_method=DELETE" method="POST">
-                  <button id="log-butt" type="submit"><i class="fas fa-chart-line"></i> TRENDS </button>
+                <form action="/pharmacy/trends" method="GET">
+                    <button id="log-butt" type="submit"><i class="fas fa-chart-line"></i> TRENDS </button>
+                </form>
+
+                <form action="/pharmacy/add-beneficiary" method="GET">
+                    <button id="log-butt" type="submit"><i class="fas fa-user-plus"></i> ADD BENEFICIARY </button>
                 </form>
     
                 <form action="/logout?_method=DELETE" method="POST">
@@ -67,7 +71,7 @@
         </div>
       <div id="font">
         <div id="section1"> 
-    <table>
+    <table id="mainTable">
         <thead>
             <tr>
                 <th>Full name</th>
@@ -148,7 +152,7 @@
                 </div>
                 <div class="table-section">
                     <h2>PRODUCT ISSUED SUBFORM</h2>
-                    <table>
+                    <table id="subFormTable">
                         <thead>
                             <tr>
                                 <th>TRANSACTION #</th>

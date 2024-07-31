@@ -57,8 +57,12 @@ router.get("/pharmacy/dispense", ensureAuthenticated, checkUserType("pharmacist"
   }
 });
 
-router.get("/pharmacy/add-medicine", (req, res) => {
+router.get("/pharmacy/add-medicine", ensureAuthenticated, checkUserType("pharmacist"), (req, res) => {
   res.render("addmedicine");
+});
+
+router.get("/pharmacy/trends", ensureAuthenticated, checkUserType("pharmacist"), (req, res) => {
+  res.render("trends");
 });
 
 router.post("/pharmacy/add-medicine", ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {

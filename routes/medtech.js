@@ -4,10 +4,7 @@ const multer = require("multer");
 const fs = require('fs');
 const path = require('path');
 const methodOverride = require("method-override");
-const {
-  ensureAuthenticated,
-  checkUserType,
-} = require("../middleware/middleware");
+const { ensureAuthenticated, checkUserType, checkNotAuthenticated, checkRhuAccess, setUserData } = require('../middleware/middleware');
 const router = express.Router();
 
 router.use(methodOverride("_method"));
@@ -38,7 +35,7 @@ router.use("/uploads", express.static("uploads"));
 
 router.get("/medtech", ensureAuthenticated, checkUserType("medtech"), async (req, res) => {
   try {
-    const getPatientsLab = await getPatientsForLab();
+    const getPatientsLab = await getPatientsForLab(req.user.rhu_id);
     res.render('medtech', {
       getPatientsLab,
       user: req.user
@@ -68,10 +65,10 @@ router.post('/add-LabResult', ensureAuthenticated, checkUserType('medtech'), upl
 
     const labResultsArray = `{${lab_results.map(filename => `"${filename}"`).join(",")}}`;
 
-    const query = 'UPDATE patients SET lab_result = $1 WHERE unq_id = $2';
-    await pool.query(query, [labResultsArray, unq_id]);
+    const query = 'UPDATE patients SET lab_result = $1 WHERE unq_id = $2 AND rhu_id = $3';
+    await pool.query(query, [labResultsArray, unq_id, req.user.rhu_id]);
 
-    const getPatientsLab = await getPatientsForLab();
+    const getPatientsLab = await getPatientsForLab(req.user.rhu_id);
     res.redirect('/medtech');
   } catch (err) {
     console.error('Error adding lab result:', err);
@@ -91,9 +88,9 @@ router.delete("/logout", (req, res) => {
 
 //------------------------function-----------//
 
-async function getPatientsForLab() {
+async function getPatientsForLab(rhuId) {
   try {
-    const viewPatients = await pool.query("SELECT * FROM patients");
+    const viewPatients = await pool.query("SELECT * FROM patients WHERE rhu_id = $1", [rhuId]);
 
     return viewPatients.rows
       .filter(row => row.category !== null && row.lab_result === null)
@@ -113,21 +110,6 @@ async function getPatientsForLab() {
     console.error("Error fetching patients:", err);
     return [];
   }
-}
-
-function setUserData(req, res, next) {
-  if (req.isAuthenticated()) {
-    res.locals.firstname = req.user.firstname;
-    res.locals.surname = req.user.surname;
-    res.locals.middle_initial = req.user.middle_initial;
-    res.locals.profession = req.user.profession;
-  } else {
-    res.locals.firstname = null;
-    res.locals.surname = null;
-    res.locals.middle_initial = null;
-    res.locals.profession = null;
-  }
-  next();
 }
 
 function calculateAge(birthdateString) {
@@ -153,15 +135,6 @@ function formatDate(dateString) {
   };
   const date = new Date(dateString);
   return date.toLocaleDateString("en-US", options);
-}
-
-function getCurrentDate() {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0');
-  const day = String(today.getDate()).padStart(2, '0');
-
-  return `${year}-${month}-${day}`;
 }
 
 module.exports = router;

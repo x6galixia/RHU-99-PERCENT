@@ -14,7 +14,7 @@
   }
   
 
-  .fa-home, .fa-plus-circle, .fa-pills, .fa-file-medical-alt, .fa-chart-line, .fa-sign-out-alt {
+  .fa-home, .fa-plus-circle, .fa-pills, .fa-file-medical-alt, .fa-chart-line, .fa-sign-out-alt, .fa-user-plus {
     margin-right: 20px;
   }
   
@@ -108,4 +108,10 @@
     align-items: center;
     margin: 0;
   }
+  #logo2 {
+    display: flex;
+    align-items: center;
+    padding: 20px 20px;
+  }
+  
   

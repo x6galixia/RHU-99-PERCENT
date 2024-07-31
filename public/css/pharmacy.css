@@ -1,98 +1,11 @@
 /* General styles */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-  }
-  
-  /* Header styles */
-  #navbar {
-    height: 40%;
-    width: 100%;
-    background-color:  #44A130;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0;
-  }
-  
-  #logo2 {
-    display: flex;
-    align-items: center;
-    padding: 20px 20px;
-  }
-  
-  #logoing {
-    height: 50px;
-    margin-left: 10px;
-    margin-top: 10px;
-  }
-
-  .openbtn {
-    font-size: 25px;
-    cursor: pointer;
-    color: white;
-    padding: 0px 15px;
-    background-color: #5cb648;
-    border-radius: 10px;
-    font-weight: 1000;
-  }
-  
-  .openbtn:hover {
-    color: rgb(78, 61, 61);
-  }
-  
-  #info {
-    margin: 0;
-  }
-  
-  .infos {
-    font-family: sans-serif;
-    font-size: 18px;
-    font-weight: bold;
-    text-wrap: nowrap;
-  }
-  
-  .infor {
-    font-family: sans-serif;
-    color: rgb(125, 125, 125);
-  }
-  
-  #meow {
-    margin-right: 10px;
-  }
-  
-  #profile2 {
-    height: 40px;
-    cursor: pointer;
-  }
-  
-  #profile-sec {
-    display: flex;
-    padding-top: 25px;
-    padding-left: 20px;
-  }
-  
-  #names {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  #log-butt {
-    border-style: none;
-    width: 100%;
-    height: 100%;
-    margin-left: 5px; 
-    font-size: 14px;
-    text-align: left;
-  }
-  
-  #log-butt:hover {
-    background-color: #E86EAB;
-    color: white;
-  }
-  
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+  overflow: hidden;
+}
   
   /* Table styles */
   table {
@@ -201,7 +114,7 @@ body {
   #buttons {
     display: flex;
     justify-content: flex-end;
-    margin-right: 40px;
+    margin-right: 20px;
     margin-top: 30px;
     gap: 10px;
     
@@ -238,4 +151,11 @@ body {
     #navbar{
         height: 80px;
     }
+  }
+  #buttons button{
+    background-color: #FF007F;
+    color: white;
+    border-style: none;
+    box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+
   }

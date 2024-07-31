@@ -1,5 +1,6 @@
-document.addEventListener("DOMContentLoaded", function () {
 
+document.addEventListener("DOMContentLoaded", function () {
+    const overlay = document.getElementById('overlay');
     function formatDate(dateString) {
         const options = {
             weekday: "short",
@@ -98,15 +99,21 @@ document.addEventListener("DOMContentLoaded", function () {
                     requesting_person,
                     relationship_beneficiary
                 );
-
+                overlay.style.display = "block";
                 document.getElementById('beneficiaryIndexForm').style.display = 'block';
             });
         });
     }
 
     document.getElementById('closeIndexBtn').addEventListener('click', function () {
+        overlay.style.display = "none";
         document.getElementById('beneficiaryIndexForm').style.display = 'none';
     });
+
+    overlay.addEventListener("click", function () {
+        overlay.style.display = "none";
+        beneficiaryIndexForm.style.display = "none";
+      });
 
     attachRowClickHandlers();
 });

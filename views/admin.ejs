@@ -18,7 +18,7 @@
     
     <form action="/hidden/admin/create-user" method="POST">
         <h1>Create User</h1>
-        <input type="text" name="user_id" placeholder="User ID">
+        <input type="text" id="user_id" name="user_id" placeholder="User ID" readonly>
         <select name="rhu_id" id="rhu_id">
             <option value="default" disabled selected>Choose an RHU</option>
             <option value="rhu1">RHU 1</option>
@@ -41,5 +41,6 @@
         </select>
         <button type="submit">Submit</button>
     </form>
+    <script src="/js/admin-func.js"></script>
 </body>
 </html>

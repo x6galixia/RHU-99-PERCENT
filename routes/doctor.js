@@ -2,7 +2,7 @@ const express = require("express");
 const pool = require("../models/localdb");
 const pharmacyPool = require("../models/pharmacydb");
 const methodOverride = require("method-override");
-const { ensureAuthenticated, checkUserType } = require("../middleware/middleware");
+const { ensureAuthenticated, checkUserType, checkNotAuthenticated, checkRhuAccess, setUserData } = require('../middleware/middleware');
 const router = express.Router();
 
 router.use(methodOverride("_method"));
@@ -10,10 +10,10 @@ router.use(setUserData);
 
 router.get("/doctor/dashboard", ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
-        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL AND rhu_id = $1', [req.user.rhu_id]);
 
         const medResults = medResultAvailable.rows;
-        const patientListDrop = await getAllPatients();
+        const patientListDrop = await getAllPatients(req.user.rhu_id);
         res.render("doctor", {
             patientListDrop,
             medResults,
@@ -47,14 +47,14 @@ router.get('/search', async (req, res) => {
 
 router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
-        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL AND rhu_id = $1', [req.user.rhu_id]);
 
         const medResults = medResultAvailable.rows;
         let { unq_id, full_name, age, gender, check_date, full_address, phone, guardian, medicine, instruction, quantity, receiver, relationship, doctor_name } = req.body;
 
         await pool.query(
-            "UPDATE patients SET medicine = medicine || $1, instruction = instruction || $2, quantity = quantity || $3 WHERE unq_id = $4",
-            [[medicine], [instruction], [quantity], unq_id]
+            "UPDATE patients SET medicine = medicine || $1, instruction = instruction || $2, quantity = quantity || $3 WHERE unq_id = $4 AND rhu_id = $5",
+            [[medicine], [instruction], [quantity], unq_id, req.user.rhu_id]
         );
 
         let dosage = null;
@@ -72,7 +72,7 @@ router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), 
             [unq_id, full_name, age, gender, check_date, full_address, phone, guardian, medicine, instruction, quantity, dosage, receiver, relationship, doctor_name]
         );
 
-        const patientListDrop = await getAllPatients();
+        const patientListDrop = await getAllPatients(req.user.rhu_id);
         res.render('doctor', {
             patientListDrop,
             medResults,
@@ -85,11 +85,9 @@ router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), 
     }
 });
 
-
-
 router.post('/labrequest', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
-        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL AND rhu_id = $1', [req.user.rhu_id]);
 
         const medResults = medResultAvailable.rows;
         const { unq_id, category, service } = req.body;
@@ -102,14 +100,14 @@ router.post('/labrequest', ensureAuthenticated, checkUserType("doctor"), async (
         const services = Array.isArray(service) ? service : [service];
 
         for (let i = 0; i < unq_ids.length; i++) {
-            const query = "UPDATE patients SET category = $1, service = $2 WHERE unq_id = $3";
-            await pool.query(query, [categories, services, unq_ids[i]]);
+            const query = "UPDATE patients SET category = $1, service = $2 WHERE unq_id = $3 AND rhu_id = $4";
+            await pool.query(query, [categories, services, unq_ids[i], req.user.rhu_id]);
         }
 
         await pool.query('COMMIT');
         console.log('Transaction committed');
 
-        const patientListDrop = await getAllPatients();
+        const patientListDrop = await getAllPatients(req.user.rhu_id);
         console.log("Updated patient list:", patientListDrop);
         res.render('doctor', {
             patientListDrop,
@@ -127,15 +125,15 @@ router.post('/labrequest', ensureAuthenticated, checkUserType("doctor"), async (
 
 router.post('/add-diagnoses', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
-        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL AND rhu_id = $1', [req.user.rhu_id]);
 
         const medResults = medResultAvailable.rows;
         const { unq_id, diagnoses } = req.body;
 
-        const query = "UPDATE patients SET diagnoses = $1 WHERE unq_id = $2";
-        await pool.query(query, [diagnoses, unq_id]);
+        const query = "UPDATE patients SET diagnoses = $1 WHERE unq_id = $2 AND rhu_id = $3";
+        await pool.query(query, [diagnoses, unq_id, req.user.rhu_id]);
 
-        const patientListDrop = await getAllPatients();
+        const patientListDrop = await getAllPatients(req.user.rhu_id);
         res.render('doctor', {
             patientListDrop,
             medResults,
@@ -150,15 +148,15 @@ router.post('/add-diagnoses', ensureAuthenticated, checkUserType("doctor"), asyn
 
 router.post('/add-findings', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
-        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL AND rhu_id = $1', [req.user.rhu_id]);
 
         const medResults = medResultAvailable.rows;
         const { unq_id, findings } = req.body;
 
-        const query = "UPDATE patients SET findings = $1 WHERE unq_id = $2";
-        await pool.query(query, [findings, unq_id]);
+        const query = "UPDATE patients SET findings = $1 WHERE unq_id = $2 AND rhu_id = $3";
+        await pool.query(query, [findings, unq_id, req.user.rhu_id]);
 
-        const patientListDrop = await getAllPatients();
+        const patientListDrop = await getAllPatients(req.user.rhu_id);
         res.render('doctor', {
             patientListDrop,
             medResults,
@@ -173,15 +171,15 @@ router.post('/add-findings', ensureAuthenticated, checkUserType("doctor"), async
 
 router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), async (req, res) => {
     try {
-        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL');
+        const medResultAvailable = await pool.query('SELECT unq_id, last_name, first_name, middle_name FROM patients WHERE lab_result IS NOT NULL AND medicine IS NULL AND rhu_id = $1', [req.user.rhu_id]);
 
         const medResults = medResultAvailable.rows;
         const { search } = req.body;
         console.log("Search term:", search);
 
         const searchResult = await pool.query(
-            "SELECT * FROM patients WHERE unq_id ILIKE $1 OR last_name ILIKE $2",
-            [`%${search}%`, `%${search}%`]
+            "SELECT * FROM patients WHERE (unq_id ILIKE $1 OR last_name ILIKE $2) AND rhu_id = $3",
+            [`%${search}%`, `%${search}%`, req.user.rhu_id]
         );
 
         const result = searchResult.rows.map(row => ({
@@ -191,7 +189,7 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
             age: calculateAge(formatDate(row.birthdate))
         }));
 
-        const patientListDrop = await getAllPatients();
+        const patientListDrop = await getAllPatients(req.user.rhu_id);
         res.render('doctor', {
             patientListDrop: result,
             medResults,
@@ -206,9 +204,10 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
 
 //----------------------------> Functions
 
-async function getAllPatients() {
+async function getAllPatients(rhuId) {
     try {
-        const viewPatients = await pool.query("SELECT * FROM patients");
+        // Query patients for the specified rhu_id
+        const viewPatients = await pool.query("SELECT * FROM patients WHERE rhu_id = $1", [rhuId]);
 
         const patients = viewPatients.rows.map(row => {
             const checkDateFormatted = formatDate(row.check_date);
@@ -239,9 +238,6 @@ async function getAllPatients() {
     }
 }
 
-
-
-
 function calculateAge(birthdateString) {
     const birthdate = new Date(birthdateString);
     const today = new Date();
@@ -265,21 +261,6 @@ function formatDate(dateString) {
     };
     const date = new Date(dateString);
     return date.toLocaleDateString("en-US", options);
-}
-
-function setUserData(req, res, next) {
-    if (req.isAuthenticated()) {
-        res.locals.firstname = req.user.firstname;
-        res.locals.surname = req.user.surname;
-        res.locals.middle_initial = req.user.middle_initial;
-        res.locals.profession = req.user.profession;
-    } else {
-        res.locals.firstname = null;
-        res.locals.surname = null;
-        res.locals.middle_initial = null;
-        res.locals.profession = null;
-    }
-    next();
 }
 
 router.delete("/logout", (req, res) => {

@@ -16,6 +16,7 @@ CREATE TABLE users (
 --  rhu
 CREATE TABLE patients (
     unq_id VARCHAR(100) PRIMARY KEY,
+    rhu_id VARCHAR(100) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     middle_name VARCHAR(50),
@@ -142,6 +143,14 @@ CREATE TABLE beneficiary (
 5. the inventory table is inside the PHARMACY database.
 5. the beneficiary table is inside the PHARMACY database.
 
+6. adding a user go to the url : /hidden/admin/create-user 
+    and register a new user.
+
+7. A NOTICE!!! -> the patient information should match the data on what's on the beneficiary record of the pharmacy, 
+    if someone is requesting a medicine in pharmacy and doesnt have a record on the beneficiary record cannot get a medecine.
+    if whant to be registered register first before dispensing.
+
+    
 this project is agile and is prepared for upgrade.
 
 //DEVELOPERS 

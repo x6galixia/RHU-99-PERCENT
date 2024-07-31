@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
     <link rel="stylesheet" href="/css/pharmacy.css" />
-    <link rel = "stylesheet" href = "/css/sidebar.css"/>
+    <link rel="stylesheet" href="/css/sidebar.css"/>
 
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -48,8 +48,12 @@
               <button id="log-butt" type="submit"><i class="fas fa-file-medical-alt"></i>  RECORD </button>
             </form>
 
-            <form action="/logout?_method=DELETE" method="POST">
+            <form action="/pharmacy/trends" method="GET">
               <button id="log-butt" type="submit"><i class="fas fa-chart-line"></i> TRENDS </button>
+            </form>
+
+            <form action="/pharmacy/add-beneficiary" method="GET">
+              <button id="log-butt" type="submit"><i class="fas fa-user-plus"></i> ADD BENEFICIARY </button>
             </form>
 
             <form action="/logout?_method=DELETE" method="POST">
@@ -74,7 +78,7 @@
   </div>
   <div id="font">
     <div id="section1">
-    <table>
+    <table id="medicineTable">
         <thead>         
           <tr>
             <th>PRODUCT ID</th>
@@ -116,12 +120,13 @@
   </div>
   </div>
   <div id="buttons">
-    <button id="BUTT" type="submit">DOWNLOAD CSV</button>
-    <button id="BUTT" type="submit">PRINT CSV</button>
+    <button id="downloadbtn" type="button">DOWNLOAD CSV</button>
+    <button id="printbtn" type="button">PRINT CSV</button>
   </div>
   <script src="/js/websocket.js"></script>
   <script src="/js/aside.js"></script>
   <script src="/js/sidebar.js"></script>
   <script src="/js/pharmacy-func.js"></script>
+  <script src="/js/csv.js"></script>
   </body>
 </html>
