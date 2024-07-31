@@ -146,6 +146,11 @@ CREATE TABLE beneficiary (
 6. adding a user go to the url : /hidden/admin/create-user 
     and register a new user.
 
+7. A NOTICE!!! -> the patient information should match the data on what's on the beneficiary record of the pharmacy, 
+    if someone is requesting a medicine in pharmacy and doesnt have a record on the beneficiary record cannot get a medecine.
+    if whant to be registered register first before dispensing.
+
+    
 this project is agile and is prepared for upgrade.
 
 //DEVELOPERS 
