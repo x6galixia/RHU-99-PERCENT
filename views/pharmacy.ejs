@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
     <link rel="stylesheet" href="/css/pharmacy.css" />
-    <link rel = "stylesheet" href = "/css/sidebar.css"/>
+    <link rel="stylesheet" href="/css/sidebar.css"/>
 
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
@@ -74,7 +74,7 @@
   </div>
   <div id="font">
     <div id="section1">
-    <table>
+    <table id="medicineTable">
         <thead>         
           <tr>
             <th>PRODUCT ID</th>
@@ -116,11 +116,12 @@
   </div>
   </div>
   <div id="buttons">
-    <button id="BUTT" type="submit">DOWNLOAD CSV</button>
-    <button id="BUTT" type="submit">PRINT CSV</button>
+    <button id="downloadbtn" type="button">DOWNLOAD CSV</button>
+    <button id="printbtn" type="button">PRINT CSV</button>
   </div>
   <script src="/js/websocket.js"></script>
   <script src="/js/aside.js"></script>
   <script src="/js/pharmacy-func.js"></script>
+  <script src="/js/csv.js"></script>
   </body>
 </html>
