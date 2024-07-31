@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     
     <link rel="stylesheet" href="/css/doctor-func.css" />
+    <link rel="stylesheet" href="/css/overlay.css" />
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <title>Doctor</title>
@@ -286,7 +287,7 @@
     
 
  <!-- Laboratory Request Form -->
- <div id="overlay" style="display: none;"></div>
+
 <div id="labRequestForm" style="display: none">
   <form action="/labrequest" method="POST">
     <div class="popup-header">
@@ -309,7 +310,7 @@
       </div>
       <div>
         <label for="check_date">Date: </label>
-      <input style="text-decoration: underline;" type="text" id="req_check_date" name="check_date" readonly />
+      <input type="text" id="req_check_date" name="check_date" readonly />
       </div>
       <div>
         <label for="occupation">Occupation: </label>
@@ -655,6 +656,7 @@
         <button id="closeAlertBtn" type="button" style="display: none;">Close</button>
       </div>
     <script src="/js/websocket.js"></script>
+    <script src="/js/overlay.js"></script>
     <script src="/js/doctor-func.js"></script>
   </body>
 </html>

@@ -9,12 +9,3 @@ document.addEventListener("DOMContentLoaded", function () {
 
     document.getElementById("date_issued").value = getCurrentDate();
 });
-
-function toggleNav() {
-    var sidebar = document.getElementById('sidebar');
-    if (sidebar.style.width === '280px') {
-        sidebar.style.width = '0';
-    } else {
-        sidebar.style.width = '280px';
-    }
-}

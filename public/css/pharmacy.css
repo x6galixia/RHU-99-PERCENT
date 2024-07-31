@@ -51,6 +51,7 @@ body {
     font-family: sans-serif;
     font-size: 18px;
     font-weight: bold;
+    text-wrap: nowrap;
   }
   
   .infor {
@@ -232,43 +233,6 @@ body {
    
   }
   
-  .sidebar {
-    height: 100%;
-    width: 0;
-    position: fixed;
-    z-index: 1111;
-    top: 0;
-    left: 0;
-    background-color: #f4f4f4;
-    overflow-x: hidden;
-    transition: 0.5s;
-    padding-top: 0px;
-    margin-top: 80px;
-    border: 1px solid #cacaca ;
-  }
-
-  .fa-home, .fa-plus-circle, .fa-pills, .fa-file-medical-alt, .fa-chart-line, .fa-sign-out-alt {
-    margin-right: 20px;
-  }
-  
-  #profile-sec {
-    display: flex;
-    align-items: center;
-  }
-  
-  #meow {
-    margin-right: 10px;
-  }
-  
-  #profile2 {
-    width: 50px;
-    height: 50px;
-    border-radius: 50%;
-  }
-  
-  #names {
-    color: #111;
-  }
 
   @media (min-height: 600px) and (max-height: 820px){
     #navbar{

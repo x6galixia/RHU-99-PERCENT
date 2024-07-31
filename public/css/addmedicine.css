@@ -7,15 +7,6 @@ body {
   }
   
   /* Header styles */
-  #navbar {
-    height: 40%;
-    width: 100%;
-    background-color:  #44A130;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0;
-  }
   
   #logo2 {
     display: flex;
