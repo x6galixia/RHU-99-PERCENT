@@ -37,6 +37,11 @@
     <form action="/pharmacy/add-beneficiary" method="GET">
       <button type="submit">Add Beneciary</button>
     </form>
+
+    <form action="/pharmacy/trends" method="GET">
+      <button id="log-butt" type="submit"><i class="fas fa-chart-line"></i> TRENDS </button>
+    </form>
+
     <% if (message && message.error) { %>
         <p><%= message.error %></p> 
     <% } %>
