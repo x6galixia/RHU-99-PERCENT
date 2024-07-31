@@ -16,6 +16,7 @@ CREATE TABLE users (
 --  rhu
 CREATE TABLE patients (
     unq_id VARCHAR(100) PRIMARY KEY,
+    rhu_id VARCHAR(100) NOT NULL,
     last_name VARCHAR(50) NOT NULL,
     first_name VARCHAR(50) NOT NULL,
     middle_name VARCHAR(50),

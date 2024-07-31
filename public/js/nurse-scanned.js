@@ -54,7 +54,7 @@ document.addEventListener("DOMContentLoaded", async () => {
     while (result.length < 4) {
         result += Math.floor(Math.random() * 10);
     }
-    return `RHU-${d}${result}-unqid`;
+    return `RHU-${d}${result}`;
   }
 
   // Function to fetch citizen data and populate form fields
