@@ -1,6 +1,9 @@
 document.addEventListener("DOMContentLoaded", function () {
 
     function formatDate(dateString) {
+        if (!dateString || dateString === 'Invalid Date') {
+            return ''; // Return an empty string for invalid or empty dates
+        }
         const options = {
             weekday: "short",
             year: "numeric",
@@ -48,8 +51,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 <td><span>${product_details[i] || ''}</span><br></td>
                 <td><span>${quantity[i] || ''}</span><br></td>
                 <td><span>${batch_number[i] || ''}</span><br></td>
-                <td><span>${formatDate(expiration_date[i]) || ''}</span><br></td>
-                <td><span>${formatDate(date_issued[i]) || ''}</span><br></td>
+                <td><span>${formatDate(expiration_date[i])}</span><br></td>
+                <td><span>${formatDate(date_issued[i])}</span><br></td>
                 <td><span>${prescribing_doctor[i] || ''}</span><br></td>
                 <td><span>${requesting_person[i] || ''}</span><br></td>
                 <td><span>${relationship_beneficiary[i] || ''}</span><br></td>

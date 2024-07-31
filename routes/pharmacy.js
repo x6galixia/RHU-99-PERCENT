@@ -275,27 +275,45 @@ router.get('/pharmacy/add-beneficiary', ensureAuthenticated, checkUserType("phar
 router.post('/pharmacy/add-beneficiary', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   try {
     const {
-      beneficiary_name, 
-      beneficiary_gender, 
-      beneficiary_address, 
-      beneficiary_contact, 
-      beneficiary_birthdate, 
-      beneficiary_age, 
-      senior_citizen, 
-      pwd
+      beneficiary_name,
+      beneficiary_gender,
+      beneficiary_address,
+      beneficiary_contact,
+      beneficiary_birthdate,
+      beneficiary_age,
+      senior_citizen,
+      pwd,
+      transaction_number = '{}', 
+      product_details = '{}',  
+      quantity = '{}',    
+      batch_number = '{}',
+      expiration_date = '{}',  
+      date_issued = '{}',  
+      prescribing_doctor = '{}',   
+      requesting_person = '{}',   
+      relationship_beneficiary = '{}'
     } = req.body;
 
     await pharmacyPool.query(
-      "INSERT INTO beneficiary (beneficiary_name, beneficiary_gender, beneficiary_address, beneficiary_contact, beneficiary_birthdate, beneficiary_age, senior_citizen, pwd) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)",
+      "INSERT INTO beneficiary (beneficiary_name, beneficiary_gender, beneficiary_address, beneficiary_contact, beneficiary_birthdate, beneficiary_age, senior_citizen, pwd, transaction_number, product_details, quantity, batch_number, expiration_date, date_issued, prescribing_doctor, requesting_person, relationship_beneficiary) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17)",
       [
-        beneficiary_name, 
-        beneficiary_gender, 
-        beneficiary_address, 
-        beneficiary_contact, 
-        beneficiary_birthdate, 
-        beneficiary_age, 
-        senior_citizen, 
-        pwd
+        beneficiary_name,
+        beneficiary_gender,
+        beneficiary_address,
+        beneficiary_contact,
+        beneficiary_birthdate,
+        beneficiary_age,
+        senior_citizen,
+        pwd,
+        transaction_number,
+        product_details,
+        quantity,
+        batch_number,
+        expiration_date,
+        date_issued,
+        prescribing_doctor,
+        requesting_person,
+        relationship_beneficiary
       ]
     );
 
@@ -305,6 +323,7 @@ router.post('/pharmacy/add-beneficiary', ensureAuthenticated, checkUserType("pha
     res.render('addbeneficiary', { message: { error: 'An error occurred while adding the beneficiary.' } });
   }
 });
+
 
 
 //-------------------functions---------///
