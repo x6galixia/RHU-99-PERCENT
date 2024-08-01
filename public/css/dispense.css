@@ -5,6 +5,7 @@ body {
   background-color: #f4f4f4;
   overflow: hidden;
 }
+
 #dispenseForm {
   display: none;
   position: fixed;
@@ -13,20 +14,21 @@ body {
   transform: translate(-50%, -50%);
   width: 1000px;
   border-radius: 20px;
-  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
   background-color: #fff;
   z-index: 1000;
 }
 
 .popup-content {
-  padding: 20px; /* Add background color to the popup content */
+  padding: 20px;
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
 }
 
-#flex{
+#flex {
   margin-bottom: 20px;
 }
+
 .popup-header {
   background-color: green;
   color: white;
@@ -46,6 +48,7 @@ body {
   cursor: pointer;
   font-size: 20px;
 }
+
 .overlay {
   display: none;
   position: fixed;
@@ -57,20 +60,23 @@ body {
   z-index: 1000;
 }
 
-.close{
-font-size: 30px;
-margin-right: 5px;
+.close {
+  font-size: 30px;
+  margin-right: 5px;
 }
-.close:hover{
-color: rgb(163, 163, 163);
-cursor: pointer;
+
+.close:hover {
+  color: rgb(163, 163, 163);
+  cursor: pointer;
 }
-#head-pop{
+
+#head-pop {
   display: flex;
   align-items: center;
   gap: 10px;
 }
-#heart{
+
+#heart {
   height: 30px;
 }
 
@@ -89,9 +95,11 @@ label {
   cursor: pointer;
   color: #ff007f;
 }
-#product{
+
+#product {
   font-size: 16px;
 }
+
 .form-section {
   font-family: 'Poppins', sans-serif !important;
   margin-top: 20px;
@@ -101,20 +109,25 @@ label {
   align-items: center !important;
   width: 100% !important;
 }
-.form-section input{
+
+.form-section input {
   padding: 10px !important;
   width: 15vw;
 }
-#relation{
+
+#relation {
   text-wrap: nowrap;
 }
+
 .table-section {
   padding-left: 20px;
   padding-right: 20px;
 }
-h2{
-  font-size: 30px ;
+
+h2 {
+  font-size: 30px;
 }
+
 #but {
   border-radius: 20px;
   background-color: #FF007F;

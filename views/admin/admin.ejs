@@ -1,21 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/admin-func.css">
     <title>Admin</title>
 </head>
+
 <body>
     <div id="message">
         <% if (message && message.error) { %>
-            <div class="error"><p><%= message.error %></p></div>
-        <% } %>
-        <% if (message && message.success) { %>
-            <div class="success"><p><%= message.success %></p></div>
-        <% } %>
+            <div class="error">
+                <p>
+                    <%= message.error %>
+                </p>
+            </div>
+            <% } %>
+                <% if (message && message.success) { %>
+                    <div class="success">
+                        <p>
+                            <%= message.success %>
+                        </p>
+                    </div>
+                    <% } %>
     </div>
-    
+
     <form action="/hidden/admin/create-user" method="POST">
         <h1>Create User</h1>
         <input type="text" id="user_id" name="user_id" placeholder="User ID" readonly>
@@ -43,4 +53,5 @@
     </form>
     <script src="/js/admin-func.js"></script>
 </body>
+
 </html>

@@ -38,13 +38,12 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('requesting_person').value = receiver;
         document.getElementById('relationship_beneficiary').value = relationship;
 
-        // Dispatch input event to ensure any dynamic behavior is triggered
         const event = new Event('input', { bubbles: true, cancelable: true });
         document.getElementById('product_details').dispatchEvent(event);
     }
 
     function attachRowClickHandlers() {
-        const rows = document.querySelectorAll("#mainTable tbody tr"); // Target only the main table
+        const rows = document.querySelectorAll("#mainTable tbody tr");
         rows.forEach((row) => {
             row.addEventListener("click", () => {
                 console.log("Row clicked:", row);
@@ -77,7 +76,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     relationship_beneficiary
                 );
 
-                // Ensure dispense form is displayed
                 const dispenseForm = document.getElementById('dispenseForm');
                 if (dispenseForm) {
                     dispenseForm.style.display = 'block';

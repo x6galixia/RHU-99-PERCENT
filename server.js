@@ -8,18 +8,18 @@ const server = http.createServer(app);
 const wss = new WebSocket.Server({ server });
 
 wss.on('connection', function connection(ws) {
-    console.log('A new client connected!');
+  console.log('A new client connected!');
 
-    ws.send('Welcome to the WebSocket server!');
+  ws.send('Welcome to the WebSocket server!');
 
-    ws.on('message', function incoming(message) {
-        console.log('received: %s', message);
-        ws.send(`You said: ${message}`);
-    });
+  ws.on('message', function incoming(message) {
+    console.log('received: %s', message);
+    ws.send(`You said: ${message}`);
+  });
 
-    ws.on('close', function close() {
-        console.log('Client disconnected');
-    });
+  ws.on('close', function close() {
+    console.log('Client disconnected');
+  });
 });
 
 const pool = require("./models/localdb");

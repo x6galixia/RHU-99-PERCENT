@@ -44,11 +44,11 @@ document.addEventListener("DOMContentLoaded", function () {
   closeVitalsBtn.addEventListener("click", function () {
     overlay.style.display = "none";
     vitalForm.style.display = "none";
-});
-overlay.addEventListener("click", function () {
-  overlay.style.display = "none";
-  vitalForm.style.display = "none";
-});
+  });
+  overlay.addEventListener("click", function () {
+    overlay.style.display = "none";
+    vitalForm.style.display = "none";
+  });
 
   // Prescribe
   openPrescribeButtons.forEach((button) => {
@@ -120,11 +120,11 @@ overlay.addEventListener("click", function () {
     labRequestForm.style.display = "none";
   });
 
-  
+
 
   //l-----------------lab results--------------
   openLabResButtons.forEach(button => {
-    button.addEventListener("click", function() {
+    button.addEventListener("click", function () {
       document.getElementById("res_unq_id").value = this.dataset.unqId;
       document.getElementById("res_check_date").value = new Date(this.dataset.checkDate).toISOString().split("T")[0];
       document.getElementById("res_full_name").value = this.dataset.fullName;
@@ -133,12 +133,11 @@ overlay.addEventListener("click", function () {
       document.getElementById("res_birthdate").value = new Date(this.dataset.birthdate).toISOString().split("T")[0];
       document.getElementById("res_occupation").value = this.dataset.occupation;
       document.getElementById("res_guardian").value = this.dataset.guardian;
-  
-      // Handle multiple images
+
       const labResults = this.dataset.labResults ? JSON.parse(this.dataset.labResults) : [];
       const labResultsContainer = document.querySelector("#labResultForm ul");
       labResultsContainer.innerHTML = "";
-  
+
       if (labResults.length > 0) {
         labResults.forEach(filename => {
           const listItem = document.createElement("li");
@@ -156,8 +155,8 @@ overlay.addEventListener("click", function () {
       labResultForm.style.display = "block";
     });
   });
-  
-  closeLabResultBtn.addEventListener("click", function() {
+
+  closeLabResultBtn.addEventListener("click", function () {
     overlay.style.display = "none";
     labResultForm.style.display = "none";
   });
@@ -266,47 +265,47 @@ overlay.addEventListener("click", function () {
   document.getElementById('search-box').addEventListener('input', function () {
     const query = this.value;
     if (query.length > 0) {
-        fetch(`/search?query=${query}`)
-            .then(response => response.json())
-            .then(data => {
-                const suggestions = document.getElementById('suggestions');
-                suggestions.innerHTML = '';
-                data.forEach(item => {
-                    const suggestionDiv = document.createElement('div');
-                    suggestionDiv.classList.add('suggestion');
-                    suggestionDiv.textContent = `${item.product_name} - ${item.dosage} QTY: ${item.product_quantity}`;
-                    suggestionDiv.addEventListener('click', function () {
-                        document.getElementById('search-box').value = item.product_name + " " + item.dosage;
-                        suggestions.innerHTML = '';
-                    });
-                    suggestions.appendChild(suggestionDiv);
-                });
-            })
-            .catch(error => console.error('Error:', error));
+      fetch(`/search?query=${query}`)
+        .then(response => response.json())
+        .then(data => {
+          const suggestions = document.getElementById('suggestions');
+          suggestions.innerHTML = '';
+          data.forEach(item => {
+            const suggestionDiv = document.createElement('div');
+            suggestionDiv.classList.add('suggestion');
+            suggestionDiv.textContent = `${item.product_name} - ${item.dosage} QTY: ${item.product_quantity}`;
+            suggestionDiv.addEventListener('click', function () {
+              document.getElementById('search-box').value = item.product_name + " " + item.dosage;
+              suggestions.innerHTML = '';
+            });
+            suggestions.appendChild(suggestionDiv);
+          });
+        })
+        .catch(error => console.error('Error:', error));
     } else {
-        document.getElementById('suggestions').innerHTML = '';
+      document.getElementById('suggestions').innerHTML = '';
     }
-});
+  });
 
-const alertMessage = document.getElementById("alertMessage");
-const closeAlertBtn = document.getElementById("closeAlertBtn");
+  const alertMessage = document.getElementById("alertMessage");
+  const closeAlertBtn = document.getElementById("closeAlertBtn");
 
-alertMessage.style.display = "block";
-closeAlertBtn.style.display = "block";
+  alertMessage.style.display = "block";
+  closeAlertBtn.style.display = "block";
 
-closeAlertBtn.addEventListener("click", function () {
-  alertMessage.style.display = "none";
-  closeAlertBtn.style.display = "none";
-});
+  closeAlertBtn.addEventListener("click", function () {
+    alertMessage.style.display = "none";
+    closeAlertBtn.style.display = "none";
+  });
 
-//----------------------->>end
+  //----------------------->>end
 });
 
 function toggleDropdown() {
   document.getElementById("dropdownContent").classList.toggle("show");
 }
 
-window.onclick = function(event) {
+window.onclick = function (event) {
   if (!event.target.matches('.dropbtn')) {
     var dropdowns = document.getElementsByClassName("dropdown-content");
     for (var i = 0; i < dropdowns.length; i++) {
@@ -320,6 +319,5 @@ window.onclick = function(event) {
 
 function logout() {
   alert("Logging out...");
-  // Perform logout actions here, such as redirecting to a logout endpoint
 }
 

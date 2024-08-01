@@ -1,41 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/login-form.css">
     <title>Login</title>
     <style>
-        
+
     </style>
 </head>
+
 <body>
     <main>
-        
-        <div id="rectang" >
-        <div id="Login-input">
-            <div id="imahe">
-                <div class="logo">
-                    <img id="logo1" src="/images/group 206.png" alt="">
+
+        <div id="rectang">
+            <div id="Login-input">
+                <div id="imahe">
+                    <div class="logo">
+                        <img id="logo1" src="/images/group 206.png" alt="">
+                    </div>
+                    <img id="illustration" src="/images/image 9.png" alt="">
+                    <h3 id="h3">One City Care</h3>
+                    <p>That can heal your inner child:</p>
                 </div>
-                <img id="illustration" src="/images/image 9.png" alt="">
-                <h3 id="h3">One City Care</h3>
-                <p>That can heal your inner child:</p>
-            </div>
-            <div id="user_type" name="user_type">
-                <H1 id="h1">SIGN IN AS</H1>
-                <h4 id="h4" style="color: rgb(116, 110, 110);">Choose which sector you are in.</h4>
-                <div id="choosing">
-                    <button id="btn" type="button" value="doctor" onclick="hideUserType(this.value)">Doctor</button>
-                    <button id="btn" type="button" value="nurse" onclick="hideUserType(this.value)">Nurse</button>
-                    <button id="btn" type="button" value="medtech" onclick="hideUserType(this.value)">Medtech</button>
-                    <button id="btn" type="button" value="pharmacist" onclick="hideUserType(this.value)">Pharmacy</button>
+                <div id="user_type" name="user_type">
+                    <H1 id="h1">SIGN IN AS</H1>
+                    <h4 id="h4" style="color: rgb(116, 110, 110);">Choose which sector you are in.</h4>
+                    <div id="choosing">
+                        <button id="btn" type="button" value="doctor" onclick="hideUserType(this.value)">Doctor</button>
+                        <button id="btn" type="button" value="nurse" onclick="hideUserType(this.value)">Nurse</button>
+                        <button id="btn" type="button" value="medtech"
+                            onclick="hideUserType(this.value)">Medtech</button>
+                        <button id="btn" type="button" value="pharmacist"
+                            onclick="hideUserType(this.value)">Pharmacy</button>
+                    </div>
                 </div>
+
             </div>
-            
         </div>
-    </div>
-        <form id="login-form" style="display:none;" action="/login" method="post"> 
+        <form id="login-form" style="display:none;" action="/login" method="post">
             <div id="center1">
                 <div class="icon">
                     <img id="icon" src="/images/group 206.png" alt="">
@@ -56,13 +60,14 @@
                     <div>
                         <button id="Log-butt" type="submit">LOGIN</button>
                     </div>
-                    
+
                 </div>
             </div>
         </form>
     </main>
-    
+
     <script src="/js/websocket.js"></script>
     <script src="/js/login-func.js"></script>
 </body>
+
 </html>

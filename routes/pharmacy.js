@@ -17,10 +17,11 @@ router.get("/pharmacy/inventory", ensureAuthenticated, checkUserType("pharmacist
 
     const lowStockItems = lowStockResult.rows;
     const medList = await inventoryLists();
-    res.render("pharmacy/pharmacy", { 
+    res.render("pharmacy/pharmacy", {
       medList,
       lowStockItems,
-      user: req.user });
+      user: req.user
+    });
   } catch (error) {
     console.error("Error:", error);
     res.sendStatus(500);
@@ -36,21 +37,21 @@ router.delete("/logout", (req, res) => {
   });
 });
 
-router.get("/pharmacy/beneficiary-records", ensureAuthenticated, checkUserType("pharmacist"), async(req, res) => {
+router.get("/pharmacy/beneficiary-records", ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   try {
     const getListBeneficiary = await beneficiaryList();
     const getListBeneficiaryIndex = await beneficiaryIndexList();
-    res.render("pharmacy/beneficiary", {getListBeneficiary, getListBeneficiaryIndex});
+    res.render("pharmacy/beneficiary", { getListBeneficiary, getListBeneficiaryIndex });
   } catch (error) {
     console.error("Error:", error);
     res.sendStatus(500);
   }
 });
 
-router.get("/pharmacy/dispense", ensureAuthenticated, checkUserType("pharmacist"), async(req, res) => {
+router.get("/pharmacy/dispense", ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   try {
     const dispenseMed = await forDispense();
-    res.render("pharmacy/dispense", {dispenseMed});
+    res.render("pharmacy/dispense", { dispenseMed });
   } catch (error) {
     console.error("Error:", error);
     res.sendStatus(500);
@@ -67,11 +68,11 @@ router.get("/pharmacy/trends", ensureAuthenticated, checkUserType("pharmacist"),
 
 router.post("/pharmacy/add-medicine", ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   try {
-    const {product_id, product_code, product_name, brand_name, supplier, dosage_form, dosage, reorder_level, batch_number, date_added, expiration, product_quantity} = req.body;
-  
-  await pharmacyPool.query("INSERT INTO inventory (product_id, product_code, product_name, brand_name, supplier, dosage_form, dosage, reorder_level, batch_number, date_added, expiration, product_quantity) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [product_id, product_code, product_name, brand_name, supplier, dosage_form, dosage, reorder_level, batch_number, date_added, expiration, product_quantity]);
+    const { product_id, product_code, product_name, brand_name, supplier, dosage_form, dosage, reorder_level, batch_number, date_added, expiration, product_quantity } = req.body;
 
-  res.render("pharmacy/addmedicine");
+    await pharmacyPool.query("INSERT INTO inventory (product_id, product_code, product_name, brand_name, supplier, dosage_form, dosage, reorder_level, batch_number, date_added, expiration, product_quantity) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [product_id, product_code, product_name, brand_name, supplier, dosage_form, dosage, reorder_level, batch_number, date_added, expiration, product_quantity]);
+
+    res.render("pharmacy/addmedicine");
   } catch (error) {
     console.log("ERrror: Error adding medicine");
   }
@@ -82,25 +83,25 @@ router.get('/get', ensureAuthenticated, checkUserType("pharmacist"), async (req,
   console.log("Received query:", query);
 
   if (!query) {
-      return res.status(400).send('Query parameter is required');
+    return res.status(400).send('Query parameter is required');
   }
 
   try {
-      const result = await pharmacyPool.query(
-          'SELECT batch_number, expiration FROM inventory WHERE product_name ILIKE $1',
-          [`${query}%`]
-      );
+    const result = await pharmacyPool.query(
+      'SELECT batch_number, expiration FROM inventory WHERE product_name ILIKE $1',
+      [`${query}%`]
+    );
 
-      if (result.rows.length > 0) {
-          console.log("Database query result:", result.rows[0]);
-          res.json(result.rows[0]);
-      } else {
-          console.log("No matching data found");
-          res.json({});
-      }
+    if (result.rows.length > 0) {
+      console.log("Database query result:", result.rows[0]);
+      res.json(result.rows[0]);
+    } else {
+      console.log("No matching data found");
+      res.json({});
+    }
   } catch (err) {
-      console.error('Database query error:', err);
-      res.status(500).send('Server error');
+    console.error('Database query error:', err);
+    res.status(500).send('Server error');
   }
 });
 
@@ -132,36 +133,36 @@ router.post("/search-beneficiary", ensureAuthenticated, checkUserType("pharmacis
 
 router.post('/search-medicine', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   try {
-      const { search } = req.body;
-      console.log("Search term:", search);
+    const { search } = req.body;
+    console.log("Search term:", search);
 
-      const lowStockResult = await pharmacyPool.query('SELECT product_name, product_quantity FROM inventory WHERE product_quantity < 50');
+    const lowStockResult = await pharmacyPool.query('SELECT product_name, product_quantity FROM inventory WHERE product_quantity < 50');
 
-      const lowStockItems = lowStockResult.rows;
+    const lowStockItems = lowStockResult.rows;
 
-      const searchResult = await pharmacyPool.query(
-          "SELECT * FROM inventory WHERE product_id ILIKE $1 OR product_name ILIKE $2",
-          [`%${search}%`, `%${search}%`]
-      );
+    const searchResult = await pharmacyPool.query(
+      "SELECT * FROM inventory WHERE product_id ILIKE $1 OR product_name ILIKE $2",
+      [`%${search}%`, `%${search}%`]
+    );
 
-      console.log("Search result:", searchResult.rows);
+    console.log("Search result:", searchResult.rows);
 
-      const result = searchResult.rows.map(row => ({
-          ...row
-      }));
+    const result = searchResult.rows.map(row => ({
+      ...row
+    }));
 
-      const medList = await inventoryLists();
-      console.log("Inventory List:", medList);
+    const medList = await inventoryLists();
+    console.log("Inventory List:", medList);
 
-      res.render('pharmacy/pharmacy', {
-          medList: result,
-          lowStockItems,
-          user: req.user
-      });
+    res.render('pharmacy/pharmacy', {
+      medList: result,
+      lowStockItems,
+      user: req.user
+    });
   } catch (err) {
-      console.error("Error searching product:", err);
-      req.flash("error", "An error occurred while searching for product: " + err.message);
-      res.redirect('/pharmacy/inventory');
+    console.error("Error searching product:", err);
+    req.flash("error", "An error occurred while searching for product: " + err.message);
+    res.redirect('/pharmacy/inventory');
   }
 });
 
@@ -192,12 +193,10 @@ router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist
       beneficiary_age
     };
 
-    // Log the data being updated
     console.log('Data being updated:', formattedData);
 
     await client.query('BEGIN');
 
-    // Check if beneficiary exists
     const beneficiaryCheckQuery = `
       SELECT id FROM beneficiary
       WHERE beneficiary_name = $1
@@ -219,7 +218,6 @@ router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist
       throw new Error('Beneficiary not found');
     }
 
-    // Update beneficiary records
     const updateResult = await client.query(
       `UPDATE beneficiary 
        SET transaction_number = transaction_number || $1::text[], 
@@ -252,10 +250,8 @@ router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist
       ]
     );
 
-    // Log the result of the update query
     console.log('Update result:', updateResult.rows);
 
-    // Continue with other operations
     const inventoryResult = await pharmacyPool.query(
       'SELECT product_quantity FROM inventory WHERE product_name = $1 AND batch_number = $2 AND expiration = $3',
       [product_details, batch_number, expiration_date]
@@ -272,7 +268,6 @@ router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist
           [newQuantity, product_details, batch_number, expiration_date]
         );
 
-        // Delete request from prescription table
         await pool.query("DELETE FROM prescription WHERE unq_id = $1", [unq_id]);
 
         await client.query('COMMIT');
@@ -308,14 +303,14 @@ router.post('/pharmacy/add-beneficiary', ensureAuthenticated, checkUserType("pha
       beneficiary_age,
       senior_citizen,
       pwd,
-      transaction_number = '{}', 
-      product_details = '{}',  
-      quantity = '{}',    
+      transaction_number = '{}',
+      product_details = '{}',
+      quantity = '{}',
       batch_number = '{}',
-      expiration_date = '{}',  
-      date_issued = '{}',  
-      prescribing_doctor = '{}',   
-      requesting_person = '{}',   
+      expiration_date = '{}',
+      date_issued = '{}',
+      prescribing_doctor = '{}',
+      requesting_person = '{}',
       relationship_beneficiary = '{}'
     } = req.body;
 
@@ -391,10 +386,10 @@ async function beneficiaryList() {
           .filter(date => !isNaN(date));
         return validDates.length > 0 ? new Date(Math.max(...validDates.map(date => date.getTime()))) : null;
       };
-    
+
       const dateA = getLatestDate(a.date_issued);
       const dateB = getLatestDate(b.date_issued);
-    
+
       if (dateA === null && dateB === null) {
         return 0;
       }
@@ -406,7 +401,7 @@ async function beneficiaryList() {
       }
 
       return dateB - dateA;
-    });    
+    });
 
     return peopleList;
   } catch (err) {
@@ -428,7 +423,7 @@ async function beneficiaryIndexList() {
       const prescribingDoctor = Array.isArray(row.prescribing_doctor) ? row.prescribing_doctor : [];
       const requestingPerson = Array.isArray(row.requesting_person) ? row.requesting_person : [];
       const relationshipToBeneficiary = Array.isArray(row.relationship_beneficiary) ? row.relationship_beneficiary : [];
-      
+
       return {
         ...row,
         transaction_number: transactionNumber,
