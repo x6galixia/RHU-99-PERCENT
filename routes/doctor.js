@@ -14,7 +14,7 @@ router.get("/doctor/dashboard", ensureAuthenticated, checkUserType("doctor"), as
 
         const medResults = medResultAvailable.rows;
         const patientListDrop = await getAllPatients(req.user.rhu_id);
-        res.render("doctor", {
+        res.render("doctor/doctor", {
             patientListDrop,
             medResults,
             user: req.user
@@ -73,7 +73,7 @@ router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), 
         );
 
         const patientListDrop = await getAllPatients(req.user.rhu_id);
-        res.render('doctor', {
+        res.render('doctor/doctor', {
             patientListDrop,
             medResults,
             user: req.user
@@ -109,7 +109,7 @@ router.post('/labrequest', ensureAuthenticated, checkUserType("doctor"), async (
 
         const patientListDrop = await getAllPatients(req.user.rhu_id);
         console.log("Updated patient list:", patientListDrop);
-        res.render('doctor', {
+        res.render('doctor/doctor', {
             patientListDrop,
             medResults,
             user: req.user
@@ -134,7 +134,7 @@ router.post('/add-diagnoses', ensureAuthenticated, checkUserType("doctor"), asyn
         await pool.query(query, [diagnoses, unq_id, req.user.rhu_id]);
 
         const patientListDrop = await getAllPatients(req.user.rhu_id);
-        res.render('doctor', {
+        res.render('doctor/doctor', {
             patientListDrop,
             medResults,
             user: req.user
@@ -157,7 +157,7 @@ router.post('/add-findings', ensureAuthenticated, checkUserType("doctor"), async
         await pool.query(query, [findings, unq_id, req.user.rhu_id]);
 
         const patientListDrop = await getAllPatients(req.user.rhu_id);
-        res.render('doctor', {
+        res.render('doctor/doctor', {
             patientListDrop,
             medResults,
             user: req.user
@@ -190,7 +190,7 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
         }));
 
         const patientListDrop = await getAllPatients(req.user.rhu_id);
-        res.render('doctor', {
+        res.render('doctor/doctor', {
             patientListDrop: result,
             medResults,
             user: req.user

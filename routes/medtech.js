@@ -36,7 +36,7 @@ router.use("/uploads", express.static("uploads"));
 router.get("/medtech", ensureAuthenticated, checkUserType("medtech"), async (req, res) => {
   try {
     const getPatientsLab = await getPatientsForLab(req.user.rhu_id);
-    res.render('medtech', {
+    res.render('medtech/medtech', {
       getPatientsLab,
       user: req.user
     });
