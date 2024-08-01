@@ -358,7 +358,10 @@ async function inventoryLists() {
         ...med,
         expiration: formatDate(med.expiration)
       }));
+
+      medicineList.sort((a, b) => a.product_name.localeCompare(b.product_name));
     }
+
     return medicineList;
   } catch (err) {
     console.log("Error: no data");
