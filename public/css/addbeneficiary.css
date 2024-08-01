@@ -62,7 +62,15 @@
             margin: 0;
         }
         
-
+        header{
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: #fff; /* Make sure the background color is the same as your navbar */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+          } 
         .center{
             padding-right: 10px;
         }

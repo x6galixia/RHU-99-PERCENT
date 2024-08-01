@@ -1,4 +1,7 @@
 /* General styles */
+body{
+  overflow: hidden;
+}
 /* Header styles */
 #navbar {
   height: 40%;
