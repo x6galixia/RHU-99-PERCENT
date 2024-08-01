@@ -15,9 +15,7 @@
 </head>
 
 <body>
-
     <!----------------------Header-------------------->
-
     <header class="py-1">
         <nav id="navbar">
             <div id="logo2">
@@ -32,9 +30,7 @@
                     </div>
                     <div id="names">
                         <p class="infos" id="info">
-                            <%= surname %>
-                                <%= firstname %>
-                                    <%= middle_initial %>
+                            <%= surname %> <%= firstname %> <%= middle_initial %>
                         </p>
                         <p class="infor" id="info">
                             <%= profession %>
@@ -72,7 +68,6 @@
                     </form>
                 </div>
             </div>
-            </div>
         </nav>
     </header>
 
@@ -88,65 +83,53 @@
             </form>
         </div>
 
-        <table>
-            <thead>
-                <tr>
-                    <th>Full name</th>
-                    <th>Gender</th>
-                    <th>Address</th>
-                    <th>Contact number</th>
-                    <th>Age</th>
-                    <th>Senior citizen</th>
-                    <th>PWD</th>
-                </tr>
-            </thead>
-            <tbody>
-                <% if (getListBeneficiary && getListBeneficiary.length> 0) { %>
-                    <% getListBeneficiary.forEach(list=> { %>
-                        <tr data-beneficiary_name="<%= list.beneficiary_name %>"
-                            data-beneficiary_gender="<%= list.beneficiary_gender %>"
-                            data-beneficiary_address="<%= list.beneficiary_address %>"
-                            data-beneficiary_contact="<%= list.beneficiary_contact %>"
-                            data-beneficiary_age="<%= list.beneficiary_age %>"
-                            data-senior_citizen="<%= list.senior_citizen %>" data-pwd="<%= list.pwd %>"
-                            data-transaction_number="<%= list.transaction_number %>"
-                            data-product_details="<%= list.product_details %>" data-quantity="<%= list.quantity %>"
-                            data-batch_number="<%= list.batch_number %>"
-                            data-expiration_date="<%= list.expiration_date %>"
-                            data-date_issued="<%= list.date_issued %>"
-                            data-prescribing_doctor="<%= list.prescribing_doctor %>"
-                            data-requesting_person="<%= list.requesting_person %>"
-                            data-relationship_beneficiary="<%= list.relationship_beneficiary %>">
-                            <td>
-                                <%= list.beneficiary_name %>
-                            </td>
-                            <td>
-                                <%= list.beneficiary_gender %>
-                            </td>
-                            <td>
-                                <%= list.beneficiary_address %>
-                            </td>
-                            <td>
-                                <%= list.beneficiary_contact %>
-                            </td>
-                            <td>
-                                <%= list.beneficiary_age %>
-                            </td>
-                            <td>
-                                <%= list.senior_citizen %>
-                            </td>
-                            <td>
-                                <%= list.pwd %>
-                            </td>
-                        </tr>
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Full name</th>
+                        <th>Gender</th>
+                        <th>Address</th>
+                        <th>Contact number</th>
+                        <th>Age</th>
+                        <th>Senior citizen</th>
+                        <th>PWD</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <% if (getListBeneficiary && getListBeneficiary.length > 0) { %>
+                        <% getListBeneficiary.forEach(list => { %>
+                            <tr data-beneficiary_name="<%= list.beneficiary_name %>"
+                                data-beneficiary_gender="<%= list.beneficiary_gender %>"
+                                data-beneficiary_address="<%= list.beneficiary_address %>"
+                                data-beneficiary_contact="<%= list.beneficiary_contact %>"
+                                data-beneficiary_age="<%= list.beneficiary_age %>"
+                                data-senior_citizen="<%= list.senior_citizen %>" data-pwd="<%= list.pwd %>"
+                                data-transaction_number="<%= list.transaction_number %>"
+                                data-product_details="<%= list.product_details %>" data-quantity="<%= list.quantity %>"
+                                data-batch_number="<%= list.batch_number %>"
+                                data-expiration_date="<%= list.expiration_date %>"
+                                data-date_issued="<%= list.date_issued %>"
+                                data-prescribing_doctor="<%= list.prescribing_doctor %>"
+                                data-requesting_person="<%= list.requesting_person %>"
+                                data-relationship_beneficiary="<%= list.relationship_beneficiary %>">
+                                <td><%= list.beneficiary_name %></td>
+                                <td><%= list.beneficiary_gender %></td>
+                                <td><%= list.beneficiary_address %></td>
+                                <td><%= list.beneficiary_contact %></td>
+                                <td><%= list.beneficiary_age %></td>
+                                <td><%= list.senior_citizen %></td>
+                                <td><%= list.pwd %></td>
+                            </tr>
                         <% }) %>
-                            <% } else { %>
-                                <tr>
-                                    <td colspan="7">No list of beneficiaries</td>
-                                </tr>
-                                <% } %>
-            </tbody>
-        </table>
+                    <% } else { %>
+                        <tr>
+                            <td colspan="7">No list of beneficiaries</td>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
     </div>
 
     <!-----------beneficiary index form-->
@@ -179,7 +162,6 @@
                         <label for="beneficiary_age">Age:</label>
                         <input type="text" id="beneficiary_age" name="beneficiary_age" readonly>
                     </div>
-
                 </div>
                 <div id="tunga">
                     <div>
@@ -210,6 +192,7 @@
             </table>
         </form>
     </div>
+
     <script src="/js/beneficiary-func.js"></script>
     <script src="/js/sidebar.js"></script>
 </body>
