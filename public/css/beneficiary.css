@@ -151,3 +151,43 @@ form{
   display: none; /* Hidden by default */
   z-index: 100; /* Make sure it's behind the form but above other content */
 }
+
+/* Search */
+#searching {
+    height: 40px !important;
+    width: 500px !important;
+    border-top-left-radius: 20px !important;
+    border-bottom-left-radius: 20px !important;
+    border-top-right-radius: 5px !important;
+    border-bottom-right-radius: 5px !important;
+    border-style: none !important;
+    border: solid #000 1px !important;
+    padding-left: 20px !important;
+    font-size: 18px !important;
+    justify-content: end !important;
+}
+
+#searching:hover {
+    border: solid #FF007F 1px !important;
+}
+
+#searching:hover::placeholder {
+    color: #FF007F !important;
+}
+
+#search-butt {
+    height: 40px !important;
+    border-top-right-radius: 20px !important;
+    border-bottom-right-radius: 20px !important;
+    padding: 0 !important;
+    width: 60px !important;
+    background-color: #FF007F !important;
+    color: #ffffff !important;
+    cursor: pointer !important;
+    margin-top: -5px;
+}
+
+#searcher {
+    display: flex !important;
+    align-items: center !important;
+}

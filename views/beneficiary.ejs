@@ -8,6 +8,7 @@
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/skeleton/2.0.4/skeleton.css"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    
     <script src="/js/websocket.js"></script>
     <title>Beneficiary Records</title>
 </head>
@@ -70,6 +71,15 @@
     <!---------------------Beneficiary Table----------------->
     <div>
         <h1 class = "title">Beneficiary Records</h1>
+        <div style="display: flex; justify-content: end;">
+          <form action="/search-beneficiary" method="post">
+            <div id="searcher" style="margin-right: 40px;">
+                <input  id="searching"  type="search" name="search" placeholder="Search">
+                <button  id="search-butt"  type="submit"><i class="fas fa-search"></i></button>
+            </div>
+          </form>  
+        </div> 
+        
     <table>
         <thead>
             <tr>

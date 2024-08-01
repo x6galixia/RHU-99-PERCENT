@@ -104,6 +104,31 @@ router.get('/get', ensureAuthenticated, checkUserType("pharmacist"), async (req,
   }
 });
 
+router.post("/search-beneficiary", ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
+  try {
+    const { search } = req.body;
+
+    if (!search) {
+      req.flash("error", "Search query is required.");
+      return res.redirect('/pharmacy/beneficiary-records');
+    }
+
+    const searchResult = await pharmacyPool.query(
+      "SELECT * FROM beneficiary WHERE beneficiary_name ILIKE $1 OR beneficiary_contact ILIKE $2",
+      [`%${search}%`, `%${search}%`]
+    );
+
+    const getListBeneficiaryIndex = await beneficiaryIndexList();
+    const getListBeneficiary = searchResult.rows;
+
+    res.render("beneficiary", { getListBeneficiary, getListBeneficiaryIndex });
+  } catch (err) {
+    console.error("Error searching beneficiary:", err);
+    req.flash("error", "An error occurred while searching for beneficiary: " + err.message);
+    res.redirect('/pharmacy/beneficiary-records');
+  }
+});
+
 
 router.post('/search-medicine', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
   try {
@@ -356,6 +381,33 @@ async function beneficiaryList() {
         ...list
       }));
     }
+
+    peopleList.sort((a, b) => {
+      const getLatestDate = (dateArray) => {
+        if (!dateArray || dateArray.length === 0) return null;
+        const validDates = dateArray
+          .filter(dateStr => dateStr)
+          .map(dateStr => new Date(dateStr))
+          .filter(date => !isNaN(date));
+        return validDates.length > 0 ? new Date(Math.max(...validDates.map(date => date.getTime()))) : null;
+      };
+    
+      const dateA = getLatestDate(a.date_issued);
+      const dateB = getLatestDate(b.date_issued);
+    
+      if (dateA === null && dateB === null) {
+        return 0;
+      }
+      if (dateA === null) {
+        return 1;
+      }
+      if (dateB === null) {
+        return -1;
+      }
+
+      return dateB - dateA;
+    });    
+
     return peopleList;
   } catch (err) {
     console.log("Error: no data");
