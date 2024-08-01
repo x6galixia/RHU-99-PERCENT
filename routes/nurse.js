@@ -36,7 +36,7 @@ router.get("/api/citizen/:last_name/:first_name/:middle_name", async (req, res) 
       SELECT * FROM citizen
       WHERE last_name = $1 AND first_name = $2 AND middle_name = $3
     `;
-    
+
     const result = await citizenPool.query(queryText, [last_name, first_name, middle_name]);
 
     if (result.rows.length > 0) {

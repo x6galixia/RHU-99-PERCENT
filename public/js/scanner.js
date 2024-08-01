@@ -10,13 +10,10 @@ scanner.render(success, error);
 
 function success(result) {
   try {
-    // Parse the JSON data
     const parsedResult = JSON.parse(result);
 
-    // Store parsed result in localStorage
     localStorage.setItem("qrResult", JSON.stringify(parsedResult));
 
-    // Display the parsed data on the page
     document.getElementById("result").innerHTML = `
       <h2>Success!</h2>
       <p>Last Name: ${parsedResult.last_name}</p>
@@ -24,14 +21,12 @@ function success(result) {
       <p>Middle Name: ${parsedResult.middle_name}</p>
     `;
 
-    // Clear the scanner and remove it from the page
     scanner.clear();
     document.getElementById("reader").remove();
 
-    // Redirect after a delay (1 second in this example)
     setTimeout(() => {
-      window.location.href = "nurse"; // Change to your desired URL
-    }, 1000); // 1000 milliseconds = 1 second
+      window.location.href = "nurse";
+    }, 1000);
   } catch (e) {
     console.error("Error processing QR code:", e);
     document.getElementById("result").innerHTML = `

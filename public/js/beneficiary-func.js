@@ -1,9 +1,8 @@
-
 document.addEventListener("DOMContentLoaded", function () {
     const overlay = document.getElementById('overlay');
     function formatDate(dateString) {
         if (!dateString || dateString === 'Invalid Date') {
-            return ''; // Return an empty string for invalid or empty dates
+            return '';
         }
         const options = {
             weekday: "short",
@@ -116,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
     overlay.addEventListener("click", function () {
         overlay.style.display = "none";
         beneficiaryIndexForm.style.display = "none";
-      });
+    });
 
     attachRowClickHandlers();
 });

@@ -6,10 +6,10 @@ body {
     overflow: hidden;
 }
 
-@media (min-height: 600px) and (max-height: 820px){
-  #navbar{
-      height: 80px;
-  }
+@media (min-height: 600px) and (max-height: 820px) {
+    #navbar {
+        height: 80px;
+    }
 }
 
 table {
@@ -18,15 +18,20 @@ table {
     margin: auto;
 }
 
-table, th, td {
+table,
+th,
+td {
     border: 1px solid #ddd;
     padding: 8px;
 }
-tr, td {
-  margin-left: 20px;
+
+tr,
+td {
+    margin-left: 20px;
 }
 
-th, td {
+th,
+td {
     padding: 10px;
     text-align: center;
 }
@@ -44,8 +49,10 @@ tbody tr:nth-child(even) {
 tbody tr:hover {
     background-color: #ddd;
 }
-th:first-child, td:first-child{
-  padding-left: 20px !important;
+
+th:first-child,
+td:first-child {
+    padding-left: 20px !important;
 }
 
 .title {
@@ -104,55 +111,56 @@ h1 {
     margin-top: 20px;
 }
 
-#beneficiaryIndexForm th, #beneficiaryIndexForm td {
+#beneficiaryIndexForm th,
+#beneficiaryIndexForm td {
     padding: 10px;
     text-align: center;
-    
+
 }
 
 #beneficiaryIndexForm th {
     background-color: #4CAF50;
     color: white;
     font-size: 10px;
-    
+
 }
- 
-label{
+
+label {
     font-size: 12px;
 }
-form{
-  margin-bottom: 1rem !important;
- }
 
-  hr {
-    margin-top: 1.5rem !important; 
+form {
     margin-bottom: 1rem !important;
-  }
+}
 
-.sect{
+hr {
+    margin-top: 1.5rem !important;
+    margin-bottom: 1rem !important;
+}
+
+.sect {
     display: flex;
     justify-content: space-between;
     padding: 0px 30px;
 }
 
-@media (min-height: 600px) and (max-height: 820px){
-  #navbar{
-      height: 80px;
-  }
+@media (min-height: 600px) and (max-height: 820px) {
+    #navbar {
+        height: 80px;
+    }
 }
 
-#overlay{
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
-  display: none; /* Hidden by default */
-  z-index: 100; /* Make sure it's behind the form but above other content */
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: none;
+    z-index: 100;
 }
 
-/* Search */
 #searching {
     height: 40px !important;
     width: 500px !important;

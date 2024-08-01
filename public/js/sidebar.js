@@ -5,4 +5,4 @@ function toggleNav() {
     } else {
         sidebar.style.width = '400px'
     }
-  }
+}

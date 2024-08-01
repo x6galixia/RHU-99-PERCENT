@@ -23,11 +23,11 @@ document.addEventListener("DOMContentLoaded", async () => {
 
     localStorage.removeItem("qrResult");
   }
-  
+
   const idInput = document.getElementById("idInput");
   const generateButton = document.getElementById("generateButton");
   const searchButton = document.getElementById("searchButton");
-  
+
 
   generateButton.addEventListener("click", () => {
     const generatedId = generateId();
@@ -52,12 +52,11 @@ document.addEventListener("DOMContentLoaded", async () => {
     let result = '';
     const d = new Date().getTime().toString();
     while (result.length < 4) {
-        result += Math.floor(Math.random() * 10);
+      result += Math.floor(Math.random() * 10);
     }
     return `RHU-${d}${result}`;
   }
 
-  // Function to fetch citizen data and populate form fields
   async function fetchAndPopulateFormData(url) {
     try {
       const response = await fetch(url);
@@ -74,7 +73,6 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   }
 
-  // Function to populate form fields with retrieved data
   function populateFormFields(data) {
     document.getElementById("last_name").value = data.last_name;
     document.getElementById("first_name").value = data.first_name;
@@ -92,14 +90,14 @@ document.addEventListener("DOMContentLoaded", async () => {
     document.getElementById("occupation").value = data.occupation;
     document.getElementById("guardian").value = data.guardian;
   }
-  
+
 });
 
 function toggleDropdown() {
   document.getElementById("dropdownContent").classList.toggle("show");
 }
 
-window.onclick = function(event) {
+window.onclick = function (event) {
   if (!event.target.matches('.dropbtn')) {
     var dropdowns = document.getElementsByClassName("dropdown-content");
     for (var i = 0; i < dropdowns.length; i++) {
@@ -113,5 +111,4 @@ window.onclick = function(event) {
 
 function logout() {
   alert("Logging out...");
-  // Perform logout actions here, such as redirecting to a logout endpoint
 }

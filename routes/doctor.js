@@ -68,7 +68,7 @@ router.post('/send-prescription', ensureAuthenticated, checkUserType("doctor"), 
         }
 
         await pool.query(
-            "INSERT INTO prescription (unq_id, full_name, age, gender, check_date, full_address, phone, guardian, medicine, instruction, quantity, dosage, receiver, relationship, doctor_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)", 
+            "INSERT INTO prescription (unq_id, full_name, age, gender, check_date, full_address, phone, guardian, medicine, instruction, quantity, dosage, receiver, relationship, doctor_name) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15)",
             [unq_id, full_name, age, gender, check_date, full_address, phone, guardian, medicine, instruction, quantity, dosage, receiver, relationship, doctor_name]
         );
 
@@ -206,7 +206,6 @@ router.post('/search-patient', ensureAuthenticated, checkUserType("doctor"), asy
 
 async function getAllPatients(rhuId) {
     try {
-        // Query patients for the specified rhu_id
         const viewPatients = await pool.query("SELECT * FROM patients WHERE rhu_id = $1", [rhuId]);
 
         const patients = viewPatients.rows.map(row => {
@@ -224,7 +223,7 @@ async function getAllPatients(rhuId) {
                 lab_result: labResults
             };
         });
-        
+
         patients.sort((a, b) => {
             const dateA = new Date(a.check_date);
             const dateB = new Date(b.check_date);
