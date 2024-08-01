@@ -5,7 +5,7 @@ const router = express.Router();
 const { checkNotAuthenticated } = require("../middleware/middleware");
 
 router.get("/login", checkNotAuthenticated, (req, res) => {
-  res.render("login", { error_msg: req.flash("error") });
+  res.render("login/login", { error_msg: req.flash("error") });
 });
 
 router.post("/login", checkNotAuthenticated, (req, res, next) => {

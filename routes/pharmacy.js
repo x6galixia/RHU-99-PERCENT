@@ -17,7 +17,7 @@ router.get("/pharmacy/inventory", ensureAuthenticated, checkUserType("pharmacist
 
     const lowStockItems = lowStockResult.rows;
     const medList = await inventoryLists();
-    res.render("pharmacy", { 
+    res.render("pharmacy/pharmacy", { 
       medList,
       lowStockItems,
       user: req.user });
@@ -40,7 +40,7 @@ router.get("/pharmacy/beneficiary-records", ensureAuthenticated, checkUserType("
   try {
     const getListBeneficiary = await beneficiaryList();
     const getListBeneficiaryIndex = await beneficiaryIndexList();
-    res.render("beneficiary", {getListBeneficiary, getListBeneficiaryIndex});
+    res.render("pharmacy/beneficiary", {getListBeneficiary, getListBeneficiaryIndex});
   } catch (error) {
     console.error("Error:", error);
     res.sendStatus(500);
@@ -50,7 +50,7 @@ router.get("/pharmacy/beneficiary-records", ensureAuthenticated, checkUserType("
 router.get("/pharmacy/dispense", ensureAuthenticated, checkUserType("pharmacist"), async(req, res) => {
   try {
     const dispenseMed = await forDispense();
-    res.render("dispense", {dispenseMed});
+    res.render("pharmacy/dispense", {dispenseMed});
   } catch (error) {
     console.error("Error:", error);
     res.sendStatus(500);
@@ -58,11 +58,11 @@ router.get("/pharmacy/dispense", ensureAuthenticated, checkUserType("pharmacist"
 });
 
 router.get("/pharmacy/add-medicine", ensureAuthenticated, checkUserType("pharmacist"), (req, res) => {
-  res.render("addmedicine");
+  res.render("pharmacy/addmedicine");
 });
 
 router.get("/pharmacy/trends", ensureAuthenticated, checkUserType("pharmacist"), (req, res) => {
-  res.render("trends");
+  res.render("pharmacy/trends");
 });
 
 router.post("/pharmacy/add-medicine", ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
@@ -71,7 +71,7 @@ router.post("/pharmacy/add-medicine", ensureAuthenticated, checkUserType("pharma
   
   await pharmacyPool.query("INSERT INTO inventory (product_id, product_code, product_name, brand_name, supplier, dosage_form, dosage, reorder_level, batch_number, date_added, expiration, product_quantity) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)", [product_id, product_code, product_name, brand_name, supplier, dosage_form, dosage, reorder_level, batch_number, date_added, expiration, product_quantity]);
 
-  res.render("addmedicine");
+  res.render("pharmacy/addmedicine");
   } catch (error) {
     console.log("ERrror: Error adding medicine");
   }
@@ -121,7 +121,7 @@ router.post("/search-beneficiary", ensureAuthenticated, checkUserType("pharmacis
     const getListBeneficiaryIndex = await beneficiaryIndexList();
     const getListBeneficiary = searchResult.rows;
 
-    res.render("beneficiary", { getListBeneficiary, getListBeneficiaryIndex });
+    res.render("pharmacy/beneficiary", { getListBeneficiary, getListBeneficiaryIndex });
   } catch (err) {
     console.error("Error searching beneficiary:", err);
     req.flash("error", "An error occurred while searching for beneficiary: " + err.message);
@@ -153,7 +153,7 @@ router.post('/search-medicine', ensureAuthenticated, checkUserType("pharmacist")
       const medList = await inventoryLists();
       console.log("Inventory List:", medList);
 
-      res.render('pharmacy', {
+      res.render('pharmacy/pharmacy', {
           medList: result,
           lowStockItems,
           user: req.user
@@ -293,7 +293,7 @@ router.post('/dispense-medicine', ensureAuthenticated, checkUserType("pharmacist
 });
 
 router.get('/pharmacy/add-beneficiary', ensureAuthenticated, checkUserType("pharmacist"), async (req, res) => {
-  res.render('addbeneficiary', { message: {} });
+  res.render('pharmacy/addbeneficiary', { message: {} });
 });
 
 
@@ -342,10 +342,10 @@ router.post('/pharmacy/add-beneficiary', ensureAuthenticated, checkUserType("pha
       ]
     );
 
-    res.render('addbeneficiary', { message: { success: 'Beneficiary added successfully!' } });
+    res.render('pharmacy/addbeneficiary', { message: { success: 'Beneficiary added successfully!' } });
   } catch (err) {
     console.error(`Error: cannot add beneficiary ${err}`);
-    res.render('addbeneficiary', { message: { error: 'An error occurred while adding the beneficiary.' } });
+    res.render('pharmacy/addbeneficiary', { message: { error: 'An error occurred while adding the beneficiary.' } });
   }
 });
 

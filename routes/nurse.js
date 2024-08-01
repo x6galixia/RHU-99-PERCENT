@@ -9,7 +9,7 @@ router.use(methodOverride("_method"));
 router.use(setUserData);
 
 router.get("/nurse", ensureAuthenticated, checkUserType("nurse"), (req, res) => {
-  res.render("nurse", { user: req.user, message: {} });
+  res.render("nurse/nurse", { user: req.user, message: {} });
 });
 
 router.get('/api/search/:searchValue', async (req, res) => {
@@ -141,10 +141,10 @@ router.post("/nurse/send-patient-info", ensureAuthenticated, checkUserType("nurs
     ];
 
     const result = await pool.query(query, values);
-    res.render('nurse', { user: req.user, message: { success: 'Patient added successfully!' } });
+    res.render('nurse/nurse', { user: req.user, message: { success: 'Patient added successfully!' } });
   } catch (err) {
     console.error(err);
-    res.render('nurse', { user: req.user, message: { error: 'An error occurred while adding the patient.' } });
+    res.render('nurse/nurse', { user: req.user, message: { error: 'An error occurred while adding the patient.' } });
   }
 });
 
