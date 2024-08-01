@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="/css/dispense.css" />
     <link rel="icon" type="image/x-icon" href="/images/favicon.ico" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">   
     <script src="/js/websocket.js"></script>
     <title>Dispense</title>
 </head>
@@ -126,32 +127,47 @@
     </table>
         </div>
       </div>
-    <div id="dispenseForm" style="display: none;">
-        <div id="dform">
-        <form action="/dispense-medicine" method="post">
-            <div id="closeDispenseBtn">&times;</div>
+      <div id="overlay" style="display: none;"></div>
+    <div id="dispenseForm" style="display: none">
+      <form>
+        <div class="popup-header">
+          <div id="head-pop">
+              <img id="heart" src="/images/capsule.png" alt="">
+              <h2>Dispense Form</h2>
+          </div>
+          
+          <span id="closeDispenseBtn" class="close">&times;</span>
+      </div>
                 <div class="form-section">
                     <input type="text" id="unq_id" name="unq_id" style="display: none;">
-                    <label>BENEFICIARY NAME</label>
+                    <div>
+                        <label>BENEFICIARY NAME</label>
                     <input type="text" id="beneficiary_name" name="beneficiary_name" readonly>
                     <input type="text" id="beneficiary_gender" name="beneficiary_gender" style="display: none;" readonly>
                     <input type="text" id="beneficiary_address" name="beneficiary_address" style="display: none;" readonly>
                     <input type="text" id="beneficiary_contact" name="beneficiary_contact" style="display: none;">
                     <input type="text" id="beneficiary_age" name="beneficiary_age" style="display: none;" readonly>
-                    <label>PHYSICIAN</label>
+                    </div>
+                    <div>
+                        <label>PHYSICIAN</label>
                     <input type="text" id="prescribing_doctor" name="prescribing_doctor" readonly>
-                    <label>REQUESTING PARTY</label>
+                    </div>
+                    <div>
+                        <label>REQUESTING PARTY</label>
                     <input type="text" id="requesting_person" name="requesting_person" readonly>
-                    <label>RELATIONSHIP TO BENEFICIARY</label>
+                    </div>
+                    <div>
+                        <label id="relation">RELATIONSHIP TO BENEFICIARY</label>
                     <input type="text" id="relationship_beneficiary" name="relationship_beneficiary" readonly>
                     <!------------------to be filled----------------->
                     <input type="date" id="expiration_date" name="expiration_date" style="display: none;" readonly>
                     <!------------------medicine info---------------->
                     <input type="text" id="batch_number" name="batch_number" placeholder="batch number" style="display: none;" readonly>
                     <input type="text" id="dosage" name="dosage" style="display: none;" readonly>
+                    </div>
                 </div>
                 <div class="table-section">
-                    <h2>PRODUCT ISSUED SUBFORM</h2>
+                    <h3 id="product">PRODUCT ISSUED SUBFORM</h3>
                     <table id="subFormTable">
                         <thead>
                             <tr>
@@ -174,9 +190,8 @@
                         <button id="but" type="submit">Dispense</button>
                     </div>
                 </div>
-            </form>
-            </div>
-        </div>
+      </form>
+    </div>
         <script src="/js/sidebar.js"></script>
     <script src="/js/dispense-func.js"></script>
     <script src="/js/aside.js"></script>
