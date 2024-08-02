@@ -50,17 +50,25 @@
 
 
     <!---------------------generate id and search id------------------>
-    <div>
+    <div id="popup-overlay" class="popup-overlay hidden">
+        <div id="popup" class="popup">
+            <span id="popup-close" class="popup-close">&times;</span>
+            <p id="popup-message"></p>
+        </div>
+    </div>
+
+    <!-- Existing content -->
+    <div id="success-add">
         <% if (message && message.error) { %>
-            <p>
+            <p id="error-message">
                 <%= message.error %>
             </p>
-            <% } %>
-                <% if (message && message.success) { %>
-                    <p>
-                        <%= message.success %>
-                    </p>
-                    <% } %>
+        <% } %>
+        <% if (message && message.success) { %>
+            <p id="success-message">
+                <%= message.success %>
+            </p>
+        <% } %>
     </div>
 
     <form action="/nurse/send-patient-info" method="post">
@@ -225,6 +233,7 @@
         </div>
 
     </form>
+    <script src="/js/popup.js"></script>
     <script src="/js/nurse-scanned.js"></script>
 </body>
 

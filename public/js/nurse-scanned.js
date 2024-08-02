@@ -49,12 +49,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   function generateId() {
-    let result = '';
     const d = new Date().getTime().toString();
-    while (result.length < 4) {
-      result += Math.floor(Math.random() * 10);
-    }
-    return `RHU-${d}${result}`;
+    return `${d}`;
   }
 
   async function fetchAndPopulateFormData(url) {

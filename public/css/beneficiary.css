@@ -136,7 +136,9 @@ hr {
 }
 
 .table-container {
-    max-height: 400px; /* Adjust as needed */
+    max-height: 550px;
+    min-height: 550px;
+    width: 95%;/* Adjust as needed */
     overflow-y: auto;
     margin: auto; /* Center the table */
     border: 1px solid #ddd; /* Optional: border around the table wrapper */

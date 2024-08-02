@@ -1,3 +1,5 @@
+const overlay = document.getElementById('overlay');
+
 document.addEventListener("DOMContentLoaded", function () {
     console.log("Script loaded and DOM fully loaded");
 
@@ -78,6 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                 const dispenseForm = document.getElementById('dispenseForm');
                 if (dispenseForm) {
+                    overlay.style.display = "block";
                     dispenseForm.style.display = 'block';
                 } else {
                     console.error('Dispense form not found.');
@@ -89,11 +92,16 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('closeDispenseBtn').addEventListener('click', function () {
         const dispenseForm = document.getElementById('dispenseForm');
         if (dispenseForm) {
+            overlay.style.display = "none";
             dispenseForm.style.display = 'none';
         } else {
             console.error('Dispense form not found.');
         }
     });
+    overlay.addEventListener("click", function () {
+        overlay.style.display = "none";
+        dispenseForm.style.display = "none";
+      });
 
     attachRowClickHandlers();
 

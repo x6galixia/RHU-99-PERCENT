@@ -12,13 +12,7 @@
 </head>
 
 <body>
-    <div style="display: block;">
-        <% if (messages.error) { %>
-            <div>
-                <%= messages.error %>
-            </div>
-            <% } %>
-    </div>
+   
     <main>
         <div id="rectang">
             <div id="Login-input">
@@ -28,10 +22,17 @@
                     </div>
                     <img id="illustration" src="/images/image 9.png" alt="">
                     <h3 id="h3">One City Care</h3>
-                    <p>That can heal your inner child:</p>
+                    <p>Your health our commitment</p>
                 </div>
                 <div id="user_type" name="user_type">
                     <H1 id="h1">SIGN IN AS</H1>
+                    <div>
+                        <% if (messages.error) { %>
+                            <div>
+                                <%= messages.error %>
+                            </div>
+                            <% } %>
+                    </div>
                     <h4 id="h4" style="color: rgb(116, 110, 110);">Choose which sector you are in.</h4>
                     <div id="choosing">
                         <button id="btn" type="button" value="doctor" onclick="hideUserType(this.value)">Doctor</button>
